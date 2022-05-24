@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Enter domain name of ADOP platform --></help>
+        <label><!-- ADOP Domain URL --></label>
+        <name>CommandCenter__ADOP_Domain_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credentials same as ADOP? --></label>
+        <name>CommandCenter__Cred_same_as_ADOP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deploy Job URL --></label>
+        <name>CommandCenter__Deploy_Job_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Uncheck this checkbox if your release process does not need any approval. Default value id TRUE --></help>
+        <label><!-- Deployment Approval Required --></label>
+        <name>CommandCenter__Deployment_Approval_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jenkins Job Name --></label>
+        <name>CommandCenter__Jenkins_Job_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jenkins Password --></label>
+        <name>CommandCenter__Jenkins_Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- Specify whether this user will be used for communicating with Jenkins or not. --></help>
+        <label><!-- Jenkins User Active? --></label>
+        <name>CommandCenter__Jenkins_User_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jenkins User Name --></label>
+        <name>CommandCenter__Jenkins_User_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Name --></label>
+        <name>CommandCenter__Job_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the jenkins job token. User has to specify this token if the job needs to be triggered from RM app. User can get this token from Jenkins job configuration -&gt; Build Triggers -&gt; Trigger Builds Remotely --></help>
+        <label><!-- Job Token --></label>
+        <name>CommandCenter__Job_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Type --></label>
+        <name>CommandCenter__Job_Type__c</name>
+        <picklistValues>
+            <masterLabel>Pipeline Job</masterLabel>
+            <translation><!-- Pipeline Job --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standalone Job</masterLabel>
+            <translation><!-- Standalone Job --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Job URL --></label>
+        <name>CommandCenter__Job_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Uncheck this checkbox if your deployment process does not have any manual steps to be completed before deployment. Default value if TRUE. --></help>
+        <label><!-- Manual Steps Required --></label>
+        <name>CommandCenter__Manual_Steps_Required__c</name>
+    </fields>
+    <fields>
+        <help><!-- Maximum number of pipelines to save for each release. Pipelines exceeding this number will be deleted automatically without any notification. --></help>
+        <label><!-- Max # of Pipeline to Save --></label>
+        <name>CommandCenter__Max_of_Pipeline_to_Save__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the jenkins job token. User has to specify this token if the job needs to be triggered from RM app. User can get this token from Jenkins job configuration -&gt; Build Triggers -&gt; Trigger Builds Remotely --></help>
+        <label><!-- On-Demand Job Token --></label>
+        <name>CommandCenter__On_Demand_Job_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- On-Demand Validation Job URL --></label>
+        <name>CommandCenter__On_Demand_Validation_Job_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Uncheck this checkbox if your deployment process does not need on-demand validation. Default value if TRUE. --></help>
+        <label><!-- On-Demand Validation Needed --></label>
+        <name>CommandCenter__On_Demand_Validation_Needed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package To Validate --></label>
+        <name>CommandCenter__Package_To_Validate__c</name>
+        <picklistValues>
+            <masterLabel>Destructive</masterLabel>
+            <translation><!-- Destructive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Main_Package</masterLabel>
+            <translation><!-- Main_Package --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Pipeline URL --></label>
+        <name>CommandCenter__Pipeline_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project / Team Name --></label>
+        <name>CommandCenter__Project_Team_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repository Name --></label>
+        <name>CommandCenter__Repository_Name__c</name>
+        <picklistValues>
+            <masterLabel>BitBucket</masterLabel>
+            <translation><!-- BitBucket --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gerrit</masterLabel>
+            <translation><!-- Gerrit --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Repository Password --></label>
+        <name>CommandCenter__Repository_Password__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repository URL --></label>
+        <name>CommandCenter__Repository_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repository Username --></label>
+        <name>CommandCenter__Repository_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- SFDC User --></label>
+        <name>CommandCenter__SFDC_User__c</name>
+        <relationshipLabel><!-- RM Configuration --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Password --></label>
+        <name>CommandCenter__Salesforce_Password__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Token --></label>
+        <name>CommandCenter__Salesforce_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce URL --></label>
+        <name>CommandCenter__Salesforce_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Username --></label>
+        <name>CommandCenter__Salesforce_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Org --></label>
+        <name>CommandCenter__Source_Org__c</name>
+    </fields>
+    <fields>
+        <label><!-- SF Environment --></label>
+        <name>CommandCenter__Target_Environment__c</name>
+        <relationshipLabel><!-- RM Configuration --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Target Org --></label>
+        <name>CommandCenter__Target_Org__c</name>
+    </fields>
+    <fields>
+        <help><!-- Uncheck this box if you do not want to see the dashboard on deployment page. Default value id TRUE --></help>
+        <label><!-- View Dashboard --></label>
+        <name>CommandCenter__View_Dashboard__c</name>
+    </fields>
+    <fields>
+        <label><!-- View Pipeline Log --></label>
+        <name>CommandCenter__View_Pipeline_Log__c</name>
+    </fields>
+    <fields>
+        <help><!-- Uncheck this checkbox if you do not want to see pipeline on deployment page. Default value id TRUE --></help>
+        <label><!-- View Pipeline --></label>
+        <name>CommandCenter__View_Pipeline__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Jenkins Authentication --></label>
+        <name>CommandCenter__Jenkins_Authentication</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- This record type is used for configuring Jenkins jobs --></description>
+        <label><!-- Jenkins Job --></label>
+        <name>CommandCenter__Jenkins_Job</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Release Management App Configuration --></description>
+        <label><!-- RM Config --></label>
+        <name>CommandCenter__RM_Config</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- RM_Repository --></label>
+        <name>CommandCenter__RM_Repository</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Can&apos;t be a negative value --></errorMessage>
+        <name>CommandCenter__Avoid_Negative_Value</name>
+    </validationRules>
+</CustomObjectTranslation>

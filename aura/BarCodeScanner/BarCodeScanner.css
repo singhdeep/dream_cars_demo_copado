@@ -1,0 +1,64 @@
+.THIS .sectionHeaderButton{
+    color: inherit;
+    font: inherit;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    padding: .5rem .75rem .5rem .75rem;
+}
+.THIS .dateField .datePicker-openIcon {
+    margin-left: 17.5rem;
+    margin-top: -5.5rem;
+    bottom: 1.5rem;
+}
+.THIS .fillColor {
+    fill: currentColor;
+}
+.THIS  .uiButton {
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
+.THIS .forcePageBlockSection .titleSpan {
+    padding-left: .5rem;
+}
+
+.THIS  .forcePageBlockSectionEdit .title
+{
+    background-color: inherit;
+    color: rgb(22, 50, 92);
+    font: 300;
+    font-size: 1rem;
+    line-height: 1;
+    margin: 0;
+    text-transform: none;
+    padding: 0;
+    display: inline-block;
+    border: none;
+}
+.THIS .sectionHeader {
+    background-color: rgb(244, 246, 249) !important;
+    color: rgb(22, 50, 92);
+    border-radius: .25rem;
+    margin: .25rem 0;
+	margin-bottom: 15px;
+}
+.THIS .titleSpan {
+    padding-left: .5rem;
+}
+.THIS  .title {
+    background-color: inherit;
+    color: rgb(22, 50, 92);
+    font: 300;
+    font-size: 1rem;
+    line-height: 1;
+    margin: 0;
+    text-transform: none;
+    padding: 0;
+    display: inline-block;
+    border: none;
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Default Step Tracker Records</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Default Step Tracker Records</value>
+    </caseValues>
+    <fields>
+        <help><!-- All SF Environments to which this default step is applicable --></help>
+        <label><!-- Applicable Orgs --></label>
+        <name>Applicable_Orgs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Salesforce Components - VF, Apex classes, objects etc --></help>
+        <label><!-- Component --></label>
+        <name>Component__c</name>
+    </fields>
+    <fields>
+        <label><!-- Step Type --></label>
+        <name>Step_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps to perform --></label>
+        <name>Steps_to_perform__c</name>
+    </fields>
+    <fields>
+        <label><!-- defaultStepNumber --></label>
+        <name>defaultStepNumber__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

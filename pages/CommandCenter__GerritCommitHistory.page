@@ -1,0 +1,230 @@
+<apex:page controller="CommandCenter.GerritDetails" action="{!recentCommit}" showHeader="false" sidebar="false">
+ <title>Release management</title>
+    <apex:stylesheet value="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/styles/salesforce-lightning-design-system.css')}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   <c:NavHeaderComp />
+<!--   <c:GerritToolHeaderComponent />-->
+    <c:Process_Step_Component CurrentPageName="{!$CurrentPage.Name}" projectParam="{!$CurrentPage.parameters.p}" branchParam="{!$CurrentPage.parameters.b}"/>
+    
+    <style>
+    html{background: #ffffff;!important;}
+        input[type=search],label select     { 
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+         } 
+        .results tr[visible='false'],
+        .no-result{
+          display:none;
+        }
+        
+        .results tr[visible='true']{
+          display:table-row;
+        }
+        .pull-right {
+            float: left !important;
+        }
+        .counter{
+          padding:8px; 
+          color:#ccc;
+        }
+        .table-bordered {
+            border: 1px solid #ddd;
+            width: 98%;
+            margin-left: 12px;
+            margin-top: 15px;
+        }
+        
+        .form-control{
+            margin:15px;
+        }
+        input::-webkit-input-placeholder {
+            font-size: 15px;
+            line-height: 3;
+        }
+        th{
+            background : #e8e8e8 !important;
+        }
+        h4{ 
+            background : #e8e8e8 !important;
+            margin-left: 2%;
+            font-weight:bold;
+            font-size:15px;
+        }
+        
+        .tdClass{
+            text-decoration: none; 
+            width: 1px;
+        }
+        
+        tr:nth-child(even) {background: #e8e8e8}
+        tr:nth-child(odd) {background: #FFF}
+        
+        .error{
+            padding:5px;
+            margin-left:20%;
+            width: 50%;
+        }
+          .sorting{
+            background: none !important;
+        }
+        th{    border: 1px solid #ccc !important;
+                
+        } 
+        
+        .container {
+            width: 98% !important;
+            margin-left: 1%;
+        }
+        h2{
+            padding: 35px 40px !important;
+            line-height: 6.4 !important;
+            font-weight: inherit !important;
+            font-size: 1.5em !important;
+        }
+        h3{
+            line-height: 3 !important;
+        }
+        .dataTables_wrapper{
+            margin-top: 13px !important;
+         }
+    </style>
+    
+ <apex:form >
+     
+        <apex:outputPanel >
+            <c:GerritCommits projectName="{!projectName}" branchName="{!branchName}" status="merged" respositoryDetails="{!respositoryDetails.Id}"></c:GerritCommits>
+        </apex:outputPanel>
+        
+     <!--
+     <div class="container">
+        
+   
+        <h4>Status:Open</h4>
+        
+        <table id="myTable" class="table table-striped" >
+            <thead>
+                <tr style="background: #eaeaea;">
+                    <th class="col-md-3 col-xs-3" style="width: 5%;">Sr. No.</th>
+                    <th class="col-md-3 col-xs-3" style="width: 30%;">Subject</th>
+                    <th class="col-md-4 col-xs-4" style="width: 8%;">Status </th>
+                    <th class="col-md-3 col-xs-3" style="width: 12%;">Owner</th>
+                    <th class="col-md-3 col-xs-3" style="width: 13%;">Project</th>
+                    <th class="col-md-3 col-xs-3" style="width: 7%;">Branch</th>
+                    <th class="col-md-5 col-xs-5" style="width: 13%;">Commited Date</th>
+                    <th class="col-md-5 col-xs-5" style="width: 17%;">Updated Date</th>
+                </tr>
+            </thead>
+            <tbody style="{!IF(wrapperDataList.size > 0, '', 'display:none;')}">
+                <apex:variable value="{!0}" var="index" />
+                <apex:repeat value="{!wrapperDataList}" var="commit" rendered="{!IF(wrapperDataList.size > 0, true, false)}">
+                    <tr>
+                        <td class="tdClass">
+                            <apex:outputText >
+                                 <apex:variable value="{!index + 1}" var="index" />
+                                  {!index}
+                            </apex:outputText>
+                        </td>
+                        <td class="tdClass">
+                            <a href="/apex/CommitComponents?p={!projectName}&b={!branchName}&c={!commit.change_id}&n={!commit.commit_number}">{!commit.subject}</a>
+                        </td>
+                        <td class="tdClass">{!commit.status}</td>
+                        <td class="tdClass">{!commit.owner.name}</td>
+                        <td class="tdClass">{!commit.project}</td>
+                        <td class="tdClass">{!commit.branch}</td>
+                        <td class="tdClass">{!commit.created}</td>
+                        <td class="tdClass">{!commit.updated}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+            <tbody style="{!IF(wrapperDataList.size == 0, '', 'display:none;')}">
+                <tr>
+                    <td colspan="8"><i class="fa fa-warning"></i>{!$Label.No_records_found}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <br/>
+        <div class="container">
+            
+            <h4>Status: Merged</h4>
+            
+            <table id="mergedCommitTable" class="table table-striped"><!-- style="width: 60%;border-left: 1px solid #d8dde6; border-right: 1px solid #d8dde6;">
+             <thead>
+                    <tr style="background: #eaeaea;">
+                        <th class="col-md-3 col-xs-3" style="width: 5%;">Sr. No.</th>
+                        <th class="col-md-3 col-xs-3" style="width: 30%;">Subject</th>
+                        <th class="col-md-4 col-xs-4" style="width: 8%;">Status </th>
+                        <th class="col-md-3 col-xs-3" style="width: 12%;">Owner</th>
+                        <th class="col-md-3 col-xs-3" style="width: 13%;">Project</th>
+                        <th class="col-md-3 col-xs-3" style="width: 7%;">Branch</th>
+                        <th class="col-md-5 col-xs-5" style="width: 13%;">Created Date</th>
+                        <th class="col-md-5 col-xs-5" style="width: 17%;">Updated Date</th>
+                    </tr>
+                </thead>
+                <tbody style="{!IF(wrapperDataMergedList.size > 0, '', 'display:none;')}">
+                    <apex:variable value="{!0}" var="index" />
+                    <apex:repeat value="{!wrapperDataMergedList}" var="RecentList">
+                        <tr>
+                            <td scope="row" data-label="Name">
+                                <div style="white-space: normal;">
+                                    <apex:outputText >
+                                        <apex:variable value="{!index + 1}" var="index" />
+                                        {!index}
+                                    </apex:outputText>
+                                </div>
+                            </td>
+                            <td class="tdClass">
+                                <a href="/apex/CommitComponents?p={!projectName}&b={!branchName}&c={!RecentList.change_id}&n={!RecentList.commit_number}">{!RecentList.subject}</a>
+                            </td>
+                            <td class="tdClass">{!RecentList.status}</td>
+                            <td class="tdClass">{!RecentList.owner.name}</td>
+                            <td class="tdClass">{!RecentList.project}</td>
+                            <td class="tdClass">{!RecentList.branch}</td>
+                            <td class="tdClass">{!RecentList.created}</td>
+                            <td class="tdClass">{!RecentList.updated}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+                <tbody style="{!IF(wrapperDataMergedList.size == 0, '', 'display:none;')}">
+                    <tr>
+                        <td scope="row" data-label="No records to display" colspan="5">
+                            <div style="white-space: normal;">{!$Label.No_records_found}</div>
+                        </td>   
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+         <script>
+            $(document).ready(function(){
+                window.alert = function() {};
+                $('#myTable').dataTable({
+                    "ordering": false,
+                    "order": [[ 6, "desc" ]]
+                });
+                $('#mergedCommitTable').dataTable({
+                    "ordering": false,
+                    "order": [[ 6, "desc" ]]
+                });
+                
+             });
+        </script>
+    </body> -->
+     </apex:form>
+                   
+</apex:page>

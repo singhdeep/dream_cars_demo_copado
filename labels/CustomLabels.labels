@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>CL_CompanyName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CL_CompanyName</shortDescription>
+        <value>[not provided]</value>
+    </labels>
+    <labels>
+        <fullName>CL_LeadStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CL_LeadStatus</shortDescription>
+        <value>App Created1</value>
+    </labels>
+    <labels>
+        <fullName>CL_ProductInterest</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CL_ProductInterest</shortDescription>
+        <value>Term Life Insurance</value>
+    </labels>
+</CustomLabels>

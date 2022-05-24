@@ -1,0 +1,33 @@
+<apex:page controller="CommandCenter.DeployController" sidebar="false" standardStylesheets="false" showHeader="false" contentType="application/vnd.ms-excel#myExcel.xls" cache="true" action="{!exportErrorReport}">
+     
+                              <apex:pageBlock title="Component Failures" > 
+                                <apex:pageBlockTable value="{!failureList}" var="obj" title="Failures:" border="1" columns="5">
+                                    <apex:column >
+                                        <apex:facet name="header">Line#</apex:facet>
+                                            {!obj.lineNumber}
+                                    </apex:column>
+                                    <apex:column >
+                                        <apex:facet name="header">Problem</apex:facet> 
+                                            {!obj.problem} 
+                                    </apex:column>
+                                  <apex:column >
+                                  <apex:facet name="header">Problem Type</apex:facet>
+                                       {!obj.problemType} 
+                                  </apex:column>
+                                  <apex:column >
+                                  <apex:facet name="header">Component Type</apex:facet>
+                                      {!obj.componentType}
+                                  </apex:column>
+                                  <apex:column >
+                                  <apex:facet name="header">File Name</apex:facet>
+                                      {!obj.fileName}
+                                   </apex:column>
+                                
+                                </apex:pageBlockTable>
+                                </apex:pageBlock>
+                                
+                                
+                          <!--   </div> -->
+
+
+</apex:page>

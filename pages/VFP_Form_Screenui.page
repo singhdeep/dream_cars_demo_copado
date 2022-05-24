@@ -1,0 +1,209 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" >
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="Form_Screen" >
+<script>
+function opexnWindow(){
+
+    var url='{!urlVar}';
+    window.open(url);
+}
+ function openWindow1(){
+
+    var url='{!urlViewHippa}';
+    window.open(url);
+}
+function navigateToLead(){
+ 
+    if( (typeof sforce != 'undefined') && (sforce != null)){
+        sforce.one.navigateToList('00Bj0000001EYtb', null, 'Lead');
+    }else{
+        window.location.href = '/00Q/o';
+    }
+}
+</script>
+
+<style>
+     .popup
+        {
+            background-color: white;
+            z-index: 1;
+            left: 50%;
+            padding:20px 0 0 0;
+            position: absolute;
+            width: 400px;
+            margin-left: -250px;
+            top:300px;
+        }
+     .popupBg
+        {
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 70);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+</style>
+<apex:form > 
+<body>
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <a href="#" title="Cancel">Cancel</a>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                       New Application
+                    </div>
+                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name">{!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+         <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 save-row">
+                <row>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>     
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <row>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">1</span>
+                                <span class="navLabel">Applicant <br />Details</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">2</span>
+                                 <span class="navLabel">Personal<br />History</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">3</span>
+                                 <span class="navLabel">Payment<br />Details</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">4</span>
+                                 <span class="navLabel">Application<br />Summary</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="current-state">5</span>
+                                 <span class="navLabel current-state-label">Forms &amp;<br />Disclosures</span>
+                            </div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                        </row>
+                    </div>      
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div> 
+                </row>
+            </div>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+             <div class="main-container create-quote-container">
+                  <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <row>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <row>
+                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                       1. Application Form: This is the completed application form
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <!--<button type="button" class="btn btn-primary">View Document</button>-->
+                                        <apex:commandButton value="View Document"  onClick="opexnWindow();" styleClass="btn btn-primary" />
+                                    </div>
+                                </row>
+                            </div>  
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                        </row>              
+                    </div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <row>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="dotted-line"></div>
+                            </div>  
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                        </row>              
+                    </div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <row>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <row>
+                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                       2. HIPAA Form: This is authorization form for release of personal health-related information <br />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <!--<button type="button" class="btn btn-primary ">View Document</button>-->
+                                        <apex:commandButton value="View Document" onClick="openWindow1();" styleClass="btn btn-primary"/>
+                                    </div>
+                                </row>
+                            </div>  
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                        </row>              
+                    </div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <row>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="dotted-line"></div>
+                            </div>  
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                        </row>              
+                    </div>
+                </row>
+                 <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mrgT300">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>                                         
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <!--<button type="button" class="btn btn-primary ">Previous</button>-->
+                                    <apex:commandButton value="Previous" action="{!previousForms}" styleClass="btn btn-primary wdt50"></apex:commandButton>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <!--<button type="button" class="btn btn-primary floatR" id="dialog-btn">Submit</button>-->
+                                   <apex:commandButton value="Submit" action="{!agree}" id="dialog-btn" styleClass="btn btn-primary wdt50 floatR" ></apex:commandButton>
+                                    
+                                    
+                                   
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                   <div class="clearfix">&nbsp;</div>
+            </div>
+        </div>
+       </div>
+    <!--Popupcode for Save Quote---------------------------------------------->
+        
+     <apex:outputPanel id="showSubmit">
+      <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!showSubmitPopup}"/>
+        <apex:outputPanel rendered="{!showSubmitPopup}" styleClass="popup">          
+           <center>
+               Application # {!AppplicationId} submitted successfully. <br/><br/> 
+               Email confirmation sent to {!leadObj.Email} !<br />
+            <!-- The application has been electronically submitted with Application Id {!AppplicationId} and current status is {!AlipApplicationStatus}.<br/><br/>                        
+             A confirmation has been sent to {!leadObj.Email} <br />-->
+               <apex:commandButton value="Close" action="{!closeSubmitpopup}" oncomplete="navigateToLead();" styleClass="btn btn-primary btn-sm btn-md btn-lg btn-block"/>
+          </center>            
+        </apex:outputPanel></apex:outputPanel>  
+</body>
+</apex:form>
+</c:ContactManagementComponentui>
+</apex:page>

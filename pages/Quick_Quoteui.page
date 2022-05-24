@@ -1,0 +1,298 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" >
+<style>
+ .popup
+    {
+        background-color: white;
+        z-index: 1;
+        left: 50%;
+        padding:20px 0 0 0;
+        position: absolute;
+        width: 400px;
+        margin-left: -250px;
+        top:300px;
+    }
+ .popupBg
+    {
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 70);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+</style>
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="Quick_Quote" >
+
+<apex:form > 
+
+<!--check : {!recommdRider} acc: {!riderAccident}-->
+<body>
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <a href="#" title="Cancel">Cancel</a>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        Create Quote
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name">{!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                <div class="main-container create-quote-container">
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>     
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <label for=" ">Product </label> 
+                                        </div>  
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                            <apex:selectList value="{!selectedProduct}" size="1" multiselect="false" styleclass="form-control width200per" Disabled="True">
+                                             <apex:selectOptions value="{!productPicklist}" />
+                                             </apex:selectList>
+                                        </div>  
+                                    </row>
+                                </div>      
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                            </row>        
+                        </div>
+                    </row>
+                   <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>     
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <label for=" ">Payment Frequency  </label>  
+                                        </div>  
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                            <apex:selectList value="{!selectedPaymentTerm}" size="1" multiselect="false" styleclass="form-control" >
+                                             <apex:selectOptions value="{!paymentTermPicklist }" />
+                                             </apex:selectList>
+                                        </div>  
+                                    </row>
+                                </div>      
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                            </row>        
+                        </div>
+                    </row>
+                     <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <row>
+                                        <div class="mrgB10 normallabel">Rider</div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pad-none">
+                                            <label class="checkbox-inline checkbox-lebel">
+                                              <apex:inputCheckbox value="{!checkAccident}"/>Accidental Disability 
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pad-none">
+                                            <label class="checkbox-inline checkbox-lebel">
+                                              <!--<input type="checkbox" id="" value="{!checkWaiver}"/> Waiver of Premium-->
+                                               <apex:inputCheckbox value="{!checkWaiver}"/>Waiver of Premium
+                                             </label>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pad-none">
+                                            <label class="checkbox-inline checkbox-lebel">
+                                              <!--<input type="checkbox" id="" value="{!checkCritical}" /> Critical illness-->
+                                              <apex:inputCheckbox value="{!checkCritical}"/>Critical illness
+                                              </label>
+                                        </div>                              
+                                    </row>
+                                </div>      
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>      
+                            </row>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10 pad-none">
+                                        <apex:outputPanel rendered="{!riderAccident}">
+                                            <div class="call-out-1">
+                                                <img src="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/images/callout-1.png')}" title="" border="0" />
+                                            </div>
+                                         </apex:outputPanel>
+                                         <apex:outputPanel rendered="{!riderCritical}">
+                                            <div class="call-out-3">
+                                                 <img src="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/images/callout-2.png')}" title="" border="0" />
+                                            </div>
+                                         </apex:outputPanel>
+                                         <apex:outputPanel rendered="{!riderWaiver}"> 
+                                            <div class="call-out-2">
+                                                 <img src="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/images/callout-3.png')}" title="" border="0" />
+                                            </div>
+                                         </apex:outputPanel>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                                    </div>                          
+                                </row>              
+                            </div>
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mrgB10 normallabel">Tobacco User?</div>
+                                     <div class="tobaco-user-label">
+                                         <apex:selectRadio value="{!tobaccoUser}" label="Tobacco User">
+                                           <apex:selectOptions value="{!tobaccoUserPicklist}" />
+                                         </apex:selectRadio>
+                                   </div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>    
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <row>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-right">
+                                            <label for="">Term (Years)</label> <br />
+                                               <apex:selectList value="{!selectedTerm}" size="1" multiselect="false" styleclass="form-control width80per" >
+                                                 <apex:selectOptions value="{!termPicklist}" />
+                                              </apex:selectList>
+                                        </div>  
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                            <label for="">Coverage Amount ($)</label> <br />
+                                                <apex:selectList value="{!selectedSumInsured}" multiselect="false" size="1" styleClass="form-control width100per">
+                                                    <apex:selectOption itemValue="$50,000 - $70,000" itemLabel="$50,000 - $70,000"/>
+                                                    <apex:selectOption itemValue="$70,001 - $100,000" itemLabel="$70,001 - $100,000"/>
+                                                    <apex:selectOption itemValue="$100,001 - $200,000" itemLabel="$100,001 - $200,000"/>
+                                                    <apex:selectOption itemValue="$200,001 - $250,000" itemLabel="$200,001 - $250,000"/>
+                                                    <apex:selectOption itemValue="$250,001 - $399,000" itemLabel="$250,001 - $399,000"/>
+                                                </apex:selectList>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none">
+                                            <label for="">&nbsp;</label> <br />
+                                            <apex:commandButton value="Get Premium" action="{!callPremium}" styleClass="btn btn-primary floatR"/>
+                                        </div>   
+                                    </row>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>  
+                            </row>                  
+                        </div>
+                    </row>                    
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <row>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-right">
+                                            <div class="premium-inputTS">
+                                            <label for=""><strong>Premium ($)</strong></label><br /> 
+                                            <apex:inputtext value="{!premiumAmount}" styleClass="form-control premium-input"/> 
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                           <div class="quote-btn">
+                                                <apex:commandButton value="Email Quote" action="{!emailQuote}" styleClass="btn btn-primary" disabled="{!!quoteCalculated}"  ></apex:commandButton>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                            <div class="quote-btn floatR">
+                                            <apex:commandButton value="Save Quote" action="{!calculateAndCreateQuote}" styleClass="btn btn-primary" />
+                                            </div>
+                                        </div>
+                                    </row>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <div class="view-saved-quotes">
+                                     <apex:commandbutton Value="View Saved Quotes"  action="{!QuickQuoteNext}" styleClass="btn btn-primary-1 floatR"/>
+                                    </div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                </div>
+            </div>
+        </row>
+    </div>
+    
+
+    
+    <!--Popupcode for Save Quote---------------------------------------------->
+        
+     <apex:outputPanel id="showSave">
+      <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!showPopup}"/>
+        <apex:outputPanel rendered="{!showPopup}" styleClass="popup">        
+           <center>
+             Quote saved successfully !<br/><br />
+             <apex:commandButton value="Close" action="{!closeSavepopup}" rerender="showSave" styleClass="btn btn-primary btn-sm btn-md btn-lg btn-block" />
+            </center>         
+         </apex:outputPanel></apex:outputPanel>
+    
+     <!--Popupcode for Email Quote---------------------------------------------->
+     
+     <apex:outputPanel id="showEmail">
+      <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!showEmailPopup}"/>
+        <apex:outputPanel rendered="{!showEmailPopup}" styleClass="popup"> 
+           <center>           
+            Quote emailed successfully to {!leadObj.Email} !<br/><br/>
+             <apex:commandButton value="Close" action="{!closeEmailpopup}" rerender="showEmail" styleClass="btn btn-primary btn-sm btn-md btn-lg btn-block" />
+              </center>            
+         </apex:outputPanel></apex:outputPanel>
+    
+</body>
+</apex:form>   
+</c:ContactManagementComponentui>
+</apex:page>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Detailed Error Message --></label>
+        <name>CommandCenter__Detailed_Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Field --></label>
+        <name>CommandCenter__Error_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>CommandCenter__Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Object --></label>
+        <name>CommandCenter__Error_Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Failure Record --></label>
+        <name>CommandCenter__Failure_Record__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Code --></label>
+        <name>CommandCenter__Status_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>CommandCenter__Type__c</name>
+    </fields>
+</CustomObjectTranslation>

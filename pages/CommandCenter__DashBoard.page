@@ -1,0 +1,551 @@
+<apex:page sidebar="false" standardStylesheets="false"  controller="CommandCenter.dashboardCnlt"   showHeader="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" cache="true">
+<!--<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">-->
+    <head>
+    <title>Release management</title>
+<apex:stylesheet value="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/styles/salesforce-lightning-design-system.css')}"/>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+   <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <link rel="stylesheet" href="https://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css" />
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+
+.node {
+  cursor: pointer;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node--leaf {
+  fill: white;
+}
+
+.label {
+  font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  font-weight: bold;
+}
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+
+.column {
+    float: left;
+    width: 30% !important;
+}
+
+</style>
+</head>
+ <!--<body>
+<c:NavHeaderComp />
+ <!--
+<svg width="700" height="700" style="margin: 18px 423px;box-shadow: 5px 3px 24px #888888;">
+  
+</svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+var svg = d3.select("svg"),
+    margin = 20,
+    diameter = +svg.attr("width"),
+    g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+var color = d3.scaleLinear()
+    .domain([-1, 5])
+    .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+    .interpolate(d3.interpolateHcl);
+
+var pack = d3.pack()
+    .size([diameter - margin, diameter - margin])
+    .padding(2);
+
+d3.json("/apex/JSON_Dashboard", function(error, root) {
+  if (error) throw error;
+
+  root = d3.hierarchy(root)
+      .sum(function(d) { return d.size; })
+      .sort(function(a, b) { return b.value - a.value; });
+
+  var focus = root,
+      nodes = pack(root).descendants(),
+      view;
+
+  var circle = g.selectAll("circle")
+    .data(nodes)
+    .enter().append("circle")
+      .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+
+  var text = g.selectAll("text")
+    .data(nodes)
+    .enter().append("text")
+      .attr("class", "label")
+      .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+      .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+      .text(function(d) { return d.data.name; });
+
+  var node = g.selectAll("circle,text");
+
+  svg
+      .style("background", color(-1))
+      .on("click", function() { zoom(root); });
+
+  zoomTo([root.x, root.y, root.r * 2 + margin]);
+
+  function zoom(d) {
+    var focus0 = focus; focus = d;
+
+    var transition = d3.transition()
+        .duration(d3.event.altKey ? 7500 : 750)
+        .tween("zoom", function(d) {
+          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+          return function(t) { zoomTo(i(t)); };
+        });
+
+    transition.selectAll("text")
+      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+        .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+        .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+  }
+
+  function zoomTo(v) {
+    var k = diameter / v[2]; view = v;
+    node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+    circle.attr("r", function(d) { return d.r * k; });
+  }
+});
+
+</script>
+</body>
+</html>
+-->
+
+<html>
+<head>
+
+<div id="transp" class="transp"></div>
+<c:NavHeaderComp />
+
+
+<script>
+$(document).ready(function() {
+  
+  
+ $(".frm-date").datepicker({
+      dateFormat: 'yy-mm-dd'
+    }).val();
+    $(".to-date").datepicker({
+      dateFormat: 'yy-mm-dd'
+    }).val();
+    call();
+});
+var envName;
+var openBracket;
+var closedBracket;
+var removeGarbag;
+function call(){    
+
+    var environmentSise='';//="{!sf_Environment_count}";
+    var listEnv='';//='{!sf_Environment}';
+    var mapVal='';//={!mapString};    
+    $('.main-container').remove();                         
+    var releaseVal=($('.selectedItem').val() !='null' ? $('.selectedItem').val() : 'UnselectedRelease');
+    var relaseFromDate =($('.frm-date').val() !='From Date' ? $('.frm-date').val() : null );
+    var relaseToDate =($('.to-date').val() !='To Date' ? $('.to-date').val() : null);
+    var err = 'false';
+     $("#transp").show('fast'); 
+    
+    Visualforce.remoting.Manager.invokeAction( 
+            '{!$RemoteAction.dashboardCnlt.renderDashboard}',
+            releaseVal,relaseFromDate,relaseToDate,
+            function(result, event){
+                console.log('>>>>result>>>>'+result);
+                if(relaseFromDate != null && relaseToDate != null){
+                    if(relaseToDate < relaseFromDate){
+                        err = 'true';
+                        document.getElementById('errorMessage').innerHTML = 'Selected \'To Date\' should be greater than \'From Date\'';
+                    }else{
+                       document.getElementById('errorMessage').innerHTML = '';
+                    }
+                }
+                if( event.status && result !='null@@@{}@@@{}' && result !='null' && result !='null@@@[]@@@{}' && err == 'false'){
+                        var rs= result.split('@@@');
+                        var envSize=(rs[0] !='null' ? rs[0] : environmentSise);
+                        listEnv=(rs[0] !='null' ?  rs[1] : listEnv);
+                        var ret = {},
+                        str = rs[2];
+                        str=str.replace('{','');
+                        str=str.replace('}','');
+                        str=str.split(',');
+                        var a='';
+                        for(var r=0; r <str.length;r++){
+                            var next =str[r].split(':');
+                            for(var m=0;m<next.length;m++){
+                                if(next[m+1] != undefined ){
+                                    ret[next[m].trim()]=next[m+1].trim();
+                                }
+                            }
+                        }
+                        for(var i=0;i<envSize;i++){
+                                if (listEnv.indexOf('}') > -1)
+                                {
+                                  openBracket=listEnv.split(',')[i].replace('{','');
+                                }
+                                if (listEnv.indexOf('{') > -1)
+                                {
+                                      closedBracket=openBracket.replace('}','');
+                                }
+                                if (listEnv.indexOf('[') > -1)
+                                {
+                                  openBracket=listEnv.split(',')[i].replace('[','');
+                                }
+                                if (listEnv.indexOf(']') > -1)
+                                {
+                                      closedBracket=openBracket.replace(']','');
+                                }
+                                envName=closedBracket;
+                                var statusSuccess=envName+'Success';
+                                var statusInProgress=envName+'In Progress';
+                                var statusPending=envName+'Pending';
+                                var statusFailed=envName+'Failed';
+                                var totalcount=envName+'Total';
+                                mapVal=(rs[0] !='null' ?  ret : '');
+                                createDashboard(statusSuccess,statusInProgress,statusPending,statusFailed,totalcount,i,mapVal);
+                        }
+                }
+                else{
+                    $('.err-msg').remove();
+                    $('body').append('<div class="err-msg">No Result Found </div>');
+                    $("#transp").hide('slow'); 
+                }
+            }, 
+            {escape: true}
+        );
+    
+}
+                       
+                       
+
+function createDashboard(status_Sucess,status_InProgress,status_Pending,status_Failure,status_Total,varId,statusMap){
+    var totalStatusCount=0; 
+    var successCount=0;
+    var inProgressCount=0
+    var pendingCount=0;
+    var failureCount=0;
+    successCount    = (statusMap[status_Sucess.trim()]     != undefined ? statusMap[status_Sucess.trim()]     : successCount);
+    inProgressCount = (statusMap[status_InProgress.trim()] != undefined ? statusMap[status_InProgress.trim()] : inProgressCount);
+    pendingCount    = (statusMap[status_Pending.trim()]    != undefined ? statusMap[status_Pending.trim()]    : pendingCount );
+    failureCount    = (statusMap[status_Failure.trim()]    != undefined ? statusMap[status_Failure.trim()]    : failureCount );
+    totalStatusCount= parseInt(successCount)+parseInt(inProgressCount)+parseInt(pendingCount)+parseInt(failureCount);
+               
+    $('body').append('<div class="main-container column"> <div class="main"> <div id="inner" class="inner-'+varId+'"></div> </div><div id="container inner"></div>'+
+    '<div class="status">Successful</div><div class="thermometer"> <p class="downloads success" style="width:'+((successCount*100)/totalStatusCount)+'%"><span style="margin-right: 10px;">'+successCount+'</span></p></div>'+
+    '<div class="status">In Progress</div>  <div class="thermometer">  <p class="downloads in-progress" style="width:'+((inProgressCount*100)/totalStatusCount)+'%"><span style="margin-right: 10px;">'+inProgressCount+'</span></p></div>'+
+    '<div class="status">Pending / Aborted</div><div class="thermometer">  <p class="downloads abort " style="width:'+((pendingCount*100)/totalStatusCount)+'%"><span style="margin-right: 10px;">'+pendingCount+'</span></p></div>'+
+    '<div class="status">Failed</div><div class="thermometer">  <p class="downloads failure" style="width:'+((failureCount*100)/totalStatusCount)+'%"><span style="margin-right: 10px;">'+failureCount+'</span></p></div>'+
+    '<div class="project-name">'+envName+'</div> </div>');
+      $('.inner-'+varId).html('TOTAL-'+parseInt(totalStatusCount));
+    
+     totalStatusCount=0;
+     successCount=0;
+     inProgressCount=0
+     pendingCount=0;
+     failureCount=0;  
+    $("#transp").hide('slow');
+    $('.err-msg').remove();
+}
+</script>
+<style>
+@import "compass/css3";
+
+@import url(https://fonts.googleapis.com/css?family=Homenaje);
+
+* { box-sizing:border-box; }
+
+body { background: #f1f2f5; }
+
+.main {
+    width: 200px;
+  height: 200px;
+  margin: 15px auto;
+  border-radius: 50%;
+  background: #166ccc;
+  background: linear-gradient(40deg, #0a40be, #5ddff5);
+  position: relative;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+.main:after {
+  position: absolute;
+  left: -12px;
+  right: -12px;
+  top: -12px;
+  bottom: -12px;
+  background: #d1d3d6;
+  background: linear-gradient(#ccced0, #fff); 
+  border-radius: inherit;
+  z-index: -1;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.2);
+}
+.project-name{
+    color:#443a3a;
+    font-weight: bold;
+    margin: 60px;
+    font-size: 18px;
+    text-align: center;
+    
+}
+#body{
+     background-image: url('{!URLFOR($Resource.CommandCenter__Icons,"bg.png")}');
+    height: 1443px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+ #transp {
+        position:absolute;
+        left:0;
+        top:0;
+        z-index: 3;
+        width:100%;
+        height:120%;
+        background: url("{!$Resource.CommandCenter__SpinnerImg}") no-repeat scroll center center rgba(255, 255, 255, 0.74);
+    }    
+#inner {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #f5f6f7;
+  background: linear-gradient(#fcfcfd, #e8e9ec);
+  margin-left: -80px;
+  margin-top: -80px;
+  
+  box-shadow:
+    0 0 10px rgba(0,0,0,0.5),
+    0 4px 5px rgba(0,0,0,0.3),
+    inset 0 -2px 1px rgba(0,0,0,0.2);
+  
+  line-height: 160px;
+  text-align: center;
+  color: #adaeb2;
+      font-size: xx-large;
+  text-shadow: 0 -2px 1px rgba(0,0,0,0.4);
+  font-family: 'Homenaje', sans-serif;
+}
+
+
+#container { text-align: center; margin: 20px; }
+h2 { color: white; }
+a { text-decoration: none; color: #EC5C93; }
+
+.bar-main-container {
+  margin: 10px auto;
+  /*width: 300px;*/
+  height: 50px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #FFF;
+}
+
+.wrap { padding: 8px; }
+
+.bar-percentage {
+  float: left;
+  background: rgba(0,0,0,0.13);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 9px 0px;
+  width: 18%;
+  height: 37px;
+}
+
+.bar-container {
+  float: right;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  height: 10px;
+  background: rgba(0,0,0,0.13);
+  width: 78%;
+  margin: 12px 0px;
+  overflow: hidden;
+}
+
+.bar {
+  float: left;
+  background: #FFF;
+  height: 100%;
+  -webkit-border-radius: 10px 0px 0px 10px;
+  -moz-border-radius: 10px 0px 0px 10px;
+  border-radius: 10px 0px 0px 10px;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  -moz-opacity: 1;
+  -khtml-opacity: 1;
+  opacity: 1;
+}
+
+/* COLORS */
+.azure   { background: #38B1CC; }
+.emerald { background: #2CB299; }
+.violet  { background: #8E5D9F; }
+.yellow  { background: #EFC32F; }
+.red     { background: #E44C41; }
+.main-container
+{
+     width: 25%;
+    margin-top: 22px;
+    background: rgba(252, 252, 252, 0.75);
+    border: 1px solid gainsboro;
+    margin-left: 22px;
+    border-radius: 7px;
+}
+.thermometer {
+   border-radius: 1em;
+    background: linear-gradient(to bottom, #726d6d 0%, #8f8c8c 100%);
+    margin: 8px;
+    margin: 10px;
+    height: 17px;
+    width: 60%;
+    margin-left: 55px;
+}
+
+.downloads {
+  /*padding: .25em 1.5em .25em .25em;*/
+  border-radius: .75em;
+  text-align: right;
+  /*background: green;*///repeating-linear-gradient(-45deg, rgba(238, 0, 0, .9), rgba(204, 0, 0, .9) 30px);
+  color: #fff;
+  height: 17px;
+
+}
+.success{background: #2fa42f;font-weight: bold;}
+.in-progress{background: #1589ee;font-weight: bold;}
+.failure{background: #ea1111;font-weight: bold;}
+.abort{background: #f26615;font-weight: bold;}
+.merge{background: green;font-weight: bold;}
+.status{
+    font-weight: bold;font-size: medium;
+    margin-left: 23px;
+    margin-left: 50px;
+}
+    .filter-btn {
+            background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 0px 0px 4px 2px;
+    text-decoration: none;
+    width: 100px;
+    text-align: center;
+    cursor : pointer;
+     margin-top: -2.7%;
+    margin-left: 38%;
+    font-weight: bold;
+    height: 31px;
+}
+
+.filter-btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+    .selectedItem{
+        margin-left: 7px;
+        
+    }
+    
+.textbox {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #EAEAEA;
+    background: -moz-linear-gradient(top, #FFF, #EAEAEA);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #FFF), color-stop(1.0, #EAEAEA));
+    border: 1px solid #CACACA;
+    color: #444;
+    font-size: 1.4em;
+    padding: 5px 9px;
+    width: 155px;
+    cursor: pointer;
+}
+ .textbox:focus {
+    background: #FFF;
+    -webkit-box-shadow: 0 0 25px #CCC;
+    -moz-box-shadow: 0 0 25px #ccc;
+    box-shadow: 0 0 25px #CCC;
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    transform: scale(1.05);
+}
+.err-msg{
+     text-align: center;
+    font-size: 60px;
+    color: #e31d1d;
+    font-weight: bold;
+    margin: 15%;
+    text-shadow: 2px 2px white;
+}   
+    .validationMessage{
+    font-size: 20px;
+    color: #e31d1d;
+    margin-left:2px;
+    font-weight: bold;
+    }
+
+</style>
+
+</head>
+   
+<body id="body">
+<apex:form id="frm">
+    
+    <apex:selectList size="1" value="{!selectedRelease}" styleClass="selectedItem textbox">
+      <apex:selectOptions value="{!ReleaseList}" ></apex:selectOptions>
+    </apex:selectList>
+    
+    <input type="text" id="datepickerTrom"  value="From Date" class="frm-date textbox"/>
+    <input type="text" id="datepickerTo"  value="To Date" class="to-date textbox"/>
+  <div  id="button" class="filter-btn" onclick="call()">
+        Filter
+    </div>
+    <div class="validationMessage" id="errorMessage">
+        
+    </div>
+</apex:form>
+</body>
+</html>
+
+
+</apex:page>

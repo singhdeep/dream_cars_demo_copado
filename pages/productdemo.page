@@ -1,0 +1,131 @@
+<apex:page Controller="ProdDemoController" standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+<c:ProductDemoComponent >
+<!-- FORM12 -->
+<apex:form >
+<!-- Body start here   -->
+<body>
+    <div class="container">
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title pad-none">
+                <div class="main-container">
+                    <row>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                        <div class="col-xs-11 col-sm-11 col0-md-11 col-lg-11">
+                        <apex:pageMessages ></apex:pageMessages>                        
+                            <h2 style="color:Teal">Welcome to the Dream cars world!</h2>
+                            <p  style="color:Teal" class="h2-tagline">Buy your dream car and make your dream come true!</p>
+                        </div>
+                    </row>
+                    <div class="form-container">
+                          <div class="form">                                                 
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT20">
+                                    <h3 style="color:teal">Budget</h3>
+                                   <!-- <div  style="color:teal" class="h3-copy">Choose your budget<br /></div>-->
+                                </div>
+                                <!-- For User Story 0053 - offer zone --> 
+                                <div  class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT20">
+                                    <h3 style="color:teal">Offers Zone</h3>
+                                    
+                                    <!--<div class="h3-copy">This is the number of years you will be <br /> protected by the policy.</div>-->
+                                </div>
+                            </row>
+                            <!--<div class="clearfix">&nbsp;</div>-->
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT20">
+                                    <div class="form-group">
+                                        <apex:selectList value="{!Budget}" multiselect="false" size="1" styleClass="form-control width45per" required="true" >
+                                            <apex:selectOption itemValue="$50,000 - $70,000"  itemLabel="$50,000  - $70,000"/>
+                                            <apex:selectOption itemValue="$70,001 - $100,000" itemLabel="$70,001  - $100,000"/>
+                                            <apex:selectOption itemValue="$100,001 - $200,000" itemLabel="$100,001 - $200,000"/>
+                                            <apex:selectOption itemValue="$200,001 - $250,000" itemLabel="$200,001 - $250,000"/>
+                                            <apex:selectOption itemValue="$250,001 - $399,000" itemLabel="$250,001 - $399,000"/>
+                                            <apex:selectOption itemValue="> $400,000" itemLabel="> $400,000"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT10">
+                                    <div class="form-group">
+                                        <apex:selectList value="{!type}" multiselect="false" size="1" styleClass="form-control width45per" required="true">
+                                            <apex:selectOption itemValue="10" itemLabel="10"/>
+                                            <apex:selectOption itemValue="15" itemLabel="15"/>
+                                            <apex:selectOption itemValue="20" itemLabel="20"/>
+                                            <apex:selectOption itemValue="25" itemLabel="25"/>
+                                            <apex:selectOption itemValue="30" itemLabel="30"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>  
+                                 <div  class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT20">
+                                   <a href="http://www.google.com">Click Here to view offers</a>
+                                    
+                                    <!--<div class="h3-copy">This is the number of years you will be <br /> protected by the policy.</div>-->
+                                </div>
+                            </row>
+                            <div class="clearfix">&nbsp;</div>
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10">
+                              
+                                   <div class="form-group">   
+                               
+                              <label style="color:teal"  for="Model" class="custom-label custome-label-wdt">Model</label>  <br />                                                           
+                                     <apex:selectList value="{!model}" multiselect="false" size="1" styleClass="form-control width45per" required="true">
+                                            <apex:selectOption itemValue="XUV" itemLabel="XUV"/>
+                                            <apex:selectOption itemValue="SUV" itemLabel="SUV"/>
+                                            <apex:selectOption itemValue="Hatchback" itemLabel="Hatchback"/>
+                                            <apex:selectOption itemValue="Notchback" itemLabel="Luxury"/>
+                                            <apex:selectOption itemValue="Luxury" itemLabel="Jeep"/>
+                                        </apex:selectList>
+                                  </div>
+                                    
+                                
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT20">
+                                    
+                                    
+                                    <!--<div class="h3-copy">This is the number of years you will be <br /> protected by the policy.</div>-->
+                                </div>                          
+                                
+                            </row>
+                            <div class="clearfix">&nbsp;</div>
+                           <row>
+                                       
+                               <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10">
+                                        <div class="form-group">
+                                         <label style="color:teal"  class="custom-label">Need car Loan <br /></label>    <br />                                        
+                                           <apex:selectRadio value="{!loan}">                                       
+                                           <apex:selectOption itemLabel="Yes" itemvalue="true" ></apex:selectOption>
+                                           <apex:selectOption itemLabel="No" itemvalue="false" > </apex:selectOption>
+                                           </apex:selectRadio>                                                                                                   
+                                    </div>  
+                                </div> 
+                             
+                                   
+                            </row>
+                           <div class="clearfix">&nbsp;</div>
+                           <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"> <hr /> </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>   
+                            </row>
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"> 
+                                    <apex:commandButton style="background-color:teal" value="Get Cars" action="{!seeresult}"  styleClass="btn see-result-btn floatR"/>
+                                 </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>   
+                            </row>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </row>
+    </div>
+</body>
+	
+</apex:form>
+</c:ProductDemoComponent>
+</apex:page>

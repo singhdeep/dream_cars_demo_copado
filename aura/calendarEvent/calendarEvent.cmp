@@ -1,0 +1,26 @@
+<aura:component>
+    <!-- Event Handlers -->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <!-- /Event Handlers -->
+    
+    <!-- Define attribute -->
+    <aura:attribute name="eventList" type="event[]"/>
+    <!-- /Define attribute -->
+    
+    <!-- List of Events -->
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+        <tbody>            
+            <aura:iteration items="{!v.eventList}" var="eventItem">
+                <tr style="height: 50px;">
+                    <td title="{!eventItem.Subject}">
+                        <div class="slds-truncate">
+                            {!eventItem.Subject}
+                            <div></div>
+                        </div>
+                    </td>
+                </tr>
+            </aura:iteration>            
+        </tbody>
+    </table>
+    <!-- /List of Events -->
+</aura:component>

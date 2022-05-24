@@ -1,0 +1,189 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" action="{!getDetails}">    
+   <c:ContactManagementComponentui leadid="{!lead.id}" activeVar="Application_Summary" >
+     <apex:form > 
+     <body>
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <a href="#" title="Cancel">Cancel</a>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                       New Application
+                    </div>
+                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name">{!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+         <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 save-row">
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                        <row>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>     
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <row>
+                                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">1</span>
+                                        <span class="navLabel">Applicant <br />Details</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">2</span>
+                                         <span class="navLabel">Personal<br />History</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">3</span>
+                                         <span class="navLabel">Payment<br />Details</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="current-state">4</span>
+                                         <span class="navLabel current-state-label">Application<br />Summary</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">5</span>
+                                         <span class="navLabel">Forms &amp;<br />Disclosures</span>
+                                    </div>
+                                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                              </row>
+                            </div>      
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div> 
+                        </row>        
+                    </div>
+                </row>
+            </div>
+        </row>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                <div class="main-container create-quote-container application-summary">
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>             
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 application-summary-header">Product Details</div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 application-summary-header">Insured Details</div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 application-summary-header">Premium Details</div>       
+                                    </row>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>                  
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>             
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Product</label> <br /><apex:outputText value="{!selectedProduct}"></apex:outputText></div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Name</label> <br /><apex:outputText value="{!leadObj.FirstName+ ' ' + leadObj.LastName}"></apex:outputText></div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Payment Frequency</label><br /> <apex:outputText value="{!QuotePayment}"></apex:outputText></div>       
+                                    </row>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>             
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Coverage</label> <br /> <apex:outputText value="{!coverageAmt1}"></apex:outputText></div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Gender</label> <br /><apex:outputText value="{!leadObj.Gender__c}"></apex:outputText></div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Payment Mode</label><br /><apex:outputText value="{!modeOfPayement}"></apex:outputText></div>      
+                                    </row>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>             
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Product Term (Years)</label> <br /><apex:outputText value="{!planTerm}"></apex:outputText> </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Date of Birth</label> <br />
+                                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                 <apex:param value="{!leadObj.D_O_B__c}" />
+                                            </apex:outputText></div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>Premium ($)</label><br /><apex:outputText value="{!CalculatedPremium}"></apex:outputText> </div>      
+                                    </row>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+                            </row>              
+                        </div>
+                    </row>
+                     <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>             
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">&nbsp;</div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>SSN</label> <br /> <apex:outputText value="{!accList.Tax_ID__c}"></apex:outputText></div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>&nbsp;</label><br />&nbsp;</div>        
+                                    </row>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+                            </row>              
+                        </div>
+                    </row>
+                     <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>             
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    <row>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">&nbsp;</div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <label>Address</label> <br />
+                                            <!--<apex:outputText value="{!leadAdd}"></apex:outputText> -->
+                                            <apex:outputText value="{!AcctObj.BillingStreet+', '+AcctObj.Billingcity+', '+AcctObj.BillingState+', '+AcctObj.BillingCountry+', '+AcctObj.BillingPostalCode}"></apex:outputText> </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><label>&nbsp;</label><br />&nbsp;</div>        
+                                    </row>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>                                         
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <!--<button type="button" class="btn btn-primary">Preuvious</button>-->
+                                    <apex:commandButton value="Previous" action="{!previousApplicationSummaryInfo}" styleClass="btn btn-primary wdt50"/>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <!--<button type="button" class="btn btn-primary floatR">Next</button>-->
+                                    <apex:commandButton value="Next" action="{!NextApplicationSummaryInfo}" styleClass="btn btn-primary floatR wdt50"/>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                   <div class="clearfix">&nbsp;</div>
+                </div>
+            </div>
+        </row>
+    </div>
+</body>
+</apex:form> 
+</c:ContactManagementComponentui>
+</apex:page>

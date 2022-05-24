@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Defect_Pattern --></label>
+        <name>CommandCenter__Defect_Pattern__c</name>
+    </fields>
+    <fields>
+        <label><!-- Include PMO ToolKit --></label>
+        <name>CommandCenter__Include_PMO_ToolKit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Commit DateTime --></label>
+        <name>CommandCenter__Last_Commit_DateTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- UserConfigId --></label>
+        <name>CommandCenter__UserConfigId__c</name>
+    </fields>
+    <fields>
+        <label><!-- UserStory Pattern --></label>
+        <name>CommandCenter__UserStory_Pattern__c</name>
+    </fields>
+</CustomObjectTranslation>

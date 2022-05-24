@@ -1,0 +1,5 @@
+<apex:page standardController="Account" extensions="displayAccoutDetails">
+{Account.name}
+{!hello}
+
+</apex:page>

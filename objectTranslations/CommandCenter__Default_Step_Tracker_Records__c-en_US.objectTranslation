@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- All SF Environments to which this default step is applicable --></help>
+        <label><!-- Applicable Orgs --></label>
+        <name>CommandCenter__Applicable_Orgs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Salesforce Components - VF, Apex classes, objects etc --></help>
+        <label><!-- Component --></label>
+        <name>CommandCenter__Component__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>CommandCenter__Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Step Type --></label>
+        <name>CommandCenter__Step_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps to perform --></label>
+        <name>CommandCenter__Steps_to_perform__c</name>
+    </fields>
+    <fields>
+        <label><!-- defaultStepNumber --></label>
+        <name>CommandCenter__defaultStepNumber__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,48 @@
+<apex:component >
+  <body>   
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Compare my Insurance.com</title>
+    <apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/bootstrap.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/compare-insurance.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/compare-insurance-MQs.css')}"/>    
+    <!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head> 
+   <div class="container">
+     <row>
+        <header class="main-Header">
+            <row>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <a href="#"> <img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/compare-logo.png')}" title="Compare Insurance" border="0" /> </a> 
+                </div>
+            </row>
+            <row>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                   <div class="ph-details ph-icon">Get Free Advice <br /> <span class="ph-no">877-123-4567</span></div>
+                </div>
+               
+            </row>
+        </header>
+    </row>
+    <row>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title pad-none">
+            <h1>Life Insurance</h1>
+        </div>
+    </row>
+   </div>
+   <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/jquery-1.10.2.min.js')}"/> 
+   <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/jquery-ui.min.js')}"/>  
+   <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/bootstrap.min.js')}"/> 
+   <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/SF-one-app.js')}"/> 
+</body>
+<apex:componentBody >         
+</apex:componentBody>
+</apex:component>

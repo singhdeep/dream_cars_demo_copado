@@ -1,0 +1,168 @@
+<apex:page controller="InsurancePortalCtrl" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0">
+<SCRIPT language="Javascript">
+  function isNumberKey(evt)
+  {
+     var charCode = (evt.which) ? evt.which : event.keyCode
+     if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+     return true;
+  }   
+</SCRIPT>
+<body>
+<c:InsuranceComponentui > </c:InsuranceComponentui>
+    <div class="container">
+        <div class="clearfix">&nbsp;</div>
+        <apex:form >
+        <div class="innerpages-container">
+         
+                <row>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                    <div class="col-sm-5 col-md-5 col-lg-5 pad-Left50">
+                        <h2>Term Life Insurance</h2>
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-lg-5">&nbsp;</div>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                    <div class="col-sm-5 col-md-5 col-lg-5 pad-Left50">
+                        <row>
+                            <div>Here is your quote!</div>
+                            <div class="co7-sm-7 col-md-7 col-lg-7 quote-container">
+                                <div><strong><apex:outputText value="${!QuoteAmnt}" id="username" styleClass="amt" /></strong>/month</div>
+                            </div>  
+                        </row>
+                        <row>
+                            <div class="co7-sm-7 col-md-7 col-lg-7 quote-edit-container">
+                            <apex:actionRegion >
+                                <apex:commandLink action="{!editQuote}" value="Edit Your Quote" title="Edit Your Quote" immediate="true" />
+                            </apex:actionRegion>
+                            </div>
+                        </row>
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-lg-5 mrgT10">
+                        <h3>Think that was easy? <br /> It's easy to apply, too!</h3>
+                        <div class="copyWidth">Fill out your application online. It's simple to get quality, affordable coverage to help protect your loved ones.
+                        </div>
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                        <div class="dividerLine">&nbsp;</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                    <div class="col-sm-5 col-md-5 col-lg-5 pad-Left50 mrgT10">
+                      <!--<apex:commandButton value="Apply Online" styleClass="btn btn-primary" title="Apply Online" disabled="true"/>-->
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-lg-5 mrgT10">
+                        <apex:commandButton value="Meet Your Advisor" styleClass="btn btn-primary" action="{!showPopup}" title="Meet Your Advisor"/>&nbsp;
+                        <apex:commandButton value="Back" action="{!BackPortal}" styleClass="btn btn-primary" ></apex:commandButton>&nbsp;
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+               
+                <!-- Second section for Inner pages -->
+                <apex:outputPanel layout="block" rendered="{!displayPopup}" id="test">
+                <div class="form-display-container">
+                 <row>
+                 
+                    <div class="col-sm-7 col-md-7 col-lg-7 mrgT10 form-dividerLine">
+                        <row>
+                        <apex:pageMessages ></apex:pageMessages>
+                        
+                            <div class="col-sm-3 col-md-3 col-lg-3">&nbsp;</div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 firstname-ipd">
+                                <label for="First Name">First Name<span class="required">*</span></label>
+                                <apex:inputText value="{!firstName}" styleClass="form-control" Html-placeholder="First Name" required="true" />
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 middlename-ipd">
+                                <label for="Middle Name">Middle Name</label>
+                                <apex:inputText value="{!middleName}" styleClass="form-control" Html-placeholder="Middle Name" />
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 lastname-ipd">
+                                <label for="Last Name">Last Name<span class="required">*</span></label>
+                                 <apex:inputText value="{!lastName}" styleClass="form-control" Html-placeholder="LastName"  required="true"/>
+                            </div>                              
+                        </row>  
+                        <div class="clearfix">&nbsp;</div>              
+                        <row>
+                            <div class="col-sm-3 col-md-3 col-lg-3">&nbsp;</div>
+                            <div class="col-sm-6 col-md-6 col-lg-6 email-ipd">
+                                <label for="Email">Email<span class="required">*</span></label>
+                                <apex:inputText value="{!Email}" styleClass="form-control" required="true" Html-placeholder="Email" />
+                            </div>                              
+                            <div class="col-sm-3 col-md-3 col-lg-3">&nbsp;</div>
+                        </row>  
+                        <div class="clearfix">&nbsp;</div>  
+                          <row>
+                            <div class="col-sm-3 col-md-3 col-lg-3">&nbsp;</div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 mrgT10 phone-ipd">
+                                <label for="Phone">Phone<span class="required">*</span></label>
+                                <apex:inputfield value="{!leadVar.Phone}" type="text" styleClass="form-control" required="true" onkeypress="return isNumberKey(event)" /> 
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3 mrgT10 preferred-ipd">
+                                <label for="Preferred Contact Time">Preferred contact time</label>
+                                <apex:inputField value="{!leadVar.Preferred_contact_time__c}" styleClass="form-control"/>
+                            </div>
+                                                       
+                            <div class="col-sm-3 col-md-3 col-lg-3">&nbsp;</div>
+                        </row>                      
+                    </div>  
+                    <div class="col-sm-5 col-md-5 col-lg-5 mrgT10">
+                         <row>
+                            <div class="col-sm-5 col-md-5 col-lg-5 coverAmt-ipd">
+                                <label>Coverage Amount</label>
+                                <div><strong>{!coverageamount}</strong></div>
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">&nbsp;</div>
+                         </row>
+                         <div class="clearfix">&nbsp;</div> 
+                          <row>
+                            <div class="col-sm-5 col-md-5 col-lg-5 mrgT20 tenure-ipd">
+                                <label>Term Length</label>
+                               <!-- <apex:outputText value="{!termlength }" styleClass="form-control" />-->
+                               <div><strong>{!termlength } years</strong></div>                               
+                            </div>
+                            <div class="col-sm-7 col-md-7 col-lg-7">&nbsp;</div>
+                         </row>
+                    </div>
+                </row>
+                </div>
+                <div class="clearfix">&nbsp;</div>  
+                  <row>
+                    <div class="col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                        <div class="dividerLine">&nbsp;</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
+                  </row>
+                <div class="clearfix">&nbsp;</div>  
+                  <row>
+                    <div class="col-sm-8 col-md-8 col-lg-8">&nbsp;</div>
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <apex:commandButton value="Continue" action="{!createlead}" styleClass="continue-btn btn" title="Continue" />
+                    </div>
+                </row>
+                 </apex:outputPanel>
+                  <apex:outputPanel layout="block" rendered="{!!displayPopup}">
+                       <div class="advisorContainer">&nbsp;</div>
+                 </apex:outputPanel> 
+           </div>       
+           <row>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="footerCopy-inner">© 2015 My Insurance. All rights reserved</div>
+            </div>
+        </row>
+      </apex:form>
+    </div>
+  </body>   
+</apex:page>

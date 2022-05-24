@@ -1,0 +1,77 @@
+<apex:page Controller="QuoteEmailTempalteController"  RenderAs="Pdf" >
+  <apex:sectionHeader title="Quote" />
+    <apex:form >
+          <apex:pageMessages />
+        <!--      <apex:pageBlock title="Quote History"> -->
+        <tr>
+           <td width="120"><b>Prospect Name </b></td>
+           <td width="300">
+           <span style="margin-left:2em">:</span>
+              <span style="margin-left:2em">
+                   <apex:outputField Value="{!lquotes.account.name}"/> 
+              </span>
+             </td> 
+          </tr>
+          <tr>
+           <td width="120"><b>Selected Product </b></td>
+           <td width="300">
+           <span style="margin-left:2em">:</span>
+          <span style="margin-left:2em">
+                 <apex:outputField Value="{!lquotes.Product__c}"/> 
+                 </span>
+             </td> 
+          </tr>
+          <tr>
+             <td width="120"><b>Premium</b></td>
+             
+             <td width="300">
+             <span style="margin-left:2em">:</span>
+              <span style="margin-left:2em">
+                 <apex:outputField Value="{!lquotes.Premium__c} "/> 
+              </span>
+             </td>   
+          </tr>
+          <tr>
+             <td width="180"><b>Selected Payment Term</b></td>
+             
+             <td width="300">
+             <span style="margin-left:2em">:</span>
+               <span style="margin-left:2em">
+                 <apex:outputField Value="{!lquotes.Payment_Term__c} "/> 
+               </span>
+             </td>   
+          </tr>
+          <tr>
+             <td width="120"><b>Selected Rider</b></td>
+             <td width="300">
+             <span style="margin-left:2em">:</span>
+               <span style="margin-left:2em">
+                 <apex:outputField Value="{!lquotes.Recommended_Rider__c} "/> 
+               </span>
+             </td>   
+          </tr>
+           <tr>
+             <td width="120"><b>Sum Insured</b></td>
+              <td width="300">
+              <span style="margin-left:2em">:</span>
+                <span style="margin-left:2em">
+                 <apex:outputField Value="{!lquotes.Sum_Insured__c} "/> 
+                </span>
+             </td>   
+          </tr>
+           <tr>
+             <td width="120"><b>Tobacco user</b></td>
+              <td width="300">
+              <span style="margin-left:2em">:</span>
+              <span style="margin-left:2em">
+                 <apex:outputtext Value="{!Tobacco}"/> 
+              </span>
+             </td>   
+          </tr>  
+        <!--  <apex:outputfield value="{!lquotes.Account.PersonEmail}" id="email" for="email" id/> -->
+        <!--  <apex:inputText value="{!email}"  id="email"/> -->
+          
+       
+          <!--    </apex:pageBlock>   -->
+      </apex:form>
+</apex:page>

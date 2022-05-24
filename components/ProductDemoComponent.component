@@ -1,0 +1,175 @@
+<apex:component controller="FindDealerController">
+  <body style="background-color:voilet">   
+  <head> 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Dream cars.com </title>  
+    <apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/bootstrap.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/compare-insurance.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/compare-insurance-MQs.css')}"/>    
+    <!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]> 
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--product demo page123-->
+    <Script type="text/javascript">
+     
+        function Showpop(){
+           
+            alert('Test');
+        }
+    </Script>
+
+    </head>
+    <apex:form >
+       <div class="container">
+       <!--  Functionality for User story 0052 -->
+         <row>
+            <header class="main-Header">
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <a href="#"> <img src="{!URLFOR($Resource.prod3)}" title="Dream Cars" border="0" /> </a> 
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                       <div class="ph-details">
+                         <!--  Contact US Button-->
+                            <button style="background-color:teal; border: none" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#contactus">Contact Us</button> 
+                            <!-- Modal -->
+                              <div class="modal fade" id="contactus" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 style="background-color:#00F0FF color:black" class="modal-title">Contact Us</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table style="width:100%">
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-01">Name* </label></td>
+                                                <td>
+                                                    <input class="form-control" style="margin-bottom: 5px;width: 100%;" id="name" type="text"/>
+                                                </td> 
+                                              </tr>
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-02">Email* </label></td>
+                                                <td>
+                                                    <input class="form-control" style="margin-bottom: 5px;width: 100%;" id="email" type="text"/>
+                                                </td> 
+                                              </tr>
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-01">Contact No.</label></td>
+                                                <td>
+                                                    <input class="form-control" style="margin-bottom: 5px;width: 100%;" id="mobile" type="text"/>
+                                                </td> 
+                                              </tr>
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-01">Comments</label></td>
+                                                <td>
+                                                    <textarea class="form-control" rows="5" id="comment"/>
+                                                </td> 
+                                              </tr>
+                                        </table>
+                                     </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+                                    </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            <!-- /Contact US Button-->
+
+                           
+								
+                            <!-- Modal -->  
+                           <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                test1
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 style="background-color:#00F0FF color:black" class="modal-title">Find Dealer</h4>
+                                    </div>
+                                   <div class="modal-body">
+                                        <table style="width:100%">
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-01">State* </label></td>
+                                                <td>
+                                                     <apex:selectList value="{!State }" multiselect="false" size="1" styleClass="form-control width45per" required="true">
+                                                     <apex:selectOption itemValue="CA" itemLabel="CA"/>
+                                                     <apex:selectOption itemValue="AZ" itemLabel="AZ"/>
+                                                     <apex:selectOption itemValue="NV" itemLabel="NV"/>
+                                                     <apex:selectOption itemValue="OR" itemLabel="OR"/>
+                                                     <apex:selectOption itemValue="WA" itemLabel="WA"/>
+                                                     </apex:selectList>
+                                                </td> 
+                                              </tr>
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-02">City* </label></td>
+                                                <td>
+                                                <apex:selectList value="{!City }" multiselect="false" size="1" styleClass="form-control width45per" required="true">
+                                            <apex:selectOption itemValue="San Francisco" itemLabel="San Francisco"/>
+                                            <apex:selectOption itemValue="San Jose" itemLabel="San Jose"/>
+                                            <apex:selectOption itemValue="Santa Monica" itemLabel="Santa Monica"/>
+                                            <apex:selectOption itemValue="Los Angeles" itemLabel="Los Angeles"/>
+                                            <apex:selectOption itemValue="San Diego" itemLabel="San Diego"/>
+                                        </apex:selectList>
+                                        </td> 
+                                              </tr>
+                                              <tr>
+                                                <td><label class="slds-form-element__label" for="input-01">Format Type</label></td>
+                                                <td>
+                                                <apex:selectList value="{!FormatType }" multiselect="false" size="1" styleClass="form-control width45per" required="true">
+                                            <apex:selectOption itemValue="Showroom" itemLabel="Showroom"/>
+                                            <apex:selectOption itemValue="Service Centre" itemLabel="Service Centre"/>
+                                           
+                                        </apex:selectList>
+                                        </td> 
+                                              </tr>
+                                              
+                                        </table>
+                                     </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Find Dealer</button>
+                                    </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                                 
+                            <!-- /Find Dealer Button -->
+                           <br /> 
+                           <span class="ph-no" style="color:teal">870-343-6569</span></div>
+                         
+                         
+                    </div>
+                </row>
+            </header>
+        </row> 
+        
+        <row>
+            <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title pad-none">
+                <h1 style="color:#ffffff ; background-color:Teal;font-weight: bold;">Dream Cars Portal</h1>
+            </div>
+        </row>
+       </div>
+       <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/jquery-1.10.2.min.js')}"/> 
+       <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/jquery-ui.min.js')}"/>  
+       <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/bootstrap.min.js')}"/> 
+       <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/SF-one-app.js')}"/> 
+    </apex:form>
+</body>
+<apex:componentBody >         
+</apex:componentBody>
+</apex:component>

@@ -1,0 +1,9 @@
+Hi {!Demo_Object__c.Name}, <br/><br/>
+
+You have been registered in Accenture portal.<br/>
+Please click below link to update your details.<br/>
+{!Demo_Object__c.Link} <br/><br/>
+
+Thank you! <br/><br/>
+
+Support Team

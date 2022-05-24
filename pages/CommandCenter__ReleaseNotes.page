@@ -1,0 +1,186 @@
+<apex:page controller="CommandCenter.ReleaseNotesController" sidebar="false" showHeader="false" applyHtmlTag="false" renderAs="pdf">
+    
+    <head>
+        <style>
+      <!--      @page {
+            size: landscape;
+            @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+            }
+            }-->
+            
+            table{
+            font-size: 14px;
+            border: 2px solid black;
+            border-color: #008B8B; 
+            border-radius: 4px;
+            border-collapse: collapse;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            width:100%;
+            }
+            th, td {
+            font-size: 14px;
+            border: 2px solid black;
+            border-color: #008B8B; 
+            padding-top:5px;
+            padding-left:5px; 
+            padding-right:5px; 
+            padding-bottom:5px;
+            }
+            th {
+            font-weight: bold;
+            font-size:16px;
+            }
+            body {
+            font-family: 'sans serif Unicode MS'; 
+            }
+            h3{
+            text-decoration:underline;
+            }
+            .relHeader{
+            text-align:center;
+            box-shadow: inset 4px -4px 7px 0px rgba(0,0,0,0.24);      
+            font-weight: bold;
+            font-size: 2.0rem;
+            color: white;
+            height: 60px;
+            line-height: 60px;
+            width:100%;
+            background: #008B8B; 
+            }
+            .relDetails{
+            font-size: 1.0rem;
+            color: black;
+            }
+            background: #008B8B;
+            padding-left:20px;
+            padding-right:20px;
+            }
+            .tableDiv{
+            padding-top:15px;
+            padding-left:15px; 
+            padding-right:15px; 
+            padding-bottom:15px;
+            }
+            .HeaderSectionDiv{
+            box-shadow: inset 4px -4px 7px 0px rgba(0,0,0,0.24);      
+            font-weight: bold;
+            font-size: 2.0rem;
+            color: white;
+            height: 25px;
+            line-height: 25px;
+            width:100%;
+            background: #008B8B;
+            
+            }
+            
+        </style>
+    </head>
+    
+    <apex:outputPanel id="header" layout="block" style="color:#333399">
+        <div class="relHeader">
+            <h3>Release Notes </h3>
+        </div>    
+        <div class="relDetails" >
+            Deployment Name        	: {!depName}
+                <span style="float:right" >
+                    Source Branch  : {!sourceBranch} 
+                </span><br/>
+                Job Name				: {!jobName}
+                <span style="float:right" >
+                    Project Name    : {!ProjectName} 
+            </span><br/><br/>
+            
+        </div> 
+    </apex:outputPanel>
+    <div class="HeaderSectionDiv" >
+        User Story Components:
+    </div>
+    <div class="tableDiv" > <!-- style="page-break-after:always;" -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Components </th>
+                    <th>User story</th>
+                    <th>Commit message</th>
+                    <th>Committed by</th>
+                </tr>
+            </thead>
+            <tbody >
+                <apex:variable value="{!0}" var="index" />
+                <apex:repeat value="{!usrStryObjList}" var="uKey" rendered="{!IF(usrStryObjList.size > 0, true, false)}">
+                    <tr>
+                        <td>
+                            <apex:outputText >
+                                <apex:variable value="{!index + 1}" var="index" />
+                                {!index}
+                            </apex:outputText>
+                        </td>
+                        <td >
+                            <apex:outputText value="{!uKey.name}"/><br/> 
+                        </td>
+                        <td >
+                            <apex:outputText value="{!uKey.CommandCenter__User_Story_Name__c}"/> <!-- dynamic issue -->
+                        </td>
+                        <td >
+                            <apex:outputText value="{!uKey.CommandCenter__Commit_Message__c}"/><br/> 
+                        </td>
+                        <td >
+                            <apex:outputText value="{!uKey.CommandCenter__Committer_Name__c}"/><br/> 
+                        </td> 
+                    </tr>
+                </apex:repeat> 
+            </tbody>
+            <tbody style="{!IF(usrStryObjList.size == 0, '', 'display:none;')}">
+                <tr>
+                    <td colspan="5">{!$Label.No_records_found}</td>
+                </tr>
+            </tbody>
+        </table> 
+    </div>
+    <div class="HeaderSectionDiv" style="display:{!if(defObjList.size > 0,"block","none")}; page-break-before:always;">
+        Defect Components:
+    </div>
+    <div class="tableDiv" style="display:{!if(defObjList.size > 0,"block","none")};">
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Components </th>
+                    <th>Defects</th>
+                    <th>Commit message</th>
+                    <th>Committed by</th>
+                </tr>
+            </thead>
+            <tbody >
+                <apex:variable value="{!0}" var="index" />
+                <apex:repeat value="{!defObjList}" var="dKey" rendered="{!IF(defObjList.size > 0, true, false)}">
+                    <tr>
+                        <td >
+                            <apex:outputText >
+                                <apex:variable value="{!index + 1}" var="index" />
+                                {!index}
+                            </apex:outputText>
+                        </td>
+                        <td >
+                            <apex:outputText value="{!dKey.name}"/><br/> 
+                        </td>
+                        <td >
+                            <apex:outputText value="{!dKey.CommandCenter__Defect_Name__c}"/> 
+                        </td>
+                        <td >
+                            <apex:outputText value="{!dKey.CommandCenter__Commit_Message__c}"/><br/> 
+                        </td>
+                        <td >
+                            <apex:outputText value="{!dKey.CommandCenter__Committer_Name__c}"/><br/> 
+                        </td> 
+                    </tr>
+                </apex:repeat> 
+            </tbody>
+        </table> 
+    </div>
+</apex:page>

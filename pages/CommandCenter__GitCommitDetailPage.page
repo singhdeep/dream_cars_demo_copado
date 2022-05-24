@@ -1,0 +1,76 @@
+<apex:page controller="CommandCenter.GitController" showHeader="false" sidebar="false">
+    <title>Release management</title>
+    <apex:stylesheet value="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/styles/salesforce-lightning-design-system.css')}"/>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"/>
+            <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    
+    <c:NavHeaderComp />
+    <body>
+        <apex:form >  
+            <apex:outputPanel id="commitDetails2">
+                <div>
+                    <div style="width: 100px;float: left;">Change</div>
+                </div>
+                <div class="review-cmt" id="commitChangeInfo" >
+                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" >
+                        <apex:outputText style="Display:none" id="commitDetails" escape="false" value="{!commitDetailMessage}"  />   
+                        <apex:outputpanel id="CommitMessagePanel">
+                            <pre style="background-color:white; border:none"><Apex:outputtext id="NewcommitMessage" escape="false" value="{!commitDetailMessage}" /></pre>
+                            ******Commit Message Here ------ DEVELOPMENT IN PROGRESS*******
+                        </apex:outputpanel>
+                    </h1>
+                </div>
+                <table id="commitDetailTable" class="table table-striped" > 
+                    <thead>
+                        <tr style="background: #eaeaea;">
+                            <th id="pro-name" class="pro-name">File Name</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <apex:repeat value="{!gitCommitDetailList}" var="comp" rendered="{!IF(gitCommitDetailList.size > 0, true, false)}" >
+                            <tr>
+                                <td>
+                                    <!-- <a href="/apex/FileComparison?p={!$CurrentPage.parameters.p}&b={!$CurrentPage.parameters.b}&n={!$CurrentPage.parameters.n}&r={!revision.current_revision}&c={!$CurrentPage.parameters.c}&f={!file}" target="_self"> -->
+                                    {!comp.filename}
+                                    <!-- </a>  -->
+                                </td>
+                            </tr>
+                        </apex:repeat>   
+                    </tbody>
+                    <tbody >
+                        <tr>
+                            <td><i class="fa fa-warning"></i>{!$Label.No_records_found}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+            <apex:actionFunction name="recentCommitMethod3" action="{!fetchGitCommitDetails}" reRender="commitDetails2">
+                <apex:param name="pn" value=""/>
+                <apex:param name="bn" value=""/>
+                <apex:param name="c" value=""/>
+                <apex:param name="cid" value=""/>
+            </apex:actionFunction> 
+        </apex:form>    
+        
+        <script>
+        $(document).ready(function(){
+            fetchCommits3("{!projectName}", "{!branchName}", "{!commitId}", "{!respositoryDetails}");
+        });
+        
+        function fetchCommits3(projectName, branchName, commitId, respositoryDetails){
+            //console.log('*** inside recentCommit *** '+projectName+' *** bn *** '+branchName+' *** c *** '+commitId+' ***respositoryDetails *** '+respositoryDetails);
+            recentCommitMethod3(projectName, branchName, commitId, respositoryDetails);    
+        }
+        
+        </script>
+    </body>
+    
+    
+    
+</apex:page>

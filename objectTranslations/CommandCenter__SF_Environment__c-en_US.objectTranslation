@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Indicate whether the org is production is sandbox or production --></help>
+        <label><!-- Is Production --></label>
+        <name>CommandCenter__Is_Production__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>CommandCenter__Level__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Org Type --></label>
+        <name>CommandCenter__Org_Type__c</name>
+        <picklistValues>
+            <masterLabel>Dev</masterLabel>
+            <translation><!-- Dev --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hotfix</masterLabel>
+            <translation><!-- Hotfix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pre-Prod</masterLabel>
+            <translation><!-- Pre-Prod --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prod</masterLabel>
+            <translation><!-- Prod --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QA</masterLabel>
+            <translation><!-- QA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation><!-- Training --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UAT</masterLabel>
+            <translation><!-- UAT --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Password --></label>
+        <name>CommandCenter__Salesforce_Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- Salesforce URL to login to org --></help>
+        <label><!-- Salesforce URL --></label>
+        <name>CommandCenter__Salesforce_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Salesforce security token --></help>
+        <label><!-- Security Token --></label>
+        <name>CommandCenter__Security_Token__c</name>
+    </fields>
+    <fields>
+        <help><!-- Salesforce org username used to login --></help>
+        <label><!-- User Name --></label>
+        <name>CommandCenter__User_Name__c</name>
+    </fields>
+</CustomObjectTranslation>

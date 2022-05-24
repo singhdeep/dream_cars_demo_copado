@@ -1,0 +1,140 @@
+<apex:page controller="InsurancePortalCtrl" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>My Insurance</title>    
+    <apex:stylesheet value="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/css/bootstrap.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/css/insurance-NewQuiz.css')}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/css/insurance-NewQuiz-MQs.css')}"/> 
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<apex:form >
+    <div class="container">
+        <header class="main-Header">
+            <row>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div>
+                        <a href="#">
+                            <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/home-logo.png')}" alt="My Insurance" title="My Insurance" border="0" />
+                        </a>                                                
+                        <h2 class="company-name">EXPO Financial Services</h2>
+                    </div>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <nav class="navbar navbar-default">
+                      <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                          <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">BOSTON<span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Registration open</a></li>
+                                 <li><a href="#">Who will be there?</a></li>                               
+                              </ul>
+                            </li>
+                             <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">NEW YORK<span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                 <li><a href="#">Registration open</a></li> 
+                                  <li><a href="#">Who will be there?</a></li>   
+                              </ul>
+                            </li>
+                             <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CHICAGO<span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                 <li><a href="#">Registration open</a></li> 
+                                  <li><a href="#">Who will be there?</a></li>                                   
+                              </ul>
+                            </li>
+                             <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CALIFORNIA<span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                 <li><a href="#">Registration open</a></li> 
+                                  <li><a href="#">Who will be there?</a></li>   
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
+                </div>
+            </row>
+        </header>
+        <div class="clearfix">&nbsp;</div>
+        <div class="home-bg">
+            <div class="title">Welcome to <span>Expro</span><br />Financial Services</div>  
+            <div class="purchase-policy"><a href="#" title="Purchase a policy through an Agent"><strong>Purchase a policy<br />through an Agent</strong></a></div> 
+            <div class="compare-policy"><a href="#" title="Compare your Insurance Quotes"><strong>Compare your<br />Insurance Quotes</strong></a></div>        
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 next-event">
+                <div>Our next event : <strong>CHICAGO, 16 Sep 2015</strong> <a class="btn btn-default btn-next orange" href="#" target="_self"><strong>Click here</strong> to register</a></div>
+            </div>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 recently-signed pad-none">
+                <div><strong>Recently signed up</strong> for Financial Services Expo</div>
+            </div>
+        </row>
+        <div class="clearfix">&nbsp;</div>      
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 company-logos ">
+                <row>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <a href="#"> 
+                            <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/my-insurance-logo-1.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                        </a>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                         <a href="#">
+                              <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/sort-profile.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                         </a>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <a href="#">                             
+                            <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/family-logo.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                        </a>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                         <a href="#">
+                             <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/marksmith-logo-1.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                         </a>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                         <a href="#">
+                             <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/Ist-state-logo-1.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                         </a>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                         <a href="#">
+                             <img src="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/images/oliver-logo-1.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                         </a>
+                    </div>                                  
+                </row>
+            </div>
+        </row>
+        <div class="clearfix">&nbsp;</div>      
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 new-footer">
+                <div>© 2015 EXPO Financial Services. All rights reserved</div>
+            </div>
+        </row>
+    </div>
+</apex:form>
+    <apex:includeScript value="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/js/jquery-1.10.2.min.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/js/bootstrap.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.insuranceNewQuizStaticUI, '/insuranceNewQuizStaticUI/js/insurance-NewQuiz.js')}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
+</body>
+</apex:page>

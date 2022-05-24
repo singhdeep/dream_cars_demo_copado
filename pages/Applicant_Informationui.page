@@ -1,0 +1,275 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false"   >
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="Applicant_Information">
+<!-- Testing by Himanshu -->
+    <style>
+        div.hideCurrDate span.dateInput span.dateFormat{
+           display:none;
+        }
+    </style>
+<apex:form > 
+<body>
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <a href="#" title="Cancel">Cancel</a>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                       New Application
+                    </div>
+                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name"> {!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+         <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 save-row">
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                        <row>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>     
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <row>
+                                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="current-state">1</span>
+                                        <span class="navLabel current-state-label">Applicant <br />Details</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">2</span>
+                                         <span class="navLabel">Personal<br />History</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">3</span>
+                                         <span class="navLabel">Payment<br />Details</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">4</span>
+                                         <span class="navLabel">Application<br />Summary</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                        <span class="default-state">5</span>
+                                         <span class="navLabel">Forms &amp;<br />Disclosures</span>
+                                    </div>
+                                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                                </row>
+                            </div>      
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div> 
+                        </row>        
+                    </div>
+                </row>
+            </div>
+        </row>
+        <div class="clearfix">&nbsp;</div>       
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                <div class="main-container create-quote-container">
+                    <row>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>     
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-LR7">
+                            <row>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pad-none">
+                                   <label>First Name</label> <br />
+                                   <apex:inputField value="{!AcctObj.firstname}" styleClass="form-control" required="true" html-placeholder="First Name"/>
+                                </div>     
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <!--<input type="text" class="form-control" placeholder="Middle  Name" />-->
+                                    <label>Middle Name</label> <br />
+                                    <apex:inputField value="{!AcctObj.Middle_Name__c}" styleClass="form-control" html-placeholder="Middle  Name"  />
+                                 </div>   
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <!--<input type="text" class="form-control" placeholder="Last Name" />-->
+                                    <label>Last Name</label> <br />
+                                    <apex:inputField value="{!AcctObj.lastName}" styleClass="form-control" required="true" html-placeholder="Last Name"/>
+                                </div>
+                            </row>
+                        </div>      
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                    </row>  
+                    <div class="clearfix">&nbsp;</div><br />
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none">
+                                    <label>Date of Birth</label> <br />
+                                    <div class="hideCurrDate">
+                                        <apex:inputField value="{!AcctObj.Birth_Date__c}" id="yourDateField" styleClass="form-control" type="date"  required="true"/>  
+                                    </div>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <label>SSN</label> <br />
+                                    <apex:inputField value="{!AcctObj.Tax_ID__c}" styleClass="form-control" html-placeholder="SSN" required="true"/> 
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div> 
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none"> 
+                                <label>Gender</label> <br />   
+                                   <div class="radio-row">                           
+                                   <apex:selectRadio value="{!AcctObj.Gender__c}" label="Tobacco User" >
+                                           <apex:selectOption itemLabel="Male" itemValue="Male"/>
+                                           <apex:selectOption itemLabel="Female" itemValue="Female"/>
+                                   </apex:selectRadio>
+                                   </div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>    
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                    <label>Street</label> <br />
+                                   <!-- <input type="text" class="form-control" id="" placeholder="Street" />-->
+                                   <apex:inputField value="{!AcctObj.BillingStreet}" styleClass="form-control"  html-placeholder="Street" required="true"/>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <label>City</label> <br />
+                                    <!--<input type="text" class="form-control" id="" placeholder="City" />-->
+                                    <Apex:InputField Value="{!AcctObj.billingcity}" styleClass="form-control" html-placeholder="City" />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <label>State</label> <br />
+                                   <!-- <input type="text" class="form-control" id="" placeholder="State" />-->
+                                    <Apex:InputField Value="{!AcctObj.billingState}" styleClass="form-control" html-placeholder="State" />
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div> 
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                    <label>Country</label> <br />
+                                    <!--<input type="text" class="form-control" id="" placeholder="Country" />-->
+                                    <Apex:InputField Value="{!AcctObj.billingCountry}" styleClass="form-control" html-placeholder="Country" />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <label>Zipcode</label> <br />
+                                  <!--  <input type="text" class="form-control" id="" placeholder="Zipcode" />-->
+                                    <Apex:InputField Value="{!AcctObj.BillingPostalCode}" styleClass="form-control" html-placeholder="Zipcode" />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div> 
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                    <label>Phone Number</label> <br />
+                                   <!-- <input type="text" class="form-control" id="" placeholder="Phone Number" />-->
+                                   <apex:inputField value="{!AcctObj.Phone}" styleClass="form-control"  required="true" html-placeholder="Phone Number"/>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <label>Email Address</label> <br />
+                                    <!--<input type="text" class="form-control" id="" placeholder="Email Address" />-->
+                                     <apex:inputField value="{!AcctObj.PersonEmail}" styleClass="form-control"  required="true" html-placeholder="Email Address"/>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div> 
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>         
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">                                     
+                                    <div class="form-group">                                    
+                                        <div class="owner-information mrgT20">   
+                                            <div class="title"><strong>Owner Information</strong></div>                                        
+                                            <ul>                                                
+                                                <li class="mrgT10">
+                                                    <label>Owner same as applicant?</label>
+                                                    <!-- <label>Owner same as applicant?</label>
+                                                    <span class="radio-btn-container-1"><label class="radio-inline"> <input type="radio" id="" value="" /> YES </label>
+                                                    <label class="radio-inline"> <input type="radio" id="" value="" /> NO </label></span>-->
+                                                </li>
+                                                <li class="radio-row-1">
+                                                    <apex:selectRadio value="{!selectedSameAsOwner}" label="Same As Applicant" >
+                                                         <apex:selectOptions value="{!sameAsApplicantValues}" />
+                                                     </apex:selectRadio>       <br />                                               
+                                                </li>
+                                                <li class="mrgT10">
+                                                    <label class="joint-ownerLabel">Joint Owner?</label>                                                                                                        
+                                                    <!-- <label>Joint Owner?</label>
+                                                    <span class="radio-btn-container-2"><label class="radio-inline"> <input type="radio" id="" value="" /> YES </label>
+                                                    <label class="radio-inline"> <input type="radio" id="" value="" /> NO </label></span>-->
+                                                </li>
+                                                <li class="radio-row-1">
+                                                    <apex:selectRadio value="{!selectedJointOwner}" label="Joint Owner" >
+                                                       <apex:selectOptions value="{!jointOwnerValues}" />
+                                                     </apex:selectRadio></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>       
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                     <apex:commandButton value="Next" action="{!nextApplicantInfo}" styleClass="btn btn-primary floatR wdt50"></apex:commandButton>
+                                    <!--<div><button type="button" class="btn btn-primary floatR">Next</button></div>-->
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                </div>
+            </div>
+        </row>
+    </div>
+</body>
+</apex:form>  
+</c:ContactManagementComponentui>
+</apex:page>

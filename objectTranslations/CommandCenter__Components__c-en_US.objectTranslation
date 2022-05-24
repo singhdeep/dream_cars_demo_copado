@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- ChangeId_ExternalID --></label>
+        <name>CommandCenter__ChangeId_ExternalID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ChangeId --></label>
+        <name>CommandCenter__ChangeId__c</name>
+    </fields>
+    <fields>
+        <label><!-- CommitId --></label>
+        <name>CommandCenter__CommitId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Message --></label>
+        <name>CommandCenter__Commit_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Committer Name --></label>
+        <name>CommandCenter__Committer_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Defect Name --></label>
+        <name>CommandCenter__Defect_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story Name --></label>
+        <name>CommandCenter__User_Story_Name__c</name>
+    </fields>
+</CustomObjectTranslation>

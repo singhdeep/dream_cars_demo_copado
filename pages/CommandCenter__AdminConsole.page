@@ -1,0 +1,842 @@
+<apex:page id="settingsPage" controller="CommandCenter.AdminConsoleController" sidebar="false" standardStylesheets="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" action="{!checkRMConfig}"> <!-- action="{!triggerJenkinsJob}" -->
+    <apex:stylesheet value="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/styles/salesforce-lightning-design-system.css')}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+    <style>
+        .formElement{
+            text-align: left;
+            width:40%;
+        }
+        
+        .btnAdd{
+            padding-left: 2px;
+            padding-right: 2px;
+            margin-left: 4%;
+            line-height: 0rem;
+        }
+        
+        .sectionHeader{
+            background: #dcf9a2;
+            color: #169c1b;
+            //padding: 5px;
+        }
+        
+        .sectionHeaderIcon{
+            width:20px;
+            height:20px;
+        }
+        
+        .pageHeader{
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.75rem;
+            color: white;
+        }
+        
+        .button{
+            line-height: 1.565rem !important;
+            top:-3px;
+            float:right;
+            margin-right:5%;
+        }
+        .btn{
+           
+        }
+        
+        .bgcolor{
+            background: #BDDEE9;
+            //padding-top: 5px;
+        }
+        
+        .cards{
+            //padding: 5px;
+            box-sizing: border-box;
+        }
+        
+        ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+            color:    #cacaca;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+           color:   #cacaca;
+           opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+           color:    #cacaca;
+           opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+           color:   #cacaca;
+        }
+        .lookupInput{padding-top: 8px !important;}
+        .lookupIcon {
+            background-image: url(/img/func_icons/util/lookup20.gif);
+            background-position: 0 0;
+            width: 20px;
+            height: 20px;
+            background-position: top left;
+            margin-top: -49px !important;
+            margin-left: 92% !important;
+            
+            }
+       .lookupIconOn {
+            background-image: url(/img/func_icons/util/lookup20.gif);
+            background-position: 0 0;
+            width: 20px;
+            height: 20px;
+            background-position: top right;
+            margin-top: -49px !important;
+            margin-left: 92% !important;
+        }
+        
+        .custom-input{//UserStory 22
+                background-color: white;
+                color: #16325c;
+                border: 1px solid #d8dde6;
+                border-radius: 0.25rem;
+                width: 100%;
+                transition: border 0.1s linear, background-color 0.1s linear;
+                display: inline-block;
+                padding: 0 1rem 0 0.75rem;
+                line-height: 1.875rem;
+                min-height: calc(1.875rem + (1px * 2));
+        }
+        .input-styl{//UserStory 22
+                width: 100%;
+        }
+        
+    .statusIcon{
+        width:25px; 
+        height:25px;
+    }
+    
+    .fieldInfoIcon{
+        width:14px;
+        height:14px;
+    }
+    table {
+    border-collapse:separate;
+    }
+    </style>
+    <script>
+    
+        function confirmDelete(jobName){
+            
+            if(confirm('Are you sure you want to delete?')){
+                console.log('true');
+                deleteJob(jobName);
+            }
+        }
+        
+        function confirmStepDelete(stepName){
+            
+            if(confirm('Are you sure you want to delete?')){
+                deleteManualStep(stepName);
+            }
+        }
+    </script>
+    </head>
+    <title>
+        Release Management
+    </title>
+    <body>
+    <apex:form id="frm">
+        <!--  Additional Comment -->
+        <apex:actionFunction name="deleteJob" action="{!deleteJenkinsJobs}" reRender="frm, deleteAction, jenkinsJobsPanel, configPanel, errorPanel, jobsPanel">
+            <apex:param name="jobName" value=""/>
+        </apex:actionFunction>
+        <!--<apex:actionFunction name="deleteManualStep" action="{!deleteManualStep}" reRender="frm, defaultSettingsPanel, deleteStep, errorPanel, stepTrackerPanel">
+            <apex:param name="stepId" value=""/>
+        </apex:actionFunction>
+        <!-- PAGE HEADER -->
+        <c:NavHeaderComp ></c:NavHeaderComp>
+        <div class="slds-page-header" role="banner" style="background: inherit; padding-top: 0px;">
+            
+            <!-- Panel -->
+            <apex:outputPanel id="configPanel" styleClass="cards">
+                <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap">
+                    <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                        <div class="slds-panel__section slds-has-divider--bottom">
+                            <div class="slds-panel__section">
+                                <div class="slds-form-element slds-hint-parent">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form--horizontal">
+                                            <fieldset class="slds-form--compound">
+                                              <div class="slds-form-element__group">
+                                                <div class="slds-form-element__row">
+                                                   
+                                                    <div class="slds-form-element  slds-size--1-of-2">
+                                                     <label class="slds-checkbox--toggle slds-grid">
+                                                      <span class="slds-form-element__label slds-m-bottom--none formElement">Approval required for deployment?  </span>
+                                                        <apex:inputField value="{!config.CommandCenter__Deployment_Approval_Required__c}"/>
+                                                        
+                                                        <span id="toggle-desc" class="slds-checkbox--faux_container" aria-live="assertive">
+                                                          <span class="slds-checkbox--faux"></span>
+                                                        </span>
+                                                      </label>
+                                                    </div>
+                                                    <!-- Removing this functionality, as jenkins job will be used to perform ondemand validation any time -->
+                                                    <!--<div class="slds-form-element  slds-size--1-of-2">
+                                                      <label class="slds-checkbox--toggle slds-grid">
+                                                        <span class="slds-form-element__label slds-m-bottom--none formElement">On-Demand validation required?</span>
+                                                        <apex:inputField value="{!config.On_Demand_Validation_Needed__c}"/>
+                                                        <span id="toggle-desc" class="slds-checkbox--faux_container" aria-live="assertive">
+                                                          <span class="slds-checkbox--faux"></span>
+                                                        </span>
+                                                      </label>
+                                                    </div> -->
+                                                  <div class="slds-form-element  slds-size--1-of-2">
+                                                      <label class="slds-checkbox--toggle slds-grid">
+                                                        <span class="slds-form-element__label slds-m-bottom--none formElement">Deployment checklist present?</span>
+                                                        <apex:inputField value="{!config.CommandCenter__Manual_Steps_Required__c}">
+                                                            <apex:actionSupport reRender="addSteps" event="onchange"/>
+                                                        </apex:inputField>
+                                                        <span id="toggle-desc" class="slds-checkbox--faux_container" aria-live="assertive">
+                                                          <span class="slds-checkbox--faux"></span>
+                                                        </span>
+                                                      </label>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            </fieldset>
+                                            <div class="slds-form-element__row">
+                                                  <div class="slds-form-element  slds-size--1-of-2">
+                                                      <label class="slds-checkbox--toggle slds-grid">
+                                                        <span class="slds-form-element__label slds-m-bottom--none formElement">Maximum no. of builds?</span>
+                                                        <apex:inputField value="{!config.CommandCenter__Max_of_Pipeline_to_Save__c}" styleClass="slds-input" style="width:60px;"/>
+                                                        <span id="toggle-desc" class="slds-checkbox--faux_container" aria-live="assertive">
+                                                          <!-- <span class="slds-checkbox--faux"></span> -->
+                                                        </span>
+                                                      </label>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align:center;"> <!-- style="margin-left: 33%;"  -->
+                                    <apex:actionStatus startText="" stopText="" id="save" > 
+                                       <apex:facet name="start" > 
+                                           <span>
+                                               <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:30px; height:30px;"/> &nbsp;
+                                           </span>
+                                       </apex:facet> 
+                                       <apex:facet name="stop"> 
+                                            <apex:commandButton action="{!saveConfig}" value="Save" status="save" reRender="frm, save, configPanel, errorPanel" styleClass="slds-button slds-button--brand btn" style="top: 0px;margin-right: 1%;"/>
+                                       </apex:facet> 
+                                    </apex:actionStatus>
+                                    &nbsp;&nbsp;
+                                </div> <br/>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            <!-- /Panel -->
+            <!-- SF Environment Component -->
+            <!--<apex:outputPanel layout="none" id="sfenvContainer">
+                <c:SF_Environments id="sfEnv" ></c:SF_Environments> 
+            </apex:outputPanel> -->
+            
+            
+            <!-- Manual Steps Component-->
+            <c:ManualSteps ></c:ManualSteps>
+            <!-- /Manual Steps Component-->
+            
+            <!-- Jobs Panel -->
+            <apex:outputPanel id="jobsPanel" styleClass="cards">
+            <c:InfoToolTipComponent toolTipText="{!$Label.commandcenter__jenkins_pipelines}" toolTipTextClassName="jenkin_Config" icon_Margin_Top="35" icon_Margin_Left="214"
+             position_Left="184" position_Bottom="-41"  toolTipWidth="140"/>
+                <div class="slds-page-header bgcolor" role="banner">
+                    <div class="slds-grid">                                
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__figure">
+                                    <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/process_60.png')}" class="sectionHeaderIcon"/>
+                                </div>
+
+                                <div class="slds-media__body" >
+                                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                        JENKINS CONFIGURATION
+                                        <apex:actionStatus startText="" stopText="" id="createJobs1" > 
+                                           <apex:facet name="start" > 
+                                               <span>
+                                                   <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px; float:right;margin-right: 10%;"/> &nbsp;
+                                               </span>
+                                           </apex:facet> 
+                                           <apex:facet name="stop"> 
+                                                <apex:commandButton action="{!createJenkinsJobs}" value="+ Jobs" status="createJobs1" reRender="frm, createJobs1, jenkinsJobsPanel, configPanel, errorPanel" styleClass="slds-button slds-button--brand button btn" style="top: 0px;margin-right: 10%;" title="{!$Label.commandcenter__add_new_pipeline}"/>
+                                           </apex:facet> 
+                                        </apex:actionStatus>
+                                        <apex:actionStatus startText="" stopText="" id="createJUser" > 
+                                           <apex:facet name="start" > 
+                                               <span>
+                                                   <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px; float:right;margin-right: 10%;"/> &nbsp;
+                                               </span>
+                                           </apex:facet> 
+                                           <apex:facet name="stop"> 
+                                                <apex:commandButton action="{!createJenkinsUser}" value="Link ADOP User" status="createJUser" reRender="frm, configPanel, errorPanel, jenkinsUserPanel" styleClass="slds-button slds-button--brand button btn" style="top: 0px;margin-right: 1%;" title="{!$Label.commandcenter__add_jenkins_user}"/>
+                                           </apex:facet> 
+                                        </apex:actionStatus>
+                                        <!--<apex:actionStatus startText="" stopText="" id="updateJUser" > 
+                                           <apex:facet name="start" > 
+                                               <span>
+                                                   <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px; float:right;margin-right: 10%;"/> &nbsp;
+                                               </span>
+                                           </apex:facet> 
+                                           <apex:facet name="stop"> 
+                                                <apex:commandButton action="{!readJenkinsUsers}" value="Update Users" status="updateJUser" reRender="configPanel, errorPanel, jenkinsUserUpdatePanel" styleClass="slds-button slds-button--brand button btn" style="top: 0px;margin-right: 1%;" title="{!$Label.Update_Jenkins_user}"/>
+                                           </apex:facet> 
+                                        </apex:actionStatus> -->
+                                        
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add content Here -->
+                    <ul class="slds-grid slds-page-header__detail-row">
+
+                        <li class="slds-page-header__detail-block releaseSection" style="max-width: 100% !important;width: 100%;">
+                            <div class="slds-form-element slds-hint-parent">
+                                <div class="slds-form-element__control">
+                                    <div style="width: 55%;float: left;">
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--striped" style="border-left: 1px solid #d8dde6; border-right: 1px solid #d8dde6;">
+                                        <thead>
+                                            <tr class="slds-text-title--caps">
+                                                <th scope="col">
+                                                    <div class="slds-truncate">Action</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Job Name">Name</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Deployment job or Validation job">Job Type</div>
+                                                </th>
+                                                <!--<th scope="col">
+                                                    <div class="slds-truncate" title="Package to Validate">Package to Validate</div>
+                                                </th> -->
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="URL of first jenkins job which will trigger as part of pipeline">Jenkins Job Name</div>
+                                                </th>
+                                                <!--<th scope="col">
+                                                    <div class="slds-truncate" title="Target Environment to which code will be deployed">Target Environment</div>
+                                                </th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!jobsMap}" var="job" rendered="{!IF(NoOfJobs > 0, true, false)}">
+                                                <tr>
+                                                    <td data-label="Action">
+                                                        <div class="slds-truncate">
+                                                            <apex:actionStatus startText="" stopText="" id="editAction" > 
+                                                               <apex:facet name="start" > 
+                                                                   <span>
+                                                                       <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:30px; height:30px;"/> &nbsp;
+                                                                   </span>
+                                                               </apex:facet> 
+                                                               <apex:facet name="stop"> 
+                                                                    <apex:commandLink action="{!editJenkinsJobs}" status="editAction" title="Edit jenkins job" reRender="frm, editAction, jenkinsJobsPanel, configPanel, errorPanel, jobsPanel">
+                                                                        <img src="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/icons/utility/edit_60.png')}" style="width:13px; height:10px;"/>
+                                                                        <apex:param name="jobName" value="{!jobsMap[job].Id}"/>
+                                                                    </apex:commandLink>
+                                                               </apex:facet> 
+                                                            </apex:actionStatus>
+                                                            &nbsp;&nbsp;
+                                                            <apex:actionStatus startText="" stopText="" id="deleteAction" > 
+                                                               <apex:facet name="start" > 
+                                                                   <span>
+                                                                       <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:30px; height:30px;"/> &nbsp;
+                                                                   </span>
+                                                               </apex:facet> 
+                                                               <apex:facet name="stop"> 
+                                                                    <a href="javascript:void(0);" onclick="confirmDelete('{!jobsMap[job].Id}')" title="Delete jenkins job">
+                                                                        <img src="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/icons/utility/delete_60.png')}" style="width:13px; height:15px;"/>
+                                                                    </a>
+                                                               </apex:facet> 
+                                                            </apex:actionStatus>
+                                                        </div>
+                                                    </td>
+                                                    <td data-label="Job Name">
+                                                        <div class="slds-truncate">{!jobsMap[job].Job_Name__c}</div>
+                                                    </td>
+                                                     <td data-label="Package to Validate">
+                                                        <div class="slds-truncate">{!jobsMap[job].Job_Type__c}</div>
+                                                    </td> 
+                                                     
+                                                    <!--<td data-label="Package to Validate">
+                                                        <div class="slds-truncate">{!jobsMap[job].Package_To_Validate__c}</div>
+                                                    </td> -->
+                                                    <td data-label="Job URL">
+                                                        <div class="slds-truncate">
+                                                            <a href="{!jobsMap[job].Job_URL__c}" target="_blank">{!jobsMap[job].Jenkins_Job_Name__c}</a>
+                                                        </div>
+                                                    </td>
+                                                    <!--<td data-label="Target Environment">
+                                                        <div class="slds-truncate">
+                                                            <apex:outputField value="{!jobsMap[job].Target_Environment__c}"/>
+                                                        </div>
+                                                    </td> -->
+                                                   
+                                                </tr>
+                                            </apex:repeat>
+                                            <tr style="{!IF(NoOfJobs > 0, 'display:none;', '')}">
+                                                <td scope="row" data-label="Pipeline Numner" colspan="6">
+                                                    <div class="slds-truncate" title="no data to display">No data to display</div>
+                                                </td>    
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- /Add content Here -->
+                </div>
+            </apex:outputPanel>
+            <!-- /Panel -->
+            
+            <!-- Repository Panel -->
+            <apex:outputPanel id="repositoryCompPanel">
+                <c:Repository id="repositoryComponent">
+                </c:Repository>
+            </apex:outputPanel>
+            
+            <!-- Jenkins Jobs Popup -->
+            <apex:outputPanel id="jenkinsJobsPanel"  style="{!IF(showJenkinsJobs == true, '', 'display:none')}" >
+            <script> $( document ).ready(function() {
+                        $('a.input-styl').removeAttr('style');
+                    });
+              </script>
+            <div id="jenkinsJobsModal" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                
+                <div class="slds-modal__container" style="width: 35% !important;">
+                    <div class="slds-modal__header">
+                        <h2 id="header43" class="slds-text-heading--medium">
+                            <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/edit_60.png')}" class="sectionHeaderIcon"/>
+                            Jenkins Setup
+                        </h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-form--stacked">
+                            <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && showJenkinsJobs == true), '', 'display:none;')}">{!errorMessage}</div>
+                          <fieldset class="slds-form--compound">
+                              <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                  <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Name <abbr class="slds-required" title="required">* </abbr></label>
+                                    <apex:inputText value="{!jenkinsJobsObj.CommandCenter__Job_Name__c}" html-placeholder="job name" styleClass="slds-input" style="{!IF((jenkinsJobsObj.CommandCenter__Job_Name__c == null && fieldRequired == true), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Job_Name__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02">Job Type <abbr class="slds-required" title="required">* </abbr></label>
+                                      <!--<apex:inputField value="{!jenkinsJobsObj.CommandCenter__Job_Type__c}" html-placeholder="Deployment/Validation" styleClass="slds-input" style="{!IF((jenkinsJobsObj.CommandCenter__Job_Type__c == null && fieldRequired == true), 'border-color:red', '')}">
+                                        <apex:actionSupport event="onchange" reRender="jenkinsJobsPanel" />  
+                                      </apex:inputField> -->
+                                      <apex:selectList value="{!jenkinsJobsObj.CommandCenter__Job_Type__c}" size="1" onchange="loadComponents()" html-placeholder="Deployment/Validation" styleClass="slds-input" style="{!IF((jenkinsJobsObj.CommandCenter__Job_Type__c == null && fieldRequired == true), 'border-color:red', '')}">
+                                          <apex:selectOptions value="{!jobTypeList}" />
+                                          <apex:actionFunction name="loadComponents" rerender="jenkinsJobsPanel" /> 
+                                      </apex:selectList>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Job_Type__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </fieldset>
+                            <fieldset class="slds-form--compound">
+                              <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                  <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Source Branch 
+                                        <a style="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, '', 'display:none')}">
+                                            <abbr class="slds-required" title="required">* </abbr>
+                                        </a>
+                                      </label>
+                                    <apex:inputField value="{!jenkinsJobsObj.CommandCenter__Source_Org__c}" html-placeholder="Branch Name" styleClass="slds-input" style="{!IF((jenkinsJobsObj.CommandCenter__Source_Org__c == null && jenkinsJobsObj.CommandCenter__Job_Type__c == STR_JOB_TYPE_PIPELINE && fieldRequired == true), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Source_Org__c == null && jenkinsJobsObj.Job_Type__c == STR_JOB_TYPE_PIPELINE && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                    <!--<div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                        <label class="slds-form-element__label" for="input-02">Target Environment 
+                                            <a style="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, '', 'display:none')}">
+                                                <abbr class="slds-required" title="required">* </abbr>
+                                            </a> 
+                                        </label>
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <apex:inputField value="{!jenkinsJobsObj.Target_Environment__c}" 
+                                                             style="border-radius: 6px;height: 30px;margin-top: 2px;background-color: white;color: #16325c;border: 1px solid #d8dde6; width:100%;{!IF((jenkinsJobsObj.Target_Environment__c == null && jenkinsJobsObj.Job_Type__c == STR_JOB_TYPE_PIPELINE && fieldRequired == true), 'border-color:red', '')}"  styleClass="input-styl"  />
+                                            
+                                        </div> 
+                                        <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Target_Environment__c == null && jenkinsJobsObj.Job_Type__c == STR_JOB_TYPE_PIPELINE && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                    </div> -->
+                                </div>
+                              </div>
+                            </fieldset>
+                            <fieldset class="slds-form--compound">
+                                <!--<div class="slds-form-element__row" style="{!if(jenkinsJobsObj.Job_Type__c == 'Pipeline Job', '', 'display:none')}">
+                                  <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Package to Validate <abbr class="slds-required" title="required">* </abbr></label>
+                                    <apex:inputField value="{!jenkinsJobsObj.Package_To_Validate__c}" html-placeholder="main_package" styleClass="slds-input" style="{!IF((jenkinsJobsObj.Package_To_Validate__c == null && fieldRequired == true), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Package_To_Validate__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                   <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-01">Jenkins Job Name <abbr class="slds-required" title="required">* </abbr></label>
+                                    <apex:inputField value="{!jenkinsJobsObj.Jenkins_Job_Name__c}" html-placeholder="Pre_deploy_Validation" styleClass="slds-input" style="{!IF((jenkinsJobsObj.Jenkins_Job_Name__c == null && fieldRequired == true), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Jenkins_Job_Name__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div> -->
+                                <div class="slds-form-element__row" >
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02" style="margin-right:0 !important">{!if(jenkinsJobsObj.Job_Type__c == STR_JOB_TYPE_STANDALONE, 'Standalone Job URL', 'Jenkins Job URL')} 
+                                        <abbr class="slds-required" title="required">* </abbr></label> 
+                                      <a href="#" data-toggle="tooltip" data-container="body" title="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, $Label.HELP_TXT_JOB_URL, $Label.HELP_TXT_STANDALONE_JOB_URL)}"> <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/info_60.png')}"  class="fieldInfoIcon"/></a>
+                                    <apex:inputField value="{!jenkinsJobsObj.CommandCenter__Job_URL__c}" html-placeholder="http://www.google.com" styleClass="slds-input" style="{!IF(((jenkinsJobsObj.CommandCenter__Job_URL__c == null && fieldRequired == true) || (isError == true && errorType = 'jobURL')), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Job_URL__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && errorType == 'jobURL'), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                                <div class="slds-form-element__row" >
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02">{!if(jenkinsJobsObj.Job_Type__c == STR_JOB_TYPE_STANDALONE, 'Standalone Job Token', 'Jenkins Job Token')}  <abbr class="slds-required" title="required">* </abbr> </label>
+                                    <apex:inputField value="{!jenkinsJobsObj.CommandCenter__Job_Token__c}" styleClass="slds-input" style="{!IF(((jenkinsJobsObj.CommandCenter__Job_Token__c == null && fieldRequired == true)), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Job_Token__c == null && fieldRequired == true ), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                                <div class="slds-form-element__row" style="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, '', 'display:none')}">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02">Jenkins Pipeline URL <abbr class="slds-required" title="required">* </abbr> </label>
+                                    <apex:inputField value="{!jenkinsJobsObj.CommandCenter__Pipeline_URL__c}" html-placeholder="http://www.google.com" styleClass="slds-input" style="{!IF(((jenkinsJobsObj.CommandCenter__Pipeline_URL__c == null && fieldRequired == true) || (isError == true && errorType = 'pipelineURL')), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsJobsObj.Pipeline_URL__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && errorType == 'pipelineURL'), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                                <div class="slds-form-element__row" style="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, '', 'display:none')}">
+                                    <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                        <label class="slds-form-element__label" for="input-02" style="margin-right:0 !important">View Components Job URL
+                                            <a href="#" data-toggle="tooltip" data-container="body" title="{!$Label.HELP_TXT_VIEW_COMPONENTS_JOB_URL}"> 
+                                                <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/info_60.png')}"  class="fieldInfoIcon"/>
+                                            </a>
+                                        </label>
+                                        <apex:inputField value="{!jenkinsJobsObj.CommandCenter__On_Demand_Validation_Job_URL__c}" html-placeholder="http://www.google.com" styleClass="slds-input"  style="{!IF((isError == true && errorType = 'onDemandUrl'), 'border-color:red', '')}"/>
+                                        <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && errorType == 'onDemandUrl'), '', 'display:none;')}">{!errorMessage}</div> 
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row" style="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, '', 'display:none')}">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02"> View Components Job Token</label>
+                                    <apex:inputField value="{!jenkinsJobsObj.CommandCenter__On_Demand_Job_Token__c}" styleClass="slds-input"  style="{!IF((isError == true && errorType = 'onDemandToken'), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && errorType == 'onDemandToken'), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                                <!-- PMO Toolkit Related -->
+                                 <div class="slds-form-element__row" style="{!if(jenkinsJobsObj.Job_Type__c != STR_JOB_TYPE_STANDALONE, '', 'display:none')}">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02">Jenkins Deploy Job URL </label>
+                                    <apex:inputField value="{!jenkinsJobsObj.CommandCenter__Deploy_Job_URL__c}" html-placeholder="http://www.google.com" styleClass="slds-input" style="{!IF((isError == true && errorType = 'DeployJobURL'), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && errorType == 'DeployJobURL'), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                                <!-- PMO Toolkit Related -->
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <apex:actionStatus startText="" stopText="" id="jenkinsJobs" > 
+                           <apex:facet name="start" > 
+                               <span style="padding-left:30%;">
+                                   <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px; float:right;margin-right: 10%;"/> &nbsp;
+                               </span>
+                           </apex:facet> 
+                           <apex:facet name="stop"> 
+                           </apex:facet> 
+                        </apex:actionStatus>
+                        <apex:commandButton action="{!cancelJenkinsJobs}" value="Cancel" status="jenkinsJobs" reRender="frm,jenkinsJobsPanel, jenkinsJobs, defaultSettingsPanel, jobsPanel" styleClass="slds-button slds-button--neutral"/>
+                        <apex:commandButton action="{!saveJenkinsJobs}" value="Save" status="jenkinsJobs" reRender="frm,jenkinsJobsPanel, jenkinsJobs, jobsPanel, defaultSettingsPanel" styleClass="slds-button slds-button--brand btn"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            </apex:outputPanel>
+            <!-- /Jenkins Jobs Popup -->
+            
+            <!-- Jenkins Jobs Popup -->
+            <apex:outputPanel id="jenkinsUserPanel"  style="{!IF(showJenkinsUsers == true, '', 'display:none')}" >
+              <!--START UserStory 22-->
+               <script> $( document ).ready(function() {
+                        $('a.input-styl').removeAttr('style');
+                });
+              </script>
+             <!--END UserStory 22--> 
+            <div id="jenkinsJobsModal" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width: 35% !important;">
+                    <div class="slds-modal__header">
+                        <h2 id="header43" class="slds-text-heading--medium">
+                            <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/edit_60.png')}" class="sectionHeaderIcon"/>
+                            Link ADOP User
+                        </h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <abbr class="slds-required" title="required">* All fields are required</abbr>
+                        <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && isActiveUser == true), '', 'display:none;')}">
+                            {!errorMessage}
+                            <div class="slds-form-element">
+                              <div class="slds-form-element__control">
+                                <span class="slds-checkbox">
+                                  <label class="slds-checkbox__label">
+                                    <apex:inputCheckbox value="{!deActiveUser}"/>
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span class="slds-form-element__label">Deactivate this user?</span>
+                                  </label>
+                                </span>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="slds-form--stacked">
+                            <fieldset class="slds-form--compound">
+                                <div class="slds-form-element__row">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-02">ADOP User Name</label>
+                                    <apex:inputField value="{!jenkinsUser.CommandCenter__Jenkins_User_Name__c}" html-placeholder="username" styleClass="slds-input" style="{!IF(((jenkinsUser.CommandCenter__Jenkins_User_Name__c == null && fieldRequired == true) ), 'border-color:red', '')}"/> <!-- || (jenkinsUser.Jenkins_User_Name__c != null && fieldRequired == true) -->
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsUser.Jenkins_User_Name__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                    <!--<div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsUser.Jenkins_User_Name__c != null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div> -->
+                                  </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-03">ADOP Password</label>
+                                      <!-- show/hide Password -->
+                                      <span class="slds-icon_container" title="Show/Hide Password">
+                                          <apex:image id="showPwdIcon" url="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/icons/utility/preview_60.png')}" style="width:18px"  onclick="showHidePassword();" />
+                                      </span>
+                                    <apex:inputSecret id="input-03" value="{!tempPwdJenkins}" redisplay="true" html-placeholder="*****" styleClass="slds-input" style="{!IF(((jenkinsUser.CommandCenter__Jenkins_Password__c == null && fieldRequired == true)), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsUser.Jenkins_Password__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                    <apex:actionFunction name="callShowDecryptText" action="{!showPassword}" reRender="none" />
+                                    <script>
+                                    function showHidePassword(){
+                                        var secrt = document.getElementById("settingsPage:frm:input-03");
+                                        //var changeIconColor = document.getElementById("showPwdIcon");
+                                        //alert('secrt:'+secrt.type);
+                                        if (secrt.type == "password") {
+                                            secrt.type = "text";
+                                            //changeIconColor.style.background-color="#005fb2";
+                                            callShowDecryptText();
+                                        } else {
+                                            secrt.type = "password";
+                                            //changeIconColor.style.background-color="#16325c";
+                                        }
+                                    }
+                                    </script>
+                                </div>
+                                <div class="slds-form-element__row">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <label class="slds-form-element__label" for="input-04">ADOP Domain URL</label>
+                                    <apex:inputField id="input-04" value="{!jenkinsUser.CommandCenter__ADOP_Domain_URL__c}" html-placeholder="https://www.google.com" styleClass="slds-input" style="{!IF(((jenkinsUser.CommandCenter__ADOP_Domain_URL__c == null && fieldRequired == true)), 'border-color:red', '')}"/>
+                                    <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((jenkinsUser.ADOP_Domain_URL__c == null && fieldRequired == true), '', 'display:none;')}">{!errorMessage}</div>
+                                  </div>
+                                </div>
+                                <!-- Test ADOP Connection -->
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2" >
+                                        <apex:actionStatus startText="" stopText="" id="testConnectionStatus" > 
+                                            <apex:facet name="start" > 
+                                                <span>
+                                                    <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px;"/> &nbsp; <!--  float:right;margin-right: 10%; -->
+                                                </span>
+                                            </apex:facet> 
+                                            <apex:facet name="stop"> 
+                                                <apex:commandButton action="{!testConnection}" value="Test Connection" status="testConnectionStatus" reRender="jenkinsUserPanel, errorPanel" styleClass="slds-button slds-button--brand"  title="{!$Label.commandcenter__test_connection}"/> <!-- style="{!if(testConnectionStatus !=null, 'top: 0px;margin-right: 1%;', 'top: 0px;margin-right: 10%;')}" -->
+                                            </apex:facet> 
+                                        </apex:actionStatus>
+                                        <span style="{!if(testConnectionStatus == 'Failure', 'top: 0px; ', 'display:none')}"><!--  float:right; margin-right: 8%; -->
+                                            <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/rejected.png')}" class="statusIcon" title="{!$Label.TEST_CONNECTION_FAILED}"/> &nbsp;
+                                        </span>
+                                        <span style="{!if(testConnectionStatus == 'Success', 'top: 0px;', 'display:none')}" >
+                                            <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/approved.png')}" class="statusIcon" title="{!$Label.TEST_CONNECTION_SUCCESS}"/> &nbsp;
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Test ADOP Connection -->
+                                <!--START UserStory 22--> 
+                                <!-- <div class="slds-form-element slds-lookup" data-select="single">
+                                  <label class="slds-form-element__label" for="lookup-63">Salesforce User</label>
+                                  <div class="slds-form-element__control">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                      <apex:inputField value="{!jenkinsUser.SFDC_User__c}" 
+                                      style="border-radius: 6px;height: 30px;margin-top: 2px;background-color: white;color: #16325c;border: 1px solid #d8dde6; width:100%;"  styleClass="input-styl"  />
+                                    </div> 
+                                  </div>
+                                </div> -->
+                                <!--END UserStory 22--> 
+
+                                <!--<div class="slds-form-element__row">
+                                  <div class="slds-form-element slds-size--1-of-2" style="margin-top: 0rem;">
+                                    <apex:inputField value="{!jenkinsUser.Jenkins_User_Active__c}"/>
+                                    <label class="slds-form-element__label" for="input-02">Is Active?</label>
+                                  </div>
+                                </div> -->
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <apex:actionStatus startText="" stopText="" id="jenkinsUserIcon" > 
+                           <apex:facet name="start" > 
+                               <span style="padding-left:30%;">
+                                   <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px; float:right;margin-right: 10%;"/> &nbsp;
+                               </span>
+                           </apex:facet> 
+                           <apex:facet name="stop"> 
+                           </apex:facet> 
+                        </apex:actionStatus>
+                        <apex:commandButton action="{!cancelJenkinsUser}" value="Cancel" status="jenkinsUserIcon" reRender="jenkinsUserPanel, jenkinsUserIcon" styleClass="slds-button slds-button--neutral"/>
+                        <apex:commandButton action="{!saveJenkinsUsers}" value="Save" status="jenkinsUserIcon" reRender="jenkinsUserPanel, jenkinsUserIcon, configPanel, errorPanel" styleClass="slds-button slds-button--brand btn"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            </apex:outputPanel>
+            <!-- /Jenkins User Popup -->
+            
+            <!-- ERROR Popup -->
+            <apex:outputPanel id="errorPanel"  style="{!IF(isError == true && showJenkinsJobs == false && showJenkinsUsers == false, '', 'display:none')}" >
+                <div role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="width: 30% !important;">
+                        <div class="slds-modal__header slds-modal__header slds-modal__header--empty">
+                        </div>
+                        <div class="slds-modal__content slds-p-around--medium">
+                            <div>
+                                <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/error_60.png')}" style="width:30px; height:30px;"/>
+                                Error: {!errorMessage}
+                            </div>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <apex:actionStatus startText="" stopText="" id="okStatus" > 
+                               <apex:facet name="start" > 
+                                   <span style="padding-left:30%;">
+                                       <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:29px; height:30px; float:right;margin-right: 10%;"/> &nbsp;
+                                   </span>
+                               </apex:facet> 
+                               <apex:facet name="stop"> 
+                               </apex:facet> 
+                            </apex:actionStatus>
+                            <apex:commandButton action="{!hideErrorPopup}" value="Ok" status="okStatus" reRender="okStatus, errorPanel" styleClass="slds-button slds-button--brand btn"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-backdrop slds-backdrop--open"></div>
+            </apex:outputPanel>
+            <!-- /ERROR Popup -->
+            
+            <!-- Update Jenkins User Popup -->
+            <apex:outputPanel id="jenkinsUserUpdatePanel" style="{!IF(jenkinsUsersList.size != 0, '', 'display:none;')}">
+            <div id="jenkinsUserUpdateModal" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal--medium">
+                <!--<div class="slds-modal__container" style="width: 35% !important;">-->
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 id="header43" class="slds-text-heading--medium">
+                            <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/edit_60.png')}" style="width:30px; height:30px;"/>
+                            Update Jenkins Users
+                        </h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div id="error-message" class="slds-form-element__help" style="color:red; {!IF((isError == true && jenkinsUsersList.size != 0), '', 'display:none;')}">
+                            {!errorMessage}
+                        </div>
+                        <!--<div style="margin-left: 10%;">-->
+                        <div class="slds-table_edit_container slds-is-relative">
+                            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table_edit" style="width: 100%;border-left: 1px solid #d8dde6; border-right: 1px solid #d8dde6;">
+                                <thead>
+                                    <tr class="slds-text-title--caps">
+                                        <th >
+                                            <div class="slds-truncate" title="Name">User Name</div>
+                                        </th>
+                                        <th >
+                                            <div class="slds-truncate" title="Name">Password</div>
+                                        </th>
+                                        <th >
+                                            <div class="slds-truncate" title="SFDCName">SFDC User</div>
+                                        </th>
+                                        <th >
+                                            <div class="slds-truncate" title="QA Complete">Is Active?</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!jenkinsUsersList}" var="usr">
+                                        <tr>
+                                            <td scope="row" data-label="Name" class="slds-cell-edit" style="width:45%;">
+                                               <div class="slds-size--8-of-12 "  title="{!usr.CommandCenter__Jenkins_User_Name__c}" >
+                                                   <apex:inputField value="{!usr.CommandCenter__Jenkins_User_Name__c}"/>
+                                                   <!-- {!LEFT(usr.Jenkins_User_Name__c, 20)}
+                                                   <apex:outputText value="..." rendered="{!IF(LEN(usr.Jenkins_User_Name__c)>20, true, false)}"></apex:outputText> -->
+                                               </div>
+                                            </td>
+                                            <td scope="row" data-label="Password">
+                                               <div class="slds-size--12-of-12 slds-truncate">
+                                                   <apex:inputSecret value="{!usr.CommandCenter__Jenkins_Password__c}" redisplay="true"/>
+                                               </div>
+                                            </td>
+                                            <td scope="row" data-label="SFDC User" style="width:40%;">
+                                               <div class="slds-size--12-of-12 slds-truncate"  title="{!usr.SFDC_User__r.Name}" >
+                                                   {!LEFT(usr.SFDC_User__r.Name, 20)}
+                                                   <apex:outputText value="..." rendered="{!IF(LEN(usr.SFDC_User__r.Name)>20, true, false)}"></apex:outputText>
+                                               </div>
+                                            </td>
+                                            <td data-label="Is Active" style="width:15%;">
+                                                <div class="slds-size--4-of-12 slds-truncate" style="text-align: center;">
+                                                    <apex:inputField value="{!usr.CommandCenter__Jenkins_User_Active__c}"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    <tr style="{!IF(jenkinsUsersList.size == 0, '', 'display:none;')}">
+                                        <td scope="row" data-label="No records to display" colspan="5">
+                                            <div class="slds-truncate">No records to display</div>
+                                        </td>   
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer" style="text-align: center;">
+                        <apex:actionStatus startText="" stopText="" id="saveJUser" > 
+                           <apex:facet name="start" > 
+                               <span style="padding-left:30%;">
+                                   <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:30px; height:30px;"/> &nbsp;
+                               </span>
+                           </apex:facet> 
+                           <apex:facet name="stop"> 
+                           </apex:facet> 
+                        </apex:actionStatus>
+                        <apex:commandButton action="{!cancelJenkinsUsers}" value="Cancel" status="saveJUser" reRender="saveJUser, jenkinsUserUpdatePanel" styleClass="slds-button slds-button--neutral"/>
+                        <apex:commandButton action="{!updateJenkinsUsers}" value="Save" status="saveJUser" reRender="saveJUser, jenkinsUserUpdatePanel" styleClass="slds-button slds-button--brand btn"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            </apex:outputPanel>
+            <!-- /Popup -->
+            
+            <!-- Warning Popup -->
+            <apex:outputPanel id="warningPanel"  style="display:none" >
+                <div role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="width: 30% !important;">
+                        <div class="slds-modal__header slds-modal__header slds-modal__header--empty">
+                        </div>
+                        <div class="slds-modal__content slds-p-around--medium">
+                            <div>
+                                <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/warning.png')}" style="width:30px; height:30px;"/> &nbsp;
+                                {!$Label.Delete_Warning}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-backdrop slds-backdrop--open"></div>
+            </apex:outputPanel>
+            <!-- /ERROR Popup -->
+        </div>
+    <!-- / PAGE HEADER -->
+    
+  </apex:form>
+  </body>
+  </html>
+</apex:page>

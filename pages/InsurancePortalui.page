@@ -1,0 +1,122 @@
+<apex:page controller="InsurancePortalCtrl" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+<body>
+<!-- Testing by Priti-->
+<c:InsuranceComponentui > </c:InsuranceComponentui>
+  <div class="container">
+        <row>
+            <div class="home-bg home-container">
+                <!-- Your Info section Starts -->
+                <div class="your-info">
+                    <div class="col-sm-12 col-md-12 col-lg-12 pad-none">
+                        <h2>Your Info</h2>
+                        <apex:pageMessages ></apex:pageMessages>
+                        <apex:form id="frm" >
+                        <form>
+                          <div class="form-group">
+                          <row>
+                              <div class="col-sm-5 col-md-5 col-lg-5 pad-none">
+                                <label>Gender</label>
+                                  <apex:selectList value="{!gender }" multiselect="false" size="1" styleClass="form-control" required="true">
+                                    <apex:selectOption itemValue="Male" itemLabel="Male"/>
+                                    <apex:selectOption itemValue="Female" itemLabel="Female"/>  
+                                  </apex:selectList>
+                                    <!-- <select class="form-control"><option>Male</option></select>-->
+                              </div>
+                               <div class="col-sm-7 col-md-7 col-lg-7">
+                                 <label for="DOB">Date of Birth</label>
+                                  <div class="DOB">
+                                    <ul>
+                                        <li class="date">
+                                             <apex:selectList value="{!dateofbirth}" size="1" styleClass="form-control"> 
+                                                <apex:selectOptions value="{!openPresentationOptions}" /> 
+                                              </apex:selectList>
+                                            <!-- <select class="form-control"><option>1</option></select>-->
+                                        </li>
+                                        <li class="month">
+                                             <apex:selectList value="{!monthofbirth}" size="1" styleClass="form-control">
+                                                <apex:selectOptions value="{!monthOptions}" /> 
+                                              </apex:selectList>
+                                            <!--<select class="form-control"><option>30</option></select>-->
+                                        </li>
+                                        <li class="year">
+                                           <apex:selectList value="{!yearofbirth}" size="1" styleClass="form-control"> 
+                                              <apex:selectOptions value="{!yearOptions}" /> 
+                                            </apex:selectList>
+                                           <!--<select class="form-control"><option>2015</option></select>-->
+                                        </li>
+                                    </ul>
+                                </div>
+                              </div>
+                          </row>
+                         <div class="clearfix">&nbsp;</div>    
+                         <row>
+                             <div class="col-sm-5 col-md-5 col-lg-5 pad-none mrgT20">
+                                <label for="Zip Code">Zip Code</label>
+                                <apex:inputText value="{!leadVar.PostalCode}" styleClass="form-control" id="ZipCode" html-placeholder="Zip Code" required="true"/>
+                             </div>
+                             <div class="col-sm-7 col-md-7 col-lg-7 mrgT20">
+                                <label>Tobacco User</label>            
+                                <apex:selectList value="{!tobacconicotineuse}" multiselect="false" size="1" styleClass="form-control" required="true">
+                                    <apex:selectOption itemValue="true" itemLabel="Yes"/>
+                                    <apex:selectOption itemValue="false" itemLabel="No"/>  
+                                  </apex:selectList>
+                                  <!--<apex:selectRadio value="{!tobacconicotineuse}" styleClass="radioLabel">
+                                     <apex:selectOption itemLabel="Yes" itemvalue="true"></apex:selectOption>
+                                      <apex:selectOption itemLabel="No" itemvalue="false" > </apex:selectOption>
+                                  </apex:selectRadio>-->
+                                  <!--<select class="form-control"><option>No</option></select>-->
+                              </div>                                                  
+                          </row>
+                          <div class="clearfix">&nbsp;</div>    
+                          <row>
+                               <div class="col-sm-5 col-md-5 col-lg-5 pad-none mrgT20 mrgB20">
+                                <label>Coverage Amount</label>
+                                 <!-- <apex:input value="{!coverageamount}" type="number" styleClass="form-control" required="true" html-placeholder="Coverage Amount"/>-->
+                                  <apex:selectList value="{!coverageamount }" multiselect="false" size="1" styleClass="form-control" required="true">
+                                    <apex:selectOption itemValue="$50,000 - $70,000" itemLabel="$50,000 - $70,000"/>
+                                    <apex:selectOption itemValue="$70,001 - $100,000" itemLabel="$70,001 - $100,000"/>
+                                    <apex:selectOption itemValue="$100,001 - $200,000" itemLabel="$100,001 - $200,000"/>
+                                    <apex:selectOption itemValue="$200,001 - $250,000" itemLabel="$200,001 - $250,000"/>
+                                    <apex:selectOption itemValue="$250,001 - $399,000" itemLabel="$250,001 - $399,000"/>
+                                </apex:selectList>
+                                   <!--<select class="form-control"><option>$100,000</option></select>-->
+                              </div>
+                              <div class="col-sm-7 col-md-7 col-lg-7 mrgT20 mrgB20">
+                                <label>Term Length</label>
+                                    <apex:selectList value="{!termlength }" multiselect="false" size="1" styleClass="form-control" required="true">
+                                        <apex:selectOption itemValue="10" itemLabel="10"/>
+                                        <apex:selectOption itemValue="15" itemLabel="15"/>
+                                        <apex:selectOption itemValue="20" itemLabel="20"/>
+                                        <apex:selectOption itemValue="25" itemLabel="25"/>
+                                        <apex:selectOption itemValue="30" itemLabel="30"/>
+                                    </apex:selectList>
+                                   <!-- <select class="form-control"><option>20 Years</option></select>-->
+                              </div>
+                          </row>
+                          <div class="clearfix">&nbsp;</div>                             
+                         <row>
+                             <div class="col-sm-12 col-md-12 col-lg-12 pad-left-none">
+                             <apex:commandButton styleClass="btn btn-primary btn-lg btn-block" value="Get Your Quote" action="{!seequote}" /> 
+                            <!--<button type="button" class="btn btn-primary btn-lg btn-block mrgT20">Get Your Quote</button>  --> 
+                            </div>  
+                         </row>                  
+                       </div>
+                    </form>
+                    </apex:form>
+                </div>
+            </div>
+        </div>
+    </row>
+    <row>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="footerCopy">© 2015 My Insurance. All rights reserved</div>
+        </div>
+    </row>
+   </div>
+    <apex:includeScript value="{!URLFOR($Resource.MyInsuranceStaticUI, '/MyInsuranceStaticUI/js/jquery-1.10.2.min.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.MyInsuranceStaticUI, '/MyInsuranceStaticUI/js/bootstrap.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.MyInsuranceStaticUI, '/MyInsuranceStaticUI/js/my-insurance.js')}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
+</body>
+</apex:page>

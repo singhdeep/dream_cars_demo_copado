@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Premium Calculation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Premium Calculation</value>
+    </caseValues>
+    <fields>
+        <label><!-- Age Lower --></label>
+        <name>Age_Lower__c</name>
+    </fields>
+    <fields>
+        <label><!-- Age Upper --></label>
+        <name>Age_Upper__c</name>
+    </fields>
+    <fields>
+        <label><!-- Coverage Lower --></label>
+        <name>Coverage_Lower__c</name>
+    </fields>
+    <fields>
+        <label><!-- Coverage Upper --></label>
+        <name>Coverage_Upper__c</name>
+    </fields>
+    <fields>
+        <label><!-- Coverage --></label>
+        <name>Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gender --></label>
+        <name>Gender__c</name>
+    </fields>
+    <fields>
+        <label><!-- Nicotine --></label>
+        <name>Nicotine__c</name>
+    </fields>
+    <fields>
+        <label><!-- Term --></label>
+        <name>Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,124 @@
+<apex:page Controller="CompareMyInsuranceController" standardStylesheets="false" showHeader="false" sidebar="false"  docType="html-5.0">
+<c:CompareInsuranceComponentui >
+<apex:form >
+<body>
+    <div class="container">
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title pad-none">
+                <div class="main-container">
+                    <row>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                        <div class="col-xs-11 col-sm-11 col0-md-11 col-lg-11">
+                        <apex:pageMessages ></apex:pageMessages>                                         
+                            <h2>Lets See How Quickly We Can Get Your Life Insurance Sorted Out.</h2>
+                            <p class="h2-tagline">We’ll help you to get the protection for you and your family</p>
+                        </div>
+                    </row>
+                    <div class="form-container">
+                          <div class="form">                                                 
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT20">
+                                    <h3>How much cover do you need?</h3>
+                                    <div class="h3-copy">This is the amount the policy will pay out <br /> in the event of a claim.</div>                       
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT20">
+                                    <h3>How long do you need your policy to last?</h3>
+                                    <div class="h3-copy">This is the number of years you will be <br /> protected by the policy.</div>
+                                </div>
+                            </row>
+                            <!--<div class="clearfix">&nbsp;</div>-->
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10">
+                                    <div class="form-group">
+                                        <apex:selectList value="{!coverageamount}" multiselect="false" size="1" styleClass="form-control width45per" required="true" >
+                                            <apex:selectOption itemValue="$50,000 - $70,000"  itemLabel="$50,000  - $70,000"/>
+                                            <apex:selectOption itemValue="$70,001 - $100,000" itemLabel="$70,001  - $100,000"/>
+                                            <apex:selectOption itemValue="$100,001 - $200,000" itemLabel="$100,001 - $200,000"/>
+                                            <apex:selectOption itemValue="$200,001 - $250,000" itemLabel="$200,001 - $250,000"/>
+                                            <apex:selectOption itemValue="$250,001 - $399,000" itemLabel="$250,001 - $399,000"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT10">
+                                    <div class="form-group">
+                                        <apex:selectList value="{!term }" multiselect="false" size="1" styleClass="form-control width45per" required="true">
+                                            <apex:selectOption itemValue="10" itemLabel="10"/>
+                                            <apex:selectOption itemValue="15" itemLabel="15"/>
+                                            <apex:selectOption itemValue="20" itemLabel="20"/>
+                                            <apex:selectOption itemValue="25" itemLabel="25"/>
+                                            <apex:selectOption itemValue="30" itemLabel="30"/>
+                                        </apex:selectList>
+                                    </div>
+                                </div>  
+                            </row>
+                            <div class="clearfix">&nbsp;</div>
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10">
+                                    <div class="form-group">
+                                     <label for="Gender" class="custom-label custome-label-wdt">Select Gender</label>  <br />                                                                   
+                                      <apex:selectRadio value="{!gender}">
+                                       <apex:selectOption itemLabel="Male" itemvalue="Male" ></apex:selectOption>
+                                       <apex:selectOption itemLabel="Female" itemvalue="Female" > </apex:selectOption>
+                                       </apex:selectRadio> 
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT10">
+                                    <div class="form-group">
+                                        <label for="DOB" class="custom-label">What is your date of birth?</label>
+                                        <div class="DOB">  
+                                            <ul>
+                                                <li> <apex:selectList value="{!dateofbirth}" size="1" styleClass="form-control"><apex:selectOptions value="{!openPresentationOptions}" /></apex:selectList></li>
+                                                <li><apex:selectList value="{!monthofbirth}" size="1" styleClass="form-control"><apex:selectOptions value="{!monthOptions}" /></apex:selectList></li>
+                                                <li><apex:selectList value="{!yearofbirth}" size="1" styleClass="form-control"><apex:selectOptions value="{!yearOptions}" /> </apex:selectList></li>                                              
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </row>
+                            <div class="clearfix">&nbsp;</div>
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10">
+                                    <div class="form-group">
+                                          <label class="custom-label">Have you used tobacco or nicotine products <br />in the last 12 months?</label>    <br />                                        
+                                           <apex:selectRadio value="{!tobacconicotineuse}">                                       
+                                           <apex:selectOption itemLabel="Yes" itemvalue="true" ></apex:selectOption>
+                                           <apex:selectOption itemLabel="No" itemvalue="false" > </apex:selectOption>
+                                           </apex:selectRadio>                                                                                                   
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 mrgT10">
+                                    <div class="form-group">
+                                        <label for="Pincode" class="custom-label custome-label-wdt">Pincode</label>
+                                        <apex:inputField value="{!l.postalcode}" styleclass="form-control width30per" id="Pincode" html-placeholder="Pincode" required="true"/>
+                                    </div>
+                                </div> 
+                                
+                            </row>
+                            
+                           <div class="clearfix">&nbsp;</div>
+                           <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"> <hr /> </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>   
+                            </row>
+                            <row>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"> 
+                                    <apex:commandButton value="See Results" action="{!seeresult}"  styleClass="btn see-result-btn floatR"/>
+                                 </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>   
+                            </row>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </row>
+    </div>
+</body>
+</apex:form>
+</c:CompareInsuranceComponentui>
+</apex:page>

@@ -1,0 +1,19 @@
+<apex:page Controller="CompareMyInsuranceController" showHeader="false" sidebar="false" standardStylesheets="false" >
+<c:CompareInsuranceComponentui >
+    <div class="container">
+        <div class="main-container">
+            <row>
+                <div class="col-sm-12 col-md-12 col-lg-12 centerDiv">  
+                    <div class="vertical-center-row">
+                        <div>
+                        <img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/thank-you-logo.png')}" alt="Thank you" title="Thank you" border="0" class="thanks-logo" />
+                         <span class="thanks-txt">Thank you for your interest ! Our insurance advisor will get in touch with you soon. Your reference number is: {!referencenumber}.
+                         </span>
+                        </div>
+                    </div>              
+                </div>
+           </row>
+         </div>
+    </div> 
+</c:CompareInsuranceComponentui>
+</apex:page>

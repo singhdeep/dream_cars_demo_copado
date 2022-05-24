@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Salesforce Components - VF, Apex classes, objects etc --></help>
+        <label><!-- Component --></label>
+        <name>CommandCenter__Component__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicate whether the manual step is default for all releases or it is for specific release. --></help>
+        <label><!-- Is Default --></label>
+        <name>CommandCenter__Is_Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Step Type --></label>
+        <name>CommandCenter__Step_Type__c</name>
+        <picklistValues>
+            <masterLabel>Assign Permission Sets</masterLabel>
+            <translation><!-- Assign Permission Sets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Create Custom Settings</masterLabel>
+            <translation><!-- Create Custom Settings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Steps to be performed - like deactivation of trigger, validation rule etc --></help>
+        <label><!-- Steps to perform --></label>
+        <name>CommandCenter__Steps_to_perform__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- PostDeploy --></label>
+        <name>CommandCenter__PostDeploy</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record for the Predeployment --></description>
+        <label><!-- PreDeploy --></label>
+        <name>CommandCenter__PreDeploy</name>
+    </recordTypes>
+</CustomObjectTranslation>

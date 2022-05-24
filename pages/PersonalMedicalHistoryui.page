@@ -1,0 +1,194 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="PersonalMedicalHistory" >
+<apex:form > 
+<body>
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <a href="#" title="Cancel">Cancel</a>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                       New Application
+                    </div>
+                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name"> {!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+         <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 save-row">
+                <row>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>     
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                         <row>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">1</span>
+                                <span class="navLabel">Applicant <br />Details</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="current-state">2</span>
+                                 <span class="navLabel current-state-label">Personal<br />History</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">3</span>
+                                 <span class="navLabel">Payment<br />Details</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">4</span>
+                                 <span class="navLabel">Application<br />Summary</span>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 pad-none">
+                                <span class="default-state">5</span>
+                                 <span class="navLabel">Forms &amp;<br />Disclosures</span>
+                            </div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                          </row>
+                    </div>      
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div> 
+                </row>
+            </div>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                 <div class="main-container create-quote-container">
+                 
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div> 
+                                             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                               <apex:pageMessages id="errorMessage" ></apex:pageMessages><br/>
+                                
+                                    <row>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 personal-history">
+                                            Has the proposed ever been declined any life or disability insurance ?
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 personal-history-radioC">
+                                        
+                                            <apex:selectRadio Value="{!SelVal}" label="Choose answer for Q1" required="true" >
+                                                  <apex:selectoptions Value="{!Item}"></apex:selectoptions>
+                                             </apex:selectRadio>
+                                            
+                                           <!-- <label class="radio-inline"> <input type="radio" id="" value="" /> YES </label>
+                                            <label class="radio-inline"> <input type="radio" id="" value="" /> NO </label>-->
+                                        </div>
+                                    </row>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <row>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 personal-history">
+                                            Has the proposed flown on an aircraft as a pilot/crew in past 2 years or is any such event planned for future ?
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 personal-history-radioC">
+                                            <apex:selectRadio Value="{!SelVal2}" label="Choose answer for Q2" required="true">
+                                                 <apex:selectoptions Value="{!Item2}"></apex:selectoptions>
+                                             </apex:selectRadio>
+                                            <!--<label class="radio-inline"> <input type="radio" id="" value="" /> YES </label>
+                                            <label class="radio-inline"> <input type="radio" id="" value="" /> NO </label>-->
+                                        </div>
+                                    </row>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                     <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <row>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 personal-history">
+                                            Has the proposed used any form of tobacco/nicotine in the last 5 years ?
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 personal-history-radioC">
+                                            
+                                            <apex:selectRadio Value="{!SelVal1}" label="Choose answer for Q3" required="true">
+                                               <apex:selectoptions Value="{!Item1}"></apex:selectoptions>
+                                             </apex:selectRadio>
+                                            <!--<label class="radio-inline"> <input type="radio" id="" value="" /> YES </label>
+                                            <label class="radio-inline"> <input type="radio" id="" value="" /> NO </label>-->
+                                        </div>
+                                    </row>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>             
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="dotted-line"></div>
+                                </div>  
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                            </row>              
+                        </div>
+                    </row>
+                     <div class="clearfix">&nbsp;</div>
+                        <row>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mrgT20">
+                                <row>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>                                         
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <apex:commandbutton action="{!PersonalPrevious}" Value="Previous" styleClass="btn wdt50 btn-primary"/>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <apex:commandbutton action="{!PersonalNext}" Value="Next" styleClass="btn btn-primary wdt50 floatR"/>
+                                    </div>  
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>   
+                                </row>              
+                            </div>
+                        </row>
+                       <div class="clearfix">&nbsp;</div>
+                </div>
+            </div>
+        </row>
+    </div>
+</body>
+</apex:form>
+</c:ContactManagementComponentui> 
+</apex:page>

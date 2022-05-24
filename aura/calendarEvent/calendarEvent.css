@@ -1,0 +1,30 @@
+.THIS .customAlign{
+   width: 50% !important;
+   display: inline !important;
+}
+.THIS .customSpace {
+    margin-bottom: 0.4rem !important;
+}
+.THIS .customTopSpace {
+    margin-top: 0.5rem;
+    bottom: 1rem;
+}
+.THIS .dateField .datePicker-openIcon {
+    margin-left: 17.5rem;
+    margin-top: -5.5rem;
+    bottom: 1.5rem;
+}
+.THIS .btn {
+    padding-left: 0rem !important;
+    padding-right: 0rem !important;
+}
+.THIS .headerCustom {
+    display: inline !important;
+    margin-left: 1rem !important;
+}
+.THIS .new{
+    text-align:center;
+    font-size: 180%;
+    
+    
+}

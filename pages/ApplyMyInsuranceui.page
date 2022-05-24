@@ -1,0 +1,212 @@
+<apex:page controller="CompareMyInsuranceController" standardStylesheets="false" showHeader="false" sidebar="false"  docType="html-5.0">
+<c:CompareInsuranceComponentui >
+<!-- Demo DEvOPs-->
+<apex:form >
+ <body>
+    <div class="container">
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title pad-none">
+                <div class="main-container">
+                <apex:pageMessages ></apex:pageMessages>                    
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none section-1">
+                            <div><span class="cover-amount-label">Cover Amount</span><span class="tenure-protection-label">Tenure of protection</span></div>
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-right">  
+                                   <div class="plus-minus-container">
+                                        <div class="inputLabel">
+                                            <apex:selectList value="{!coverageamount}" multiselect="false" size="1" styleClass="form-control" required="true" >
+                                                <apex:selectOption itemValue="$50,000 - $70,000"  itemLabel="$50,000  - $70,000"/>
+                                                <apex:selectOption itemValue="$70,001 - $100,000" itemLabel="$70,001  - $100,000"/>
+                                                <apex:selectOption itemValue="$100,001 - $200,000" itemLabel="$100,001 - $200,000"/>
+                                                <apex:selectOption itemValue="$200,001 - $250,000" itemLabel="$200,001 - $250,000"/>
+                                                <apex:selectOption itemValue="$250,001 - $399,000" itemLabel="$250,001 - $399,000"/>
+                                            </apex:selectList>               
+                                        </div>                                      
+                                    </div>                                                          
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>                                
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <div class="plus-minus-container">
+                                        <div class="inputLabel">
+                                            <apex:selectList value="{!term }" multiselect="false" size="1" styleClass="form-control" required="true">
+                                                <apex:selectOption itemValue="10" itemLabel="10"/>
+                                                <apex:selectOption itemValue="15" itemLabel="15"/>
+                                                <apex:selectOption itemValue="20" itemLabel="20"/>
+                                                <apex:selectOption itemValue="25" itemLabel="25"/>
+                                                <apex:selectOption itemValue="30" itemLabel="30"/>
+                                           </apex:selectList>
+                                        </div>                                          
+                                    </div>                                  
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <row>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">                                          
+                                            <div  class="col-xs-7 col-sm-7 col-md-7 col-lg-7 pad-none">
+                                                <div class="ADB-rider">Accidental Death Benefit Rider</div>
+                                                <div class="rider">
+                                                 <apex:selectRadio value="{!rider}">
+                                                       <apex:selectOption itemLabel="Yes" itemvalue="Yes" ></apex:selectOption>
+                                                       <apex:selectOption itemLabel="No" itemvalue="No" > </apex:selectOption>
+                                                   </apex:selectRadio>                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                                <div class="mrgT10">
+                                                <apex:commandLink value="Update" styleClass="update-btn" />
+                                                <!--<a href="#" role="button" class="update-btn">Update</a>-->
+                                                </div>
+                                            </div>                                      
+                                        </div>
+                                    </row>
+                                </div>
+                            </row>
+                        </div>
+                    </row>  
+                    <div class="clearfix">&nbsp;</div>  
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="policy-compare-container-title">
+                              <div class="rating-title">A.M. Best <br />Ratings</div>                                  
+                              <div class="claims-paid-title">% of Life <br /> Claims Paid</div>
+                              <div class="ADB-available">Accidental <br />Death Benefit <br /> Available</div>
+                              <div class="apply-online-title">Customer<br />Feedback</div>
+                              <div class="premium-title">You Pay</div>
+                            </div>
+                         </div>
+                    </row>                                    
+                    <div class="clearfix">&nbsp;</div>  
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="policy-compare-container">
+                                <ul>
+                                    <li class="company-logo"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/oliver-logo-1.jpg')}" title="oliver" border="0" />
+                                    <span class="market-share"> Market Share - <strong>17%</strong> </span>
+                                    </li>     
+                                    <li class="rating"><strong>B+</strong></li>                               
+                                    <li class="claims-paid">95%</li>
+                                    <li class="ADB"><span class="no-icon"></span></li>
+                                    <li class="apply-online"><span class="rating-4"></span></li>
+                                    <li class="installment-col"><span class="monthly-amt">                                                                      
+                                     <apex:outputText value="$ {!Quote1Amnt}" id="quoteamt1"/>
+                                    </span> <br /><span class="per-month">per month</span></li>
+                                    <li class="GP-ticket">&nbsp;</li>                                   
+                                    <li class="apply-btn">
+                                        <div class="mrgT10"><apex:commandButton value="Apply Online" styleClass="btn btn-primary"/></diV>
+                                        <div class="mrgT10"><apex:commandButton value="Apply by Phone" styleClass="btn btn-primary"/></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </row>     
+                     <div class="clearfix">&nbsp;</div> 
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="policy-compare-container">
+                                <ul>
+                                    <li class="company-logo"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/my-insurance-logo-1.jpg')}" alt="My Insurance" title="My Insurance" border="0" />
+                                        <span class="market-share"> Market Share - <strong>21.5%</strong> </span>
+                                    </li>                                    
+                                    <li class="rating"><strong>A+</strong></li>
+                                    <li class="claims-paid">95.7%</li>
+                                    <li class="ADB"><span class="yes-icon"></span></li>
+                                    <li class="apply-online"><span class="rating-4-5"></span></li>
+                                    <li class="installment-col"><span class="monthly-amt">
+                                    <apex:outputText value="$ {!QuoteAmnt}" id="quoteamt2"/>
+                                    </span> <br /><span class="per-month">per month</span></li>
+                                    <li class="GP-ticket pad-none"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/GP-ticket.jpg')}" title="GP ticket" border="0" /></li>
+                                    
+                                    <li class="apply-btn">
+                                        <!--<div class="mrgT10">&nbsp;</diV>-->
+                                       <div class="mrgT10"><apex:commandButton value="Apply Online" styleClass="btn btn-primary"/></diV>
+                                        <div class="mrgT10"><apex:commandButton value="Apply by Phone" action="{!apply}" styleClass="btn btn-primary"/></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </row>    
+                     <div class="clearfix">&nbsp;</div>                    
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="policy-compare-container">
+                                <ul>
+                                    <li class="company-logo"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/Ist-state-logo-1.jpg')}" alt="Ist state" title="Ist state" border="0" />
+                                        <span class="market-share"> Market Share - <strong>16%</strong> </span>
+                                    </li>                                    
+                                    <li class="rating"><strong>A</strong></li>
+                                    <li class="claims-paid">94.6%</li>
+                                    <li class="ADB"><span class="no-icon"></span></li>
+                                    <li class="apply-online"><span class="rating-3-5"></span></li>
+                                    <li class="installment-col"><span class="monthly-amt">
+                                   <!-- $ {!Quote2Amnt}-->
+                                    <apex:outputText value="$ {!Quote2Amnt}" id="quoteamt3"/>
+                                    </span> <br /><span class="per-month">per month</span></li>
+                                    <li class="GP-ticket"> &nbsp;</li>
+                                    <li class="apply-btn">
+                                    <div class="mrgT10"><apex:commandButton value="Apply Online" styleClass="btn btn-primary"/></diV>
+                                        <div class="mrgT10"><apex:commandButton value="Apply by Phone" styleClass="btn btn-primary"/></div>                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </row>  
+                     <div class="clearfix">&nbsp;</div> 
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="policy-compare-container">
+                                <ul>
+                                    <li class="company-logo"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/marksmith-logo-1.jpg')}" alt="" title="" border="0" />
+                                        <span class="market-share"> Market Share - <strong>16%</strong> </span>
+                                    </li>                                    
+                                    <li class="rating"><strong>A</strong></li>
+                                    <li class="claims-paid">94.6%</li>
+                                    <li class="ADB"><span class="no-icon"></span></li>
+                                    <li class="apply-online"><span class="rating-4"></span></li>
+                                    <li class="installment-col"><span class="monthly-amt">
+                                    <apex:outputText value="$ {!Quote3Amnt}" id="quoteamt22222"/>
+                                    </span> <br /><span class="per-month">per month</span></li>
+                                    <li class="GP-ticket pad-none">&nbsp; </li>
+                                    
+                                    <li class="apply-btn">
+                                        <!--<div class="mrgT10">&nbsp;</diV>-->
+                                       <div class="mrgT10"><apex:commandButton value="Apply Online" styleClass="btn btn-primary"/></diV>
+                                        <div class="mrgT10"><apex:commandButton value="Apply by Phone" styleClass="btn btn-primary"/></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </row>                      
+                    <div class="clearfix">&nbsp;</div>                     
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="policy-compare-container">
+                                <ul>
+                                    <li class="company-logo"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/family-logo-1.jpg')}" alt="Ist state" title="Ist state" border="0" />
+                                        <span class="market-share"> Market Share - <strong>16%</strong> </span>
+                                    </li>                                    
+                                    <li class="rating"><span><strong>A</strong></span></li>
+                                    <li class="claims-paid">93.8%</li>
+                                    <li class="ADB"><span class="no-icon"></span></li>
+                                    <li class="apply-online"><span class="rating-4"></span></li>
+                                    <li class="installment-col"><span class="monthly-amt">
+                                   <!-- $ {!Quote2Amnt}-->
+                                    <apex:outputText value="$ {!Quote4Amnt}" id="quoteamt30000"/>
+                                    </span> <br /><span class="per-month">per month</span></li>
+                                    <li class="GP-ticket"> &nbsp;</li>
+                                    <li class="apply-btn">
+                                    <div class="mrgT10"><apex:commandButton value="Apply Online" styleClass="btn btn-primary"/></diV>
+                                        <div class="mrgT10"><apex:commandButton value="Apply by Phone" styleClass="btn btn-primary"/></div>                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </row>        
+                </div>
+            </div>
+        </row>
+    </div>
+</body>
+</apex:form>
+</c:CompareInsuranceComponentui> 
+</apex:page>

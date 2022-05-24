@@ -1,0 +1,176 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+<apex:includeScript value="{!URLFOR($Resource.guage, 'js/raphael.2.1.0.min.js')}"/> 
+<apex:includeScript value="{!URLFOR($Resource.guage, 'js/justgage.1.0.1.min.js')}"/> 
+
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="Prospect_Details" >
+<apex:form > 
+<!--<apex:pageMessages />-->
+<!--<apex:inputHidden value="{!Lead.Interest__c}"/>-->
+    <div class="container-fluid pad-none">
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none">
+                <row>
+                    <header class="header">
+                        <row>
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 pad-none">
+                                Prospect Details
+                            </div>
+                             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name">{!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                            </div>
+                        </row>
+                    </header>
+                </row>
+                <div class="main-container Prospect_Details_Save">
+                <apex:pageMessages ></apex:pageMessages>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 home-name-row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pad-left-none">
+                                <h3>{!leadObj.FirstName} {!leadObj.LastName}</h3>
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col0-md-8 col-lg-8 floatR">                            
+                                <!--<button type="button" class="btn btn-primary">Create Quote</button>--> 
+                                <!--<button type="button" class="btn btn-primary">Edit Details</button>-->
+                                <div class="txt-alignR">
+                                    <apex:commandButton value="Create Quote" action="{!convertLeadToAccAndOpp}" styleClass="btn btn-primary mrgR10"/>                                  
+                                    <apex:commandButton value="Edit Details" action="{!editLead}" styleClass="btn btn-primary "/>    
+                                </div>                       
+                            </div>
+                        </div>
+                    </row>
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                   
+                            <div class="col-xs-2 col-sm-2 col0-md-2 col-lg-2 pad-none">
+                                <div class="ppicture">
+                                <apex:image url="{!leadObj.Facebook_Profile_URL__c}" styleClass="ppicture" />
+                                </div>                 
+                                <div id="gauge" class="prospectAM-bar"></div>                                     
+                            </div>
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 floatR pad-none">   
+                                        <!--<a href="#" title="face-book" class="face-book-icon floatR">&nbsp;</a> -->
+                                        <a href="javascript:sforce.one.navigateToURL('https://www.facebook.com/login/');" title="face-book" class="face-book-icon floatR">&nbsp;</a>                                    
+                                        <a href="#" title="skyp" class="skyp-icon floatR"></a>  
+                                        <!--<a href="#" title="phone" class="ph-icon floatR"></a>-->
+                                        <a target="_blank" class="ph-icon floatR" href="tel:{!leadObj.Phone}">&nbsp;</a>                                    
+                                    </div>
+                                </row>
+                                <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padL40">
+                                        <div class="address-label">Address</div>                                        
+                                        <apex:outputText value="{!leadObj.Street+if(AND(leadObj.street==NULL,leadObj.street==''),'',',') + leadObj.city+if(AND(leadObj.city==NULL,leadObj.city==''),'',',')}" /><br/>
+                                        <apex:outputText value="{!leadObj.state+if(AND(leadObj.state==NULL,leadObj.state==''),'',',')+leadObj.country+if(AND(leadObj.country==NULL,leadObj.country==''),'',',')+leadObj.PostalCode}"/>
+                                    </div>
+                                </row>
+                                <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none mrgT20">
+                                        <row>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padL40">
+                                                <label>Phone</label><br />
+                                                 <apex:outputField value="{!leadObj.Phone}" styleClass="form-control"/>  
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Preferred Contact Time</label><br />
+                                                <apex:outputField value="{!leadObj.Preferred_contact_time__c}" styleClass="form-control"/>  
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Email</label><br />
+                                                {!leadObj.Email}
+                                                
+                                            </div>
+                                        </row>
+                                    </div>
+                                </row>
+                                  <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none mrgT20">
+                                        <row>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padL40">
+                                                <label>Gender</label><br />
+                                                 <apex:outputField value="{!leadObj.Gender__c}" styleClass="form-control"/> 
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Date of Birth</label><br />
+                                                <apex:outputField value="{!leadObj.D_O_B__c}" styleClass="form-control"/>
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Reference No</label><br />
+                                                <apex:outputField value="{!leadObj.Reference_Number__c}" styleClass="form-control"/>
+                                            </div>
+                                        </row>
+                                    </div>
+                                </row>
+                                  <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none mrgT20">
+                                        <row>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padL40">
+                                                <label>Occupation</label><br />
+                                                <apex:outputField value="{!leadObj.Occupation__c}" styleClass="form-control"/> 
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Annual Income</label><br />
+                                                <apex:outputField value="{!leadObj.AnnualRevenue}" styleClass="form-control"/>
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Marital Status</label><br />
+                                                <apex:outputField value="{!leadObj.Marital_Status__c}" styleClass="form-control"/> 
+                                            </div>
+                                        </row>
+                                    </div>
+                                </row>
+                                  <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none mrgT20">
+                                        <row>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padL40">
+                                                <label>Weight (lbs)</label><br />
+                                                <apex:outputField value="{!leadObj.Weight__c}" styleClass="form-control"/> 
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Height (inches)</label><br />
+                                                <apex:outputField value="{!leadObj.Height__c}" styleClass="form-control"/> 
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Children</label><br />
+                                                <apex:outputField value="{!leadObj.Children__c}" styleClass="form-control"/>  
+                                            </div>
+                                        </row>
+                                    </div>
+                                </row>
+                                  <row>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none mrgT20">
+                                        <row>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padL40">
+                                                <label>Product Interest</label><br />
+                                                 <apex:outputField value="{!leadObj.Product_Interest__c}" styleClass="form-control"/>
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <label>Facebook ID</label><br />
+                                                 <apex:outputField value="{!leadObj.Facebook_ID__c}" styleClass="form-control"/> 
+                                            </div>
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">&nbsp;</div>
+                                        </row>
+                                    </div>
+                                </row>
+                            </div>
+                        </div>
+                    </row>
+                </div>
+            </div>
+        </row>
+    </div>
+</apex:form>   
+</c:ContactManagementComponentui>
+<script>
+  var g = new JustGage({
+    id: "gauge",
+    value: {!guageVar},
+    min: 0,
+    max: 100,
+    title: 'Prospect Agent Match',
+    titleFontColor :'#2aace2',
+    levelColorsGradient : false,
+    levelColors : ['#008000','#008000','#008000']  
+  });
+</script>
+</apex:page>

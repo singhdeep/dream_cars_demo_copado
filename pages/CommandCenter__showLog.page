@@ -1,0 +1,78 @@
+<apex:page controller="CommandCenter.AttachementController" showHeader="false" standardStylesheets="false">
+    <apex:stylesheet value="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/styles/salesforce-lightning-design-system.css')}"/>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+    <style>
+        
+        .hide {
+          display: none;
+        }
+        
+        .sectionHeader{
+            background: #dcf9a2;
+            padding: 5px;
+        }
+        
+        .sectionHeaderIcon{
+            width:20px;
+            height:20px;
+        }
+        
+        .pageHeader{
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.75rem;
+            color: white;
+        }
+        
+        .releaseSection{
+            padding-right: 0rem;
+        }
+        .breadcrum{
+            color:white;
+        }
+    </style>
+    
+    </head>
+    <title>
+        Release Management
+    </title>
+    <body style="{!IF((contains(stageObj.Name, 'TAS') || contains(stageObj.Name, 'tas')), 'width: 100%;padding-left: 0px;', '')}">
+        <apex:form id="frm">
+            
+            <c:NavHeaderComp ></c:NavHeaderComp>
+            
+            <div class="slds-page-header" role="banner" style="background: lightgray ; padding-top: 0px;">
+                
+                <!-- Panel -->
+                <apex:outputPanel id="deployPanel">
+                    <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap">
+                        <div class="slds-form--stacked slds-grow slds-scrollable--x">
+                            <div class="slds-panel__section slds-has-divider--bottom">
+                                <div class="slds-panel__section">
+                                    <h3 class="slds-text-heading--small slds-m-bottom--medium sectionHeader">
+                                        <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/doctype/html_60.png')}" class="sectionHeaderIcon"/>
+                                        {!stageObj.Deployment__r.Name} > {!stageObj.Name} > {!docName}
+                                    </h3>
+                                    
+                                    <div class="slds-form-element slds-hint-parent">
+                                        <div class="slds-form-element__control" style="{!IF((contains(stageObj.Name, 'TAS') || contains(stageObj.Name, 'tas')), 'margin-left: 0px;', 'margin-left: 25%;')}">
+                                            <apex:outputText value="{!strHTML}" escape="false"></apex:outputText>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <!-- /Panel -->
+            </div>
+        </apex:form>
+    </body>
+  </html>
+</apex:page>

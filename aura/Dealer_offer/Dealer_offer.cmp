@@ -1,0 +1,51 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <div class="dealerofferbody">
+        <div class="slds-text-heading_large slds-bold">
+            <lightning:icon iconName="standard:campaign" size="large" alternativeText="Offers"/>
+            Offers 
+        </div>
+        <ul class="slds-accordion">
+            <li class="slds-accordion__list-item">
+                <section class="slds-accordion__section slds-is-open">
+                    <div class="slds-accordion__summary">
+                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                            <button aria-controls="accordion-details-01" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action">
+                                <lightning:icon iconName="utility:switch"/>
+                                <span class="slds-truncate" title="Offer1">10% discount on direct payment by cash</span>
+                            </button>
+                        </h3>
+                    </div>
+                    <div aria-hidden="false" class="slds-accordion__content" id="accordion-details-01">For more details, reach out to the store</div>
+                </section>
+                <div class="Rollback"></div>
+            </li>
+            <li class="slds-accordion__list-item">
+                <section class="slds-accordion__section">
+                    <div class="slds-accordion__summary">
+                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                            <button aria-controls="accordion-details-02" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action">
+                                <lightning:icon iconName="utility:switch"/>
+                                <span class="slds-truncate" title="Offer2">20% disount on finance with dealer</span>
+                            </button>
+                        </h3>
+                    </div>
+                    <div aria-hidden="true" class="slds-accordion__content" id="accordion-details-02">For more details, reach out to the store</div>
+                </section>
+            </li>
+            <li class="slds-accordion__list-item">
+                <section class="slds-accordion__section">
+                    <div class="slds-accordion__summary">
+                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                            <button aria-controls="accordion-details-03" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action">
+                                <lightning:icon iconName="utility:switch"/>
+                                <span class="slds-truncate" title="Offer3">5% discount on accessories</span>
+                            </button>
+                           
+                        </h3>
+                    </div>
+                    <div aria-hidden="true" class="slds-accordion__content" id="accordion-details-03">For more details, reach out to the store</div>
+                </section>
+            </li>
+        </ul>
+    </div>
+</aura:component>

@@ -1,0 +1,129 @@
+<apex:page Controller="CompareMyInsuranceController" standardStylesheets="false" showHeader="false" sidebar="false"   docType="html-5.0">
+<c:CompareInsuranceComponentui >
+ <apex:form >
+  <body>
+    <div class="container">
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title pad-none">
+                <div class="main-container">                    
+                    <row>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none policy-summary-container">
+                            <row>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 back-to-result">
+                                    <div>
+                                        <div><span class="back-to-result-icon"></span></div>
+                                        <div class="back-to-link">
+                                        <!--<a href="#" class="back-to-link" title="Back to Results">Back to Results</a>-->
+                                        <apex:commandLink value="Back to results" action="{!backtoresults}" styleclass="back-to-link"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 policy-quote-details">
+                                    <div><em>Your policy (<strong>Quote Ref No: {!referencenumber}</strong>) for <strong>{!firstname}{!lastname} is of</strong> <span class="highliter"> {!coverageamount }</span> cover over  <span class="highliter"> {!term} years</span> for  <span class="highliter"><strong>${!Quote} </strong></span> a month</em></div>
+                                    <div></div>         
+                                </div>
+                            </row>
+                        </div>
+                    </row>  
+                    <div class="clearfix">&nbsp;</div>
+                    <row>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                        <div class="col-xs-11 col-sm-11 col0-md-11 col-lg-11 mrgB10">
+                            <h2>To apply for this product</h2>
+                        </div>
+                    </row>
+                    <row>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">&nbsp;</div>
+                        <div class="col-xs-3 col-sm-3 col0-md-3 col-lg-3 call-us-container mrgT20">
+                            <h3>You can call us</h3>
+                             <div class="mrgT10 call-us call-us-icon">0800 170 1952</div>
+                             <div class="clearfix">&nbsp;</div>
+                            <div class="quote-ref">Quoting Reference: <strong>{!referencenumber}</strong></div>
+                            <div><hr /></div>
+                            <div class="working-days">
+                                <ul>
+                                    <li>Mon - Fri</li>
+                                    <li class="highliter">9am - 8pm</li>
+                                    <li>Sat</li>
+                                    <li class="highliter">9am - 2pm</li>
+                                    <li>Sun</li>
+                                    <li class="highliter">Closed</li>
+                                </ul>
+                            </div>
+                             <div class="clearfix">&nbsp;</div>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="or-icon"><div class="or-icon"><img src="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/images/or-icon.png')}" title="" border="0" /></div></div>
+                        </div>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 mrgT20 we-call-back-container">
+                            <h3>We can call you back</h3>
+                            <div class="clearfix">&nbsp;</div>
+                            <row>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none mrgR5">
+                                    <label for="First Name">First Name</label>   
+                                    <apex:inputText value="{!firstname}" styleClass="form-control" Html-placeholder="First Name" required="true"/>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none mrgR5">
+                                    <label for="Middle Name">Middle Name</label>
+                                    <apex:input value="{!middleName}" styleClass="form-control" Html-placeholder="Middle Name" />
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none">
+                                    <label for="Last Name">Last Name</label>
+                                    <apex:inputText value="{!lastname }" styleClass="form-control" Html-placeholder="Last Name" required="true"/>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">&nbsp;</div>                               
+                            </row>
+                            <div class="clearfix">&nbsp;</div>              
+                            <row>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT20 pad-none">
+                                    <label for="Email">Email</label>
+                                    <apex:inputfield value="{!l.Email }" type="text"  styleClass="form-control" Html-placeholder="Email" required="true" />
+                                </div>                              
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">&nbsp;</div>    
+                            </row>  
+                            <div class="clearfix">&nbsp;</div>  
+                            <row>                               
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mrgT20 pad-none mrgR5">
+                                    <label for="Phone">Phone</label>
+                                     <apex:inputfield value="{!l.Phone }" type="text"  styleClass="form-control" required="true" onkeypress="return isNumberKey(event)" />
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mrgT20 pad-none">
+                                    <label for="Preferred contact time" class="PCtime">Preferred contact time</label>
+                                    <apex:inputField value="{!l.Preferred_contact_time__c}" styleClass="form-control"/>
+                                    <!--<select class="form-control">
+                                      <option>9am-6pm</option>
+                                    </select>-->
+                                </div>  
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">&nbsp;</div>                       
+                            </row>
+                            <div class="clearfix">&nbsp;</div>
+                            <row>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pad-none">
+                                 <apex:commandButton value="Back" action="{!BackconfirmApplInsu}" styleClass="btn btn-primary" ></apex:commandButton>&nbsp;
+                                <apex:commandButton value="Submit" action="{!createlead}" title="Submit" styleClass="btn btn-primary-block btn-lg btn-block rightarrow-icon mrgT10"/>
+                                 <!--<apex:commandButton value="Back" action="{!BackconfirmApplInsu}" styleClass="btn btn-primary" ></apex:commandButton>&nbsp; -->                              
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">&nbsp;</div>
+                            </row>  
+                            <row>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none privacy-policy">
+                                    <div>By clicking “submit” you are agreeing to the policy<br />
+                                        these <a href="#" title="terms and conditions">terms and conditions </a> and <a href="#" title="privacy policy">privacy policy</a>
+                                    </div>
+                                </div>
+                            </row>                              
+                        </div>
+                    </row>
+                     <div class="clearfix">&nbsp;</div>         
+                </div>
+            </div>
+        </row>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/compare-insurance.js"></script>
+  </body>
+ </apex:form>
+</c:CompareInsuranceComponentui>
+</apex:page>

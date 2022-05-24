@@ -1,0 +1,272 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" standardStylesheets="false" applyBodyTag="false" renderAs="pdf" action="{!getDetails}">     
+    <head>
+
+        <style>
+
+            .companyName {  font:30px; 
+                            color: red;
+                         } 
+                                   
+
+        </style>
+
+    </head>
+<body>
+<a href="#" STYLE="position:right"> <img src="{!URLFOR($Resource.MyInsuranceStaticUI, '/MyInsuranceStaticUI/images/logo.png')}" title="My Insurance" border="0" /> </a> <br/>
+<br/>
+
+ <apex:outputText styleClass="companyName" value="Life Insurance Application"/><br/>
+ <br/>
+    An instruction sheet is attached to assist you in completing this application.
+    Please review the application upon completion to ensure all required information has been provided.<br/>
+    <br/>
+    <hr/>
+    <h2>1. Proposed Insured</h2>
+    <table>
+        <tr>
+             <td width="120"><b>First Name</b></td>
+             <td width="300"> 
+                 <apex:outputText value="{!accList.FirstName}"></apex:outputText> 
+             </td>
+              <td width="100"><b>Last Name</b></td>
+              <td width="100">
+                  <apex:outputText value="{!accList.LastName}"></apex:outputText> 
+              </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+        <tr>
+             <td width="120"><b>Gender</b></td>
+             <td width="300"> 
+                 <apex:outputText value="{!accList.Gender__c}"></apex:outputText> 
+             </td>
+             <td width="110"><b>Marital Status</b></td>
+             <td width="100"> 
+                 <apex:outputText value="{!accList.Marital_Status__c}"></apex:outputText> 
+             </td>
+        </tr> 
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+        <tr>
+             <td width="120"><b>DOB (mm/dd/yyyy)</b></td>
+             <td width="295"> 
+                 <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                         <apex:param value="{!leadObj.D_O_B__c}" />
+                                    </apex:outputText> 
+             </td>
+             <td width="110"><b>SSN</b></td>
+             <td width="100"> 
+                 <apex:outputText value="{!accList.Tax_ID__c}"></apex:outputText> 
+             </td>
+        </tr> 
+                <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+        <tr>
+             <td width="130"><b>Address</b></td>
+             <td width="150"> 
+                 <apex:outputText value="{!leadAdd}"></apex:outputText>
+             </td>            
+        </tr> 
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+        <tr>
+             <td width="130"><b>City</b></td>
+             <td width="300"> 
+                 <apex:outputText value="{!accList.billingcity}"></apex:outputText>
+             </td>
+             <td width="110"><b>State</b></td>
+             <td width="100"> 
+                 <apex:outputText value="{!accList.BillingState}"></apex:outputText> 
+             </td>            
+             
+        </tr> 
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+        <tr>
+             
+             <td width="130"><b>Zip</b></td>
+             <td width="300"> 
+                 <apex:outputText value="{!accList.BillingPostalCode}"></apex:outputText> 
+             </td>
+             <td width="100"><b>Country</b></td>
+             <td width="100"> 
+                 <apex:outputText value="{!accList.BillingCountry}"></apex:outputText> 
+             </td>
+             
+        </tr> 
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+        <tr>
+             <td width="130"><b>Height</b></td>
+             <td width="300"> 
+                 <apex:outputText value="{!accList.Height__c}"></apex:outputText> 
+             </td>  
+             
+             <td width="50"><b>Weight</b></td>
+             <td width="100"> 
+                 <apex:outputText value="{!accList.Weight__c}"></apex:outputText> 
+             </td>          
+        </tr> 
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+        <tr>
+             <td width="130"><b>Phone</b></td>
+             <td width="300"> 
+                 <apex:outputText value="{!accList.phone}"></apex:outputText> 
+             </td>  
+             
+             <td width="100"><b>Email</b></td>
+             <td width="100"> 
+                 <apex:outputText value="{!accList.PersonEmail}"></apex:outputText> 
+             </td>          
+        </tr> 
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+
+    </table>
+    <br/>
+    <hr/>
+    <br/>
+    <h2 font = "30px">2. Policy Information</h2>
+    <table>
+        <tr>
+             <td width="150"><b>Plan Name</b></td>
+             <td width="260"> 
+                 <apex:outputText value="{!selectedProduct}"></apex:outputText> 
+             </td>
+             <td width="100"><b>Face Amount</b></td>
+              <td width="100">
+                  <apex:outputText value="{!selectedSumInsured}"></apex:outputText> 
+              </td>
+              
+        </tr>
+     </table>
+    <br/>
+    <hr/>
+    <br/>
+    <br/>
+    <br/>
+    <h2 font = "30px">3. Premium Payment Information</h2>
+    
+    <table>
+        <tr>
+             <td width="200"><b>Source of the initial premium?</b></td>
+             <td width="550"> 
+                 <apex:outputText value="{!selectedModeOfPayment}"></apex:outputText> 
+             </td>
+             <td width="100"><b>Billing Frequency </b></td>
+             <td width="304"> 
+                 <!--<apex:outputText value="{!selectedPaymentTerm}"></apex:outputText> -->
+                 <apex:outputText value="{!billingFreq}"></apex:outputText>
+                 
+             </td>
+              
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>  
+        </tr>
+       <!-- <tr>
+             <td width="100"><b>Planned Premium</b></td>
+             <td width="304"> 
+                 <apex:outputText value="{!premiumAmount}"></apex:outputText> 
+             </td>
+              
+        </tr>-->
+         <tr>
+             <td width="200"><b>Bill Payment Method </b></td>
+             <td width="460"> 
+                 <apex:outputText value="{!modeOfPayement}" ></apex:outputText> 
+             </td>
+             <td width="110"><b>Premium Amount</b></td>
+             <td width="304"> 
+                 <apex:outputText value="{!premiumAmount}"></apex:outputText> 
+             </td>
+              
+        </tr>
+   </table>
+   <br/>
+    <hr/>
+    <br/>
+    <h2 font = "30px">4. Riders</h2>
+    <table>
+        <tr>
+             <td width="200"><b>Rider</b></td>
+             <td width="304"> 
+                 <apex:outputText value="{!selectedRider}"></apex:outputText> 
+             </td>
+             
+              
+        </tr>
+    </table>
+    <br/>
+    <hr/>
+    <br/>
+    <h2 font = "30px">5. Personal History </h2>
+    
+    <table>
+        <tr>
+             <td><b>Has the Proposed Insured ever had a request for Life or Disability insurance declined, rated, canceled, or restricted in
+                                any way?</b></td>
+             <td> 
+                 <apex:outputText value="{!TextQus1}"></apex:outputText> 
+             </td>            
+              
+        </tr>
+        <br/>
+        
+        <tr>
+             <td><b>Has the Proposed Insured flown on an aircraft as a pilot or crew member in the past two years,or any such flights
+                    planned in the future?</b></td>
+             <td> 
+                 <apex:outputText value="{!TextQus2}"></apex:outputText> 
+             </td>            
+              
+        </tr>
+        <br/>
+        
+        <tr>
+             <td width = "900"><b>Within the last 5 years, has the Proposed Insured used any form of tobacco or nicotine?</b></td>
+             <td> 
+                 <apex:outputText value="{!TextQus3}"></apex:outputText> 
+             </td>            
+              
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+      Signature: <br/><br/> <div align="center" style="background-color: lightgrey;
+                                            width: 300px;
+                                            border: 1px solid navy;
+                                            ">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </body>
+</apex:page>

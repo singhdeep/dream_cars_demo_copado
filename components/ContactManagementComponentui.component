@@ -1,0 +1,31 @@
+<apex:component controller="QuotePageController">
+<apex:attribute name="leadid" type="String" description="leadsid"/> 
+<apex:attribute name="activeVar" type="String" description="activeVar"/> 
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>SF1 App</title>
+     <apex:stylesheet value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/css/jquery-ui.css')}"/>
+     <apex:stylesheet value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/css/bootstrap.min.css')}"/>
+     <apex:stylesheet value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/css/SF-one-app.css')}"/>
+     <apex:stylesheet value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/css/SF-one-appMQs.css')}"/>
+     
+    <!--<apex:stylesheet value="{!URLFOR($Resource.CompareInsuranceStaticUI, '/CompareInsuranceStaticUI/css/bootstrap.min.css')}"/>-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->          
+</head>
+<body>
+<apex:componentBody >
+</apex:componentBody>   
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/jquery-1.10.2.min.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/jquery-ui.min.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/bootstrap.min.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.SF1AppStaticUI, '/SF1AppStaticUI/js/SF-one-app.js')}"/>  
+</body>
+</apex:component>

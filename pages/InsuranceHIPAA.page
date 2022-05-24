@@ -1,0 +1,92 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" standardController="lead" >
+
+<!--<head>
+Testing by Priti
+    <apex:stylesheet value="{!URLFOR($Resource.NewBootStrap, 'css/bootstrap.css')}"/>
+
+
+
+</head>-->
+
+<div class="row" style="float: right; text-align:right">
+Authorization for Release of<br/>
+Personal Health-Related Information<br/>
+This authorization complies with the HIPAA Privacy Rule<br/>
+For Life and Disability Only<br/>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div>
+
+{!lead.FirstName} {!lead.LastName}<br/>
+Name of Proposed Insured/Patient (please print)
+
+
+
+<div  style="float: right; text-align:right">
+
+<apex:outputText value="{0, date, MM/dd/yyyy}">
+<apex:param value="{!lead.D_O_B__c}" />
+</apex:outputText><br/>
+Date of Birth:
+
+</div>
+
+</div>
+<br/>
+<br/>
+<br/>
+
+I authorize any health plan, physician, health care professional, hospital, clinic, laboratory, pharmacy,
+medical facility, or other health care provider that has provided payment, treatment or services to me or on
+my behalf within the past 10 years (“My Providers”) to disclose my entire medical record and any other
+personal health information concerning me to this Insurance Company and its
+affiliated insurance companies, its agents, employees, and representatives (collectively referred to as “The
+Companies”). This includes information on the diagnosis or treatment of Human Immunodeficiency Virus
+(HIV) infection and sexually transmitted diseases. This also includes information on the diagnosis and
+treatment of mental illness and the use of alcohol, drugs, and tobacco, but excludes psychotherapy notes.
+Psychotherapy notes means notes recorded (in any medium) by a health care provider who is a mental
+health professional documenting or analyzing the contents of conversation during a private counseling
+session or a group, joint, or family counseling session and that are separated from the rest of the individual’s
+medical record. Psychotherapy notes excludes (meaning the following information is included in this
+authorization) medication prescription and monitoring, counseling session start and stop times, the
+modalities and frequencies of treatment furnished, results of clinical tests, and any summary of the following
+items: diagnosis, functional status, the treatment plan, symptoms, prognosis, and progress to date.
+By my signature below, I acknowledge that any agreements I have made to restrict my personal health
+information do not apply to this authorization and I instruct My Providers to release and disclose my entire
+medical record without restriction.<br/>
+
+This personal health information is to be disclosed under this Authorization so that The Companies may: 1)
+underwrite my application for coverage, make eligibility, risk rating, policy issuance and enrollment
+determinations; 2) obtain reinsurance; 3) administer claims and determine or fulfill responsibility for coverage
+and provision of benefits; 4) administer coverage; and 5) conduct other legally permissible activities that
+relate to any coverage I have or have applied for with The Companies.
+This authorization shall remain in force for 24 months following the date of my signature below, and a copy
+of this authorization is as valid as the original. I understand that I have the right to revoke this authorization
+in writing, at any time, by sending a written request for revocation to this Insurance
+Company and its affiliated insurance companies
+Attention:Authorization Administrator.<br/>
+
+I understand that a revocation is not effective to the extent that any of My
+Providers has relied on this Authorization or to the extent that The Companies have a legal right to contest a
+claim under an insurance policy or to contest the policy itself. I understand that any information that is
+disclosed pursuant to this authorization may be redisclosed and no longer covered by federal rules governing
+privacy and confidentiality of health information.
+I understand that My Providers may not refuse to provide treatment or payment for health care services if I
+refuse to sign this authorization. I further understand that if I refuse to sign this authorization to release my
+complete medical record, The Companies may not be able to process my application, or if coverage has been
+issued may not be able to make any benefit payments. I understand that I will receive a copy of this
+authorization upon request.<br/><br/><br/>
+
+
+Proposed Insured/Patient, SignatureDate<br/><br/><br/>
+
+Description of Personal Representative’s Authority or<br/>
+Relationship to Patient (if applicable)<br/><br/><br/><br/>
+
+
+</apex:page>

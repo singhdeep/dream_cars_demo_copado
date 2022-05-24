@@ -1,0 +1,97 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" >
+<script>
+        function changeValue(input, textid) {
+           
+            document.getElementById(textid).value = input;
+            
+            
+        }
+    </script>
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="QuoteHistory" >
+<Apex:form >
+<body>
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                       <!--<a href="#" title="Back">Back</a>-->
+                       <apex:commandLink value="Back" action="{!QuoteHistoryPrevious}" />
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        Saved Quotes
+                    </div>
+                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name">{!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+        <apex:pagemessages ></apex:pagemessages>
+         <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 save-row">
+                <!--<button type="button" class="btn btn-primary floatR">Convert Quote</button>-->
+                <apex:commandButton value="Convert To Policy"  action="{!convertQuoteToPolicy}" styleClass="btn btn-primary floatR" />
+            </div>
+        </row>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 saved-quotes mrgT20">
+            <apex:inputHidden value="{!selectedvalue}" id="RadioButtonValue" />
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 saved-quote-header">
+                        <row>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 ">&nbsp;</div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">Product   </div>  
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">Term (years)</div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Rider </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none ">Coverage Amount ($)</div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">Payment Frequency</div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 premium-col-ipad">Premium ($)   </div>          
+                        </row>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </row>
+                 <apex:repeat value="{!retrieveListOfQuotesForOpp}" var="quoteRec" id="quoteHistory">
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 saved-quote-body">  
+                        <row>                       
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 txt-alignC">
+                                 <label>
+                              <!--     <apex:selectRadio value="{!quoteRec.selectedQuoteCheckbox}">
+                                    <apex:selectOption itemvalue="{!quoteRec.quoteObject.Id}"  onclick="changeValue(this,'{!$Component.RadioButtonValue}');" ></apex:selectOption>
+                                   </apex:selectRadio> 
+                                    <input type="radio" name="blankRadio" id="blankRadio1" value="{!quoteRec.selectedQuoteCheckbox}" aria-label="..." />
+                              -->
+                                <input type="radio" name="Letters" value="" onclick="changeValue('{!quoteRec.quoteObject.Id}','{!$Component.RadioButtonValue}');" /> 
+                                    
+                                    
+                               
+                              
+                             <!--        <apex:inputCheckbox id="selectedQuoteCheckbox" value="{!quoteRec.selectedQuoteCheckbox}"/> -->
+                                  </label>
+                            </div>                         
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">{!quoteRec.quoteObject.Product__c}</div>    
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">{!quoteRec.quoteObject.Term_Length__c}</div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 ">{!quoteRec.quoteObject.Recommended_Rider__c}</div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ">{!quoteRec.quoteObject.Sum_Insured__c}</div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">{!quoteRec.quoteObject.Payment_Term__c}</div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 ">{!quoteRec.quoteObject.Premium__c}</div>           
+                        </row>                    
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-none saved-quote-body">
+                        <div><hr /></div>                       
+                    </div>
+                 </row>
+                </apex:repeat>
+                 
+            </div>
+        </row>
+    </div>
+</body>
+</Apex:form>
+</c:ContactManagementComponentui>
+</apex:page>

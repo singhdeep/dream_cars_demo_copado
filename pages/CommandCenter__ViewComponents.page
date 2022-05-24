@@ -1,0 +1,132 @@
+<apex:page standardController="CommandCenter__Deployment__c" extensions="CommandCenter.ViewComponentsExtention" sidebar="false" showHeader="false" applyHtmlTag="false" action="{!checkDeploymentComponents}">
+   <head>
+       <style>
+           .treeIcon{
+           width:20px;
+           height:20px;
+           margin-top: 5px;
+           margin-right: 5px;
+           }
+           
+           .Downloadscontainer{
+           width:100%;
+           }  
+           
+           .sectionHeaderIcon{
+           width:20px;
+           height:20px;
+           }
+            
+       </style>
+    </head>
+    <apex:form >
+        <apex:outputPanel id="deploymentCompPanel" >
+            <script type="text/javascript">
+            j$ = jQuery.noConflict();
+            j$(document).ready(function() 
+                               {
+                                   j$(".Downloadscontainer ul li ul").css("display", "none");
+                                   j$(".Downloadscontainer a").click(function (e) {
+                                       e.preventDefault();
+                                       j$(this).closest('li').children('ul').toggle();
+                                   });
+                               });
+            </script> 
+           
+            <div id="depCompModal" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal--small">
+                <div class="slds-modal__container" style="width: 96% !important;height: 80% !important; padding:1%;">
+                    <div class="slds-modal__header">
+                        <h4 id="header43" class="slds-text-heading--medium" style="font-weight:bold;">
+                            <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/knowledge_base_60.png')}" class="sectionHeaderIcon"/>
+                            Deployment Components
+                        </h4>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium" style="height: 65%;">
+                        
+                        <!-- Show Workspace --><!-- Show User Stories & Components -->
+                        <div>
+                            <span style="padding-top:10%;padding-left:50%;{!IF(jobCompleted == false && viewComponents == false && triggerJob == false , 'display:block;', 'display:none;')}">
+                                <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:60px;"/> &nbsp;
+                            </span>
+                            <div class="Downloadscontainer">
+                                <apex:repeat value="{!artifactMap}" var="root1">
+                                    <ul class="slds-tree" role="tree">
+                                        <li role="treeitem" aria-level="1">
+                                            <div>
+                                                <a href="#" style="text-decoration:none;">
+                                                    <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/open_folder_60.png')}" class="sectionHeaderIcon"/>
+                                                    {!root1}
+                                                </a>&nbsp;&nbsp;
+                                                <a href="#" onclick="window.open('{!jenkinsJob.On_Demand_Validation_Job_URL__c}/ws/Deploy/dist/*zip*/dist.zip')" target="_blank" style="text-decoration:none;">
+                                                    Download &nbsp;
+                                                    <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/download_60.png')}" class="sectionHeaderIcon"/>
+                                                </a>
+                                            </div>
+                                            <apex:repeat value="{!artifactMap[root1]}" var="folder">
+                                                <ul>
+                                                    <li role="treeitem" aria-level="2">
+                                                        <div class="slds-tree__item" style="padding-left: 2rem;">
+                                                            <a href="#" style="{!IF(contains(folder, 'z_'), 'display:none;', '')}">
+                                                                <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/utility/open_folder_60.png')}" class="treeIcon" style="{!IF(contains(folder, 'z_'), 'display:none;', '')}"/>
+                                                                <!-- <apex:outputText value="{!IF(contains(folder, 'z_'), SUBSTITUTE(folder, 'z_', ''), folder)}"></apex:outputText> -->
+                                                                {!folder}
+                                                            </a>
+                                                            <a href="#" style="{!IF(contains(folder, 'z_'), '', 'display:none;')}" onclick="window.open('{!jenkinsJob.On_Demand_Validation_Job_URL__c}/ws/Deploy/dist/{!IF(contains(folder, 'z_'), SUBSTITUTE(folder, 'z_', ''), folder)}')" target="_blank">
+                                                                <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/doctype/txt_60.png')}" class="treeIcon" style="{!IF(contains(folder, 'z_'), '', 'display:none;')}"/>
+                                                                <apex:outputText value="{!IF(contains(folder, 'z_'), SUBSTITUTE(folder, 'z_', ''), folder)}"></apex:outputText>
+                                                            </a>
+                                                        </div>
+                                                        <apex:repeat value="{!artifactMap[root1][folder]}" var="file">
+                                                            <ul>
+                                                                <li role="treeitem" aria-level="3">
+                                                                    <div class="slds-tree__item" style="padding-left: 3.5rem;">
+                                                                        <a href="#" onclick="window.open('{!jenkinsJob.On_Demand_Validation_Job_URL__c}/ws/Deploy/dist/{!folder}/{!file}')" target="_blank" style="text-decoration:none;">
+                                                                            <img src="{!URLFOR($Resource.SDLCV_2_1_3, '/assets/icons/doctype/txt_60.png')}" class="treeIcon"/>
+                                                                            {!file}
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </apex:repeat>
+                                                    </li>
+                                                </ul>
+                                            </apex:repeat>
+                                        </li>
+                                    </ul>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                        <p>&nbsp;</p>
+                        <apex:actionStatus startText="" stopText="" id="viewComponents" > 
+                            <apex:facet name="start" > 
+                                <span style="float:right;margin-right: 5px;">
+                                    <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:30px; height:30px;"/> &nbsp;
+                                </span>
+                            </apex:facet> 
+                            <apex:facet name="stop">
+                                
+                            </apex:facet> 
+                        </apex:actionStatus>
+                        <apex:actionPoller enabled="{!jobCompleted == false && viewComponents == false && triggerJob == false}" action="{!checkDeploymentComponents}" interval="7" reRender="viewComponents, deploymentCompPanel"/>
+                    </div>
+                    
+                    <div class="slds-modal__footer">
+                        <apex:actionStatus startText="" stopText="" id="exitDepComp" > 
+                            <apex:facet name="start" > 
+                                <span style="padding-left:30%;">
+                                    <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/process.gif')}" style="width:30px; height:30px;"/> &nbsp;
+                                </span>
+                            </apex:facet> 
+                            <apex:facet name="stop"> 
+                            </apex:facet> 
+                        </apex:actionStatus>
+                        <!-- <apex:commandButton action="{!exitViewComponent}" value="Close" status="exitDepComp" reRender="exitDepComp, deploymentCompPanel, viewComponents" styleClass="slds-button slds-button--brand btn"/> -->
+                    </div>
+                </div>
+                
+            </div>
+            
+        </apex:outputPanel>
+        
+    </apex:form>
+</apex:page>

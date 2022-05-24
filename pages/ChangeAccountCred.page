@@ -1,0 +1,19 @@
+<apex:page standardController="Account">
+  
+    <apex:form >
+
+        <apex:pageBlock title="Hello1123 {!$User.FirstName}!">
+
+            You are viewing the new acccount   {!account.name}   Dccount Details. <p/>
+
+            Change Account Name: sreeni123<p/>
+
+            <apex:inputField value="{!account.name}"/> <p/>
+
+            <apex:commandButton action="{!save}" value="Save New Account Name"/>
+
+        </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

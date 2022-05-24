@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Policy</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Policies</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account_Name__c</name>
+        <relationshipLabel><!-- Policies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Alip Application Id --></label>
+        <name>Alip_Application_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alip Application Status --></label>
+        <name>Alip_Application_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- AutorabitExtId__c --></label>
+        <name>AutorabitExtId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Initial Premium Payment --></label>
+        <name>Initial_Premium_Payment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mode Of Payment --></label>
+        <name>Mode_Of_Payment__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Check</masterLabel>
+            <translation><!-- Check --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Online Transfer</masterLabel>
+            <translation><!-- Online Transfer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Policy End Date --></label>
+        <name>Policy_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Start Date --></label>
+        <name>Policy_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- Policies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quote --></label>
+        <name>Quote_Name__c</name>
+        <relationshipLabel><!-- Policies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Application Submitted</masterLabel>
+            <translation><!-- Application Submitted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Policy issued</masterLabel>
+            <translation><!-- Policy issued --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tax Qualification Status --></label>
+        <name>Tax_Qualification_Status__c</name>
+        <picklistValues>
+            <masterLabel>Not Qualified</masterLabel>
+            <translation><!-- Not Qualified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Qualified</masterLabel>
+            <translation><!-- Qualified --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

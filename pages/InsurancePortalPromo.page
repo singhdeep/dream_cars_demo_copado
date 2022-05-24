@@ -1,0 +1,481 @@
+<apex:page controller="InsurancePortalCtrl" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+<style>
+ .popup
+    {
+        background-color: #f4f5f6;
+        z-index: 1;
+        left: 50%;
+        padding:20px 0 0 0;
+        position: absolute;
+        width: 600px;
+        margin-left: -250px;
+        top:140px;
+    }
+ .popupBg
+    {
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 70);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+    @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { 
+      .popup {
+        width: 500px;
+        }
+    }
+    @media (max-width: 768px) and (min-width: 520px){
+    .popup {
+        width: 490px;
+        }
+    }
+</style>
+<apex:form > 
+<body>
+<c:InsuranceComponentui > </c:InsuranceComponentui>
+  <div class="container">
+    <row>
+        <div class="home-promo-bg home-container">
+          <div class="racing-promo">
+                <row>
+                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                        <h2>Customized Packages for Racing Enthusiasts like you!</h2>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                        <img src="{!URLFOR($Resource.MyInsuranceStaticUI, '/MyInsuranceStaticUI/images/no-medical-tests.png')}" title="no-medical-tests" class="no-medical-tests" border="0" />
+                    </div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="prod-row">
+                            <row>
+                                <div class="col-sm-10 col-md-10 col-lg-10">
+                                    <div class="prod-name">I-Select</div>
+                                    <div class="prod-details">
+                                        <ul>
+                                            <li>
+                                                <label>Coverage</label><br />
+                                                <div>$100,000 </div>
+                                            </li>
+                                            <li>
+                                                <label>Term</label><br />
+                                                <div>20 years</div>
+                                            </li>
+                                            <li>
+                                                <label>Premium</label><br />
+                                                <div>$17.49/month</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2 pad-none">
+                                    <apex:commandButton styleclass="btn btn-md remind-btn" value="Remind Later" action="{!popupRemind}" rerender="showRemind,hiddenBlock">
+                                        <apex:param name="counter" value="1" assignTo="{!counter}"/>
+                                    </apex:commandButton>
+                                    <apex:pageBlock id="hiddenBlock" rendered="false"></apex:pageBlock>
+                                    <apex:commandButton styleclass="btn btn-md buy-btn" value="Buy Now" action="{!popupBuy}" rerender="showBuy,hiddenBlock">
+                                        <apex:param name="counter" value="1" assignTo="{!counter}"/>
+                                    </apex:commandButton>
+                                    
+                                </div>
+                            </row>
+                        </div>
+                    </div>
+                </row>
+                <div class="clearfix">&nbsp;</div>
+                <row>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="prod-row">
+                            <row>
+                                <div class="col-sm-10 col-md-10 col-lg-10">
+                                    <div class="prod-name">I-Flex</div>
+                                    <div class="prod-details">
+                                        <ul>
+                                            <li>
+                                                <label>Coverage</label><br />
+                                                <div>$200,000</div>
+                                            </li>
+                                            <li>
+                                                <label>Term</label><br />
+                                                <div>25 years</div>
+                                            </li>
+                                            <li>
+                                                <label>Premium</label><br />
+                                                <div>$35.49/month</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2 pad-none">
+                                    <apex:commandButton styleclass="btn btn-md remind-btn" value="Remind Later" action="{!popupRemind}" rerender="showRemind,hiddenBlock">
+                                        <apex:param name="counter" value="2" assignTo="{!counter}"/>
+                                    </apex:commandButton>
+                                    <apex:commandButton styleclass="btn btn-md buy-btn" value="Buy Now" action="{!popupBuy}" rerender="showBuy,hiddenBlock">
+                                        <apex:param name="counter" value="2" assignTo="{!counter}"/>
+                                    </apex:commandButton>
+                                    
+                                </div>
+                            </row>
+                        </div>
+                    </div>
+                </row>                              
+                <div class="clearfix">&nbsp;</div>
+                                <row>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="prod-row">
+                            <row>
+                                <div class="col-sm-10 col-md-10 col-lg-10">
+                                    <div class="prod-name">I-Protect</div>
+                                    <div class="prod-details">
+                                        <ul>
+                                            <li>
+                                                <label>Coverage</label><br />
+                                                <div>$350,000</div>
+                                            </li>
+                                            <li>
+                                                <label>Term</label><br />
+                                                <div>30 years</div>
+                                            </li>
+                                            <li>
+                                                <label>Premium</label><br />
+                                                <div>$46.99/month</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2 pad-none">
+                                    <apex:commandButton styleclass="btn btn-md remind-btn" value="Remind Later" action="{!popupRemind}" rerender="showRemind,hiddenBlock">
+                                        <apex:param name="counter" value="3" assignTo="{!counter}"/>
+                                    </apex:commandButton>
+                                    <apex:commandButton styleclass="btn btn-md buy-btn" value="Buy Now" action="{!popupBuy}" rerender="showBuy,hiddenBlock">
+                                        <apex:param name="counter" value="3" assignTo="{!counter}"/>
+                                    </apex:commandButton>                                    
+                                </div>
+                            </row>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 txtC">
+                            <hr class="dividerLine-fff" />
+                            <apex:commandButton styleclass="btn btn-md btn-primary" value="Build Your Own Quote" action="{!redirectToPortal}" />                                                        
+                        </div>
+                    </div>
+                </row>                           
+            </div>
+        </div>
+    </row>
+    <row>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="footerCopy">© 2015 My Insurance. All rights reserved</div>
+        </div>
+    </row>
+   </div>
+    <!--Popupcode for Remind Later   ---------------------------------------------->
+     
+     <apex:outputPanel id="showRemind">
+      <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!flagRemind}"/>
+        <apex:outputPanel rendered="{!flagRemind}" styleClass="popup"> 
+          <div class="popup-product-info">
+             <row>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Product Name</label><br />
+                    <span><strong>{!promoProduct}</strong></span>
+                </div>
+                 <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Coverage</label><br />
+                    <span><strong>{!promoCoverage}</strong></span>
+                </div>
+                 <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Term</label><br />
+                    <span><strong>{!promoTerm}</strong></span>
+                </div>
+                 <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Premium</label><br />
+                    <span><strong>{!promoPremium}</strong></span>
+                </div>
+              </row>
+              <div class="clearfix">&nbsp;</div>
+              <row>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="popup-header">Let us know more about you</div>
+                </div>
+              </row>
+            <div class="popup-body">
+            
+               <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>First Name</label><br />
+                       <!-- <input type="text" class="form-control"/> -->
+
+                        <apex:inputText value="{!firstName}" styleClass="form-control" Html-placeholder="First Name" required="true" />
+                                
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Last Name</label><br />
+                       <!--  <input type="text" class="form-control" /> -->
+                         <apex:inputText value="{!lastName}" styleClass="form-control" Html-placeholder="Last Name" required="true" />
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <row>
+                            <div class="col-sm-12 col-md-12 col-lg-12 pad-none"> <label for="DOB">Date of Birth</label></div>
+                        </row>
+                        <row>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none">
+                                 <apex:selectList value="{!dateofbirth}" size="1" styleClass="form-control"> 
+                                    <apex:selectOptions value="{!openPresentationOptions}" /> 
+                                  </apex:selectList>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padLR5">
+                                 <apex:selectList value="{!monthofbirth}" size="1" styleClass="form-control">
+                                    <apex:selectOptions value="{!monthOptions}" /> 
+                                  </apex:selectList>
+                            </div>
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 pad-none">
+                                 <apex:selectList value="{!yearofbirth}" size="1" styleClass="form-control"> 
+                                  <apex:selectOptions value="{!yearOptions}" /> 
+                                </apex:selectList>
+                            </div>
+                        </row>              
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Gender</label><br />
+                        <apex:selectList value="{!gender }" multiselect="false" size="1" styleClass="form-control" required="true">
+                            <apex:selectOption itemValue="Male" itemLabel="Male"/>
+                            <apex:selectOption itemValue="Female" itemLabel="Female"/>  
+                        </apex:selectList> 
+                    </div>
+                </row> 
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Street</label><br />
+                        <apex:inputText styleClass="form-control" Html-placeholder="Street" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>City</label><br />
+                         <apex:inputText styleClass="form-control" Html-placeholder="City" required="true" />
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>State</label><br />
+                        <apex:inputText styleClass="form-control" Html-placeholder="State" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Zip Code</label><br />
+                         <apex:inputText styleClass="form-control" Html-placeholder="Zip Code" required="true" />
+                    </div>
+                </row> 
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Email</label><br />
+                        <apex:inputText value="{!email}" styleClass="form-control" Html-placeholder="Email" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Phone</label><br />
+                         <apex:inputText styleClass="form-control" Html-placeholder="Phone" required="true" />
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Preferred time of Contact</label><br />
+                        <select class="form-control">
+                            <option>6am - 9am</option>
+                            <option>9am - 12pm</option>
+                            <option>12pm - 4pm</option>
+                            <option>4pm - 6pm</option>
+                            <option>6pm - 9pm</option>
+
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">&nbsp;</div>
+                </row>
+                <div class="clearfix">&nbsp;</div>          
+                <row>  
+                    <div class="col-sm-12 col-md-12 col-lg-12 mrgB10"> 
+                    <br /><div class="popup-dividerL"></div>   <br />              
+                       <apex:commandButton value="Submit" action="{!closeRemind}" rerender="showRemind" styleClass="btn btn-primary btn-sm btn-md btn-lg floatR" />
+                   </div>
+                </row>                          
+              </div>             
+          </div>             
+         </apex:outputPanel></apex:outputPanel>
+         
+          <!--Popupcode for Buy Now---------------------------------------------->
+     
+     <apex:outputPanel id="showBuy">
+      <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!flagBuy}"/>
+        <apex:outputPanel rendered="{!flagBuy}" styleClass="popup">  
+                     <div class="popup-product-info">
+             <row>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Product Name</label><br />
+                    <span><strong>{!promoProduct}</strong></span>
+                </div>
+                 <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Coverage</label><br />
+                    <span><strong>{!promoCoverage} </strong></span>
+                </div>
+                 <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Term</label><br />
+                    <span><strong>{!promoTerm}</strong></span>
+                </div>
+                 <div class="col-sm-3 col-md-3 col-lg-3">
+                    <label>Premium</label><br />
+                    <span><strong>{!promoPremium}</strong></span>
+                </div>
+              </row>
+              <div class="clearfix">&nbsp;</div>
+              <row>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="popup-header">Let us know more about you</div>
+                </div>
+              </row>
+              <div class="popup-body">
+               <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>First Name</label><br />
+                        <apex:inputText value="{!firstName}" styleClass="form-control" Html-placeholder="First Name" required="true" />                                
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Last Name</label><br />
+                         <apex:inputText value="{!lastName}" styleClass="form-control" Html-placeholder="Last Name" required="true" />
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <row>
+                        <div class="col-sm-12 col-md-12 col-lg-12 pad-none"> <label for="DOB">Date of Birth</label></div>
+                    </row>                    
+                    <row>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pad-none">
+                           <apex:selectList value="{!dateofbirth}" size="1" styleClass="form-control"> 
+                                <apex:selectOptions value="{!openPresentationOptions}" /> 
+                              </apex:selectList>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padLR5">
+                            <apex:selectList value="{!monthofbirth}" size="1" styleClass="form-control">
+                                <apex:selectOptions value="{!monthOptions}" /> 
+                              </apex:selectList>
+                        </div>
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 pad-none">
+                             <apex:selectList value="{!yearofbirth}" size="1" styleClass="form-control"> 
+                              <apex:selectOptions value="{!yearOptions}" /> 
+                            </apex:selectList>
+                        </div>
+                    </row>               
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Gender</label><br />
+                        <apex:selectList value="{!gender }" multiselect="false" size="1" styleClass="form-control" required="true">
+                            <apex:selectOption itemValue="Male" itemLabel="Male"/>
+                            <apex:selectOption itemValue="Female" itemLabel="Female"/>  
+                        </apex:selectList>
+                    </div>
+                </row> 
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Street</label><br />
+                        <apex:inputText styleClass="form-control" Html-placeholder="Street" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>City</label><br />
+                         <apex:inputText styleClass="form-control" Html-placeholder="City" required="true" />
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>State</label><br />
+                        <apex:inputText styleClass="form-control" Html-placeholder="State" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Zip Code</label><br />
+                         <apex:inputText styleClass="form-control" Html-placeholder="Zip Code" required="true" />
+                    </div>
+                </row> 
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Email</label><br />
+                        <apex:inputText value="{!email}" styleClass="form-control" Html-placeholder="Email" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Phone</label>
+                <!--         <input type="text" class="form-control" />-->
+                         <apex:inputText styleClass="form-control" Html-placeholder="Phone" required="true" />
+                    </div>
+                </row>
+                <row>  
+                    <div class="col-sm-12 col-md-12 col-lg-12"> 
+                    <br /><div class="popup-dividerDash"></div> 
+                    </div>
+                </row>    
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="popup-header">Billing Information</div>
+                    </div>
+                    <apex:actionRegion >
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mrgT10">
+                   <!--   <span><input type="checkbox" checked="checked"/></span> <span>same as above</span>-->
+                          <label>same as above&nbsp;&nbsp;</label>
+                          <apex:inputCheckbox value="{!flagBilling}"> 
+                        <apex:actionSupport event="onchange"  reRender="showBuy"/>
+                        </apex:inputCheckbox>
+                    </div>
+                    </apex:actionRegion>
+                </row>
+                <div class="clearfix">&nbsp;</div>  
+                <apex:outputPanel id="billing" rendered="{!!flagBilling}">
+<row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Street</label><br />
+                      <!--  <input type="text" class="form-control"/>-->
+                        <apex:inputText styleClass="form-control" Html-placeholder="Street" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>City</label><br />
+                      <!--   <input type="text" class="form-control" />-->
+                         <apex:inputText styleClass="form-control" Html-placeholder="City" required="true" />
+                    </div>
+                </row>
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>State</label><br />
+                    <!--    <input type="text" class="form-control"/>-->
+                        <apex:inputText styleClass="form-control" Html-placeholder="State" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Zip Code</label><br />
+                  <!--       <input type="text" class="form-control" />-->
+                         <apex:inputText styleClass="form-control" Html-placeholder="Zip Code" required="true" />
+                    </div>
+                </row> 
+                <row>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Email</label><br />
+                <!--        <input type="text" class="form-control"/>-->
+                        <apex:inputText value="{!email}" styleClass="form-control" Html-placeholder="Email" required="true" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Phone</label>
+                <!--         <input type="text" class="form-control" />-->
+                         <apex:inputText styleClass="form-control" Html-placeholder="Phone" required="true" />
+                    </div>
+                </row>
+                </apex:outputpanel>         
+                <div class="clearfix">&nbsp;</div>          
+                <row>  
+                    <div class="col-sm-12 col-md-12 col-lg-12 mrgB10"> 
+                    <br /><div class="popup-dividerL"></div>   <br />              
+                       <apex:commandButton value="Continue" action="{!closeBuy}" rerender="showBuy" styleClass="btn btn-primary btn-sm btn-md btn-lg floatR" /> 
+                   </div>
+                </row>                          
+              </div>             
+          </div>                                 
+         </apex:outputPanel></apex:outputPanel>
+</body>
+</apex:form> 
+</apex:page>

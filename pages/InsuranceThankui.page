@@ -1,0 +1,25 @@
+<apex:page controller="InsurancePortalCtrl" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0">
+<!--<apex:page showHeader="false" sidebar="false">-->
+<body>
+    <c:InsuranceComponentui > </c:InsuranceComponentui>
+    <div class="container">
+        <div class="thanks-container">
+            <row>
+                <div class="col-sm-12 col-md-12 col-lg-12 centerDiv">  
+                    <div class="vertical-center-row">
+                        <div>
+                        <img src="{!URLFOR($Resource.MyInsuranceStaticUI, '/MyInsuranceStaticUI/images/thanks-logo.png')}" alt="Thank you" title="Thank you" border="0" class="thanks-logo" />
+                         <span class="thanks-txt">Thank you for your interest ! Our insurance advisor will get in touch with you soon. Your reference number is: {!referencenumber}.</span>
+                        </div>
+                    </div>              
+                </div>
+           </row>
+         </div>
+         <row>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="footerCopy-inner">© 2015 My Insurance. All rights reserved</div>
+            </div>
+        </row>
+    </div>
+</body>
+</apex:page>

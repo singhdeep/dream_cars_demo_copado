@@ -1,0 +1,177 @@
+<apex:page standardController="Lead" extensions="QuotePageController" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" >
+<c:ContactManagementComponentui leadid="{!lead.id}" activeVar="Prospect_Details" >
+<style>
+    div.hideCurrDate span.dateInput span.dateFormat{
+       display:none;
+    }
+    textarea {
+    width: 488px; 
+    resize:none;
+    }
+</style>
+<apex:form >   
+<apex:pageMessages />
+    <div class="container-fluid pad-none">
+        <row>
+            <header class="header">
+                <row>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <!--<a href="#" title="Cancel">Cancel</a>-->
+                         <!--<apex:commandLink value="Cancel" action="{!cancelLead}" />-->
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        Prospect Details
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="advisor-logged">Advisor logged in as :<br /><span class="advisor-name">{!loggedUser.firstname} {!loggedUser.lastname}</span></div>                      
+                    </div>
+                </row>
+            </header>
+        </row>
+        <div class="clearfix">&nbsp;</div>
+         <row>
+          <!--<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">&nbsp;</div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 save-row">
+                 <apex:commandButton value="Save" action="{!saveLead}" styleClass="btn btn-primary wdt50 floatR"></apex:commandButton>
+            </div>-->
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+               &nbsp;
+            </div>
+            <div class="col-xs-8 col-sm-8 col0-md-8 col-lg-8 floatR">                            
+                <!--<button type="button" class="btn btn-primary">Create Quote</button>--> 
+                <!--<button type="button" class="btn btn-primary">Edit Details</button>-->
+                <div class="txt-alignR">
+                   <apex:commandButton value="Save" action="{!saveLead}" styleClass="btn btn-primary mrgR10"></apex:commandButton> 
+                   <apex:commandButton value="Cancel" action="{!cancelLead}" styleClass="btn btn-primary"></apex:commandButton>  
+                </div>
+            </div>
+        </row>
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 Prospect_Details_edit mrgT20">
+             <apex:pageMessages ></apex:pageMessages>
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>First Name</label><br />
+                                <apex:inputField value="{!leadObj.FirstName}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Middle Name</label><br />
+                                 <apex:inputField value="{!leadObj.Middle_Name__c}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Last Name</label><br />
+                                <apex:inputField value="{!leadObj.LastName}" styleClass="form-control"/>
+                            </div>
+                        </row>
+
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Street</label><br />
+                                <apex:inputField value="{!leadObj.Street}" styleClass="form-control"/>  
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>City</label><br />
+                                <apex:inputField value="{!leadObj.city}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>State</label><br />
+                                <apex:inputField value="{!leadObj.state}" styleClass="form-control"/> 
+                            </div>
+                        </row>
+
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Country</label><br />
+                                <apex:inputField value="{!leadObj.country}" styleClass="form-control"/>  
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Zip</label><br />
+                                <apex:inputField value="{!leadObj.PostalCode}" styleClass="form-control"/>  
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20"></div>
+                        </row>
+                        <div class="clearfix">&nbsp;</div>
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Phone</label><br />
+                                <apex:inputField value="{!leadObj.Phone}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Preferred Contact Time</label><br />
+                                <apex:inputField value="{!leadObj.Preferred_contact_time__c}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Email</label><br />
+                                <apex:inputField value="{!leadObj.Email}" styleClass="form-control"/> 
+                            </div>
+                        </row>
+
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Gender</label><br />
+                                <apex:inputField value="{!leadObj.Gender__c}" styleClass="form-control"/> 
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Date of Birth</label><br />
+                                <div class="hideCurrDate">
+                                    <apex:inputField value="{!leadObj.D_O_B__c}" id="yourDateField"  styleClass="form-control" type="date"/> 
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Reference No</label><br />
+                                 <apex:inputField value="{!leadObj.Reference_Number__c}" styleClass="form-control"/> 
+                            </div>
+                        </row>
+                        <div class="clearfix">&nbsp;</div>
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Occupation</label><br />
+                                <apex:inputField value="{!leadObj.Occupation__c}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Annual Income</label><br />
+                                 <apex:inputField value="{!leadObj.AnnualRevenue}" styleClass="form-control"/> 
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Marital Status</label><br />
+                                 <apex:inputField value="{!leadObj.Marital_Status__c}" styleClass="form-control"/>                               
+                            </div>
+                        </row>
+
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Weight (lbs)</label><br />
+                                <apex:inputField value="{!leadObj.Weight__c}" styleClass="form-control"/>  
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Height (inches)</label><br />
+                                 <apex:inputField value="{!leadObj.Height__c}" styleClass="form-control"/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Children</label><br />
+                                <apex:inputField value="{!leadObj.Children__c}" styleClass="form-control"/>                       
+                            </div>
+                        </row>
+
+                        <row>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Product Interest</label><br />
+                                <apex:inputField value="{!leadObj.Product_Interest__c}" styleClass="form-control"/>    
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">
+                                <label>Facebook ID</label><br />
+                                <apex:inputField value="{!leadObj.Facebook_ID__c}" styleClass="form-control"/> 
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mrgT20">&nbsp;</div>                            
+                        </row>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </row>
+            </div>
+        </row>
+    </div>               
+</apex:form>   
+</c:ContactManagementComponentui>
+</apex:page>

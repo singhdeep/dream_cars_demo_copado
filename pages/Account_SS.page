@@ -1,0 +1,6 @@
+<!-- VF page to decide the navigation of the logged-in user to their respective business unit -->
+
+<apex:page standardController="Account">
+  <!-- you are into the second page2222 -->
+
+</apex:page>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Build Number --></label>
+        <name>CommandCenter__Build_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Deployed --></label>
+        <name>CommandCenter__Code_Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>CommandCenter__Release__c</name>
+        <relationshipLabel><!-- Release Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SF Environment --></label>
+        <name>CommandCenter__SFEnvironment__c</name>
+        <relationshipLabel><!-- release trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field indicate whether testing is completed or not --></help>
+        <label><!-- Validation Completed --></label>
+        <name>CommandCenter__Validation_Completed__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- You cannot mark validation completed to true unless code deployed is true --></errorMessage>
+        <name>CommandCenter__Cannot_complete_validation_without_code</name>
+    </validationRules>
+</CustomObjectTranslation>

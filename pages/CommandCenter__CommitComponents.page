@@ -1,0 +1,1493 @@
+<apex:page controller="CommandCenter.GerritDetails" action="{!readCommitCompnents}" showHeader="false" sidebar="false">
+ <title>Release management</title>
+    <apex:stylesheet value="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/styles/salesforce-lightning-design-system.css')}"/>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+       <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    
+   <c:NavHeaderComp />
+  
+<!--   <c:GerritToolHeaderComponent /> 
+    <apex:outputPanel rendered="{!IF($CurrentPage.parameters.p == '-', false, true)}">
+        <c:Process_Step_Component CurrentPageName="{!$CurrentPage.Name}" projectParam="{!projectName}" branchParam="{!branchName}" buildParam="{!$CurrentPage.parameters.n}" commit="{!$CurrentPage.parameters.c}"/>
+    </apex:outputPanel> 
+    <apex:outputPanel rendered="{!IF($CurrentPage.parameters.p == '-', true, false)}"> -->
+        <!--<c:GerritCommitLinks />
+            <div style="width: 30px;float: right;padding-right:10px;">
+                       	<a href="/apex/GitCommitsPage?pn={!$CurrentPage.parameters.pn}&bn={!$CurrentPage.parameters.bn}" title ="Navigate Back">
+                        	<img src="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/icons/utility/arrowup_60.png')}"  />
+                    	</a>
+                    </div> -->
+    <!-- </apex:outputPanel> -->
+    <style>
+        html{background: #ffffff;!important;}
+         input[type=search],label select     { 
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+         } 
+        .results tr[visible='false'],
+        .no-result{
+            display:none;
+        }
+        
+        .results tr[visible='true']{
+            display:table-row;
+        }
+        .pull-right {
+            float: left !important;
+        }
+        .counter{
+            padding:8px; 
+            color:#ccc;
+        }
+        .table-bordered {
+            border: 1px solid #ddd;
+            width: 98%;
+            margin-left: 12px;
+            margin-top: 15px;
+        }
+        
+        .form-control{
+            margin:15px;
+        }
+        input::-webkit-input-placeholder {
+            font-size: 15px;
+            line-height: 3;
+        }
+        th{
+            background : #e8e8e8 !important;
+        }
+        .tdClass{ background : #e8e8e8 !important;
+        }
+        .ui-autocomplete {
+            z-index: 5000;
+        }
+        .construct{
+            margin-left:35%;
+            with:250px;
+            height:250px;
+        }
+        
+        h2{
+               padding: 35px 40px !important;
+                line-height: 6.4 !important;
+                font-weight: inherit !important;
+                font-size: 1.5em !important;
+        }
+        h3{    line-height: 3 !important;}
+        .review-cmt{
+           border: 1px solid rgba(128, 128, 128, 0.12);
+            height: 291px;
+            width: 95%;
+        }
+        .dataTables_length,.dataTables_filter{
+                padding-top: 10px;
+        }
+        .review-cmt-right{
+                border: 1px solid rgba(8, 7, 7, 0.4);
+                width: 60px;
+                text-align: center;
+                border-radius: 4px;
+                margin-right: 289px;
+                font-size: 12px;
+                background: ghostwhite;
+                cursor: pointer;
+        }
+        
+        .editMessage{
+                border: 1px solid rgba(8, 7, 7, 0.4);
+                width: 100px;
+                text-align: center;
+                border-radius: 4px;
+                font-size: 12px;
+                background: ghostwhite;
+                cursor: pointer;
+                float: right;
+                margin-right: 10%;
+        }
+        
+        .cherrypick{
+            border: 1px solid rgba(8, 7, 7, 0.4);
+            width: 80px;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 12px;
+            background: ghostwhite;
+            cursor: pointer;
+            display:none;
+            float:left;
+        }
+        
+        .cherryField{
+            background: #F1F1F1;
+            padding: 4px 8px 4px 4px;
+            cursor: default;
+            font-family: Arial Unicode MS, Arial, sans-serif;
+            font-weight: bold;
+            border-bottom: 1px solid #bbbbbb;
+            border-top: 1px solid #D2D2D2;
+        }
+             
+        .code-review-cmt-right{
+            border: 1px solid rgba(8, 7, 7, 0.4);
+            width: 100px;
+            text-align: center;
+            border-radius: 4px;
+            margin-left: 73px;
+            font-size: 12px;
+            background: #67afef;
+            cursor: pointer;
+            margin-top: -18px;
+            color: white;         
+        }
+        span.review-span{
+                margin-left: 85px;
+        }
+        .btn-cls,.btn-cls-topic,.btn-cls-add,.btn-cls-topicUpdate,.btn-cls-cnl,.btn-cls-cnltopic{
+            font-weight: bold;
+            width: 66px;
+            background: #0070d2;
+            color: white;
+            cursor:pointer;
+            text-align: center;
+        }
+        .btn-cls-add{
+               margin-left: 129px;
+               margin-top: 3px;
+               display:none;
+        }
+        
+        .btn-cls-topicUpdate{
+               margin-left: 129px;
+               margin-top: 3px;
+               display:none;
+        }
+        
+        .btn-cls-topic{
+               margin-left: 283px;
+               margin-top: -21px;
+               
+        }
+        
+        
+        .btn-cls-cnl{
+            margin-top: -20px;
+            margin-left: 313px;
+            display:none;            
+        }
+        
+        .btn-cls-cnltopic{
+            margin-top: -20px;
+            margin-left: 448px;
+            display:none;            
+        }
+        
+        .btn-cls{
+            padding: 0px 3px;
+            margin-top: -21px !important;
+            margin-left: 283px !important;
+        }
+        
+        .abd-btn{
+            background: hsl(14, 76%, 50%);
+            /*background:#1589ee;*/
+            color: white;
+            width: 75px;
+            text-align: center;
+            /*margin-top: -20px;
+            margin-left: 83px;*/
+            border-radius: 2px;
+            height: 21px;
+            font-weight: bold;
+            cursor:pointer;
+            border: 1px solid #a4a0a0;
+            float: left;
+            margin-left: 5px;
+        }
+        .cherryPick-Btn{
+            background:#1589ee;
+            color: white;
+            width: 100px;
+            text-align: center;
+            /*margin-top: -20px;
+            margin-left: 83px;*/
+            border-radius: 2px;
+            height: 21px;
+            font-weight: bold;
+            cursor:pointer;
+            border: 1px solid #a4a0a0;
+            float: left;
+            margin-left: 5px;
+        }
+        .restore{
+            background: hsl(14, 76%, 50%);
+            /*background:#1589ee;*/
+            color: white;
+            width: 75px;
+            text-align: center;
+            /*margin-top: -20px;
+            margin-left: 83px;*/
+            border-radius: 2px;
+            height: 21px;
+            font-weight: bold;
+            cursor:pointer;
+            border: 1px solid #a4a0a0;
+            float: left;
+            margin-left: 5px;
+        }
+        
+        .rebase{
+            background: hsl(14, 76%, 50%);
+            /*background:#1589ee;*/
+            color: white;
+            width: 75px;
+            text-align: center;
+            /*margin-top: -20px;
+            margin-left: 83px;*/
+            border-radius: 2px;
+            height: 21px;
+            font-weight: bold;
+            cursor:pointer;
+            border: 1px solid #a4a0a0;
+            float: left;
+            margin-left: 5px;
+            display: none;
+        }
+        
+        .revert{
+            /*background: hsl(14, 76%, 50%);*/
+            background:#1589ee;
+            color: white;
+            width: 75px;
+            text-align: center;
+            /*margin-top: -20px;
+            margin-left: 83px;*/
+            border-radius: 2px;
+            height: 21px;
+            font-weight: bold;
+            cursor:pointer;
+            border: 1px solid #a4a0a0;
+            float: left;
+            margin-left: 5px;
+        }
+        
+        .pop-up{
+              width: 35%;
+              background: gainsboro;
+              height: 195px;
+              display : none;
+              position: absolute;
+              margin-top: -25px;
+            }
+        
+        
+         .pop-up-editMessage{
+              width: 45%;
+              background: gainsboro;
+              height: 160px;
+              display : none;
+              position: absolute;
+              margin-top: 20px;
+            } 
+                
+            .pop-up-abandon{
+                width: 20%;
+                background: gainsboro;
+                position: absolute;
+                margin-top: 25px;
+                margin-left: 81px;
+                display : none;
+                height: 110px;
+                    
+            }
+            
+             .pop-up-cherrypick{
+                width: 80%;
+                background: gainsboro;
+                position: relative;
+                margin-left: -200px;
+                display: none;
+                height: 320px;  
+            }
+             
+             .cherrypick-pop-up{
+                width: 100%;
+                background: gainsboro;
+                position: relative;
+                margin:inherit;
+                display: none;
+                height: 320px;  
+            }
+             
+            .pop-up-restore{
+                width: 20%;
+                background: gainsboro;
+                position: absolute;
+                margin-left: 81px;
+                margin-top: 25px;
+                display : none;
+                height: 110px;
+                    
+            }
+            
+            .pop-up-rebase{
+                width: 20%;
+                background: gainsboro;
+                position: absolute;
+                margin-left: 81px;
+                margin-top: 25px;
+                display : none;
+                height: 110px;
+                   
+            }
+            .pop-up-message{
+                width: 20%;
+                background: gainsboro;
+                position: absolute;
+                margin-left: 81px;
+                display : none;
+                height: 107px;
+                   
+            }
+            .pop-up-submit{
+                width: 20%;
+                background: gainsboro;
+                position: absolute;
+                margin-left: 81px;
+                display : none;
+                height: 110px;
+                    
+            }
+            
+            .pop-up-revert{
+                width: 20%;
+                background: gainsboro;
+                position: absolute;
+                margin-left: 81px;
+                margin-top: 25px;
+                display : none;
+                height: 110px;
+                    
+            }
+            
+            .text-area{
+                    margin: 5px;
+                    width: 94%;
+            }
+            
+            .text-area1{
+                    margin: 10px;
+                    width: 110%;
+            }
+            .code-rew{
+                border: 1px solid gainsboro;
+            }
+             .td-cls-cd-rw{font-weight: bold;
+            font-size: larger;
+            }
+            
+            .post{
+                margin-top: 13px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                padding: 2px;
+                float: left;
+                cursor: pointer;
+                margin-left: 10px;
+                border-radius: 5px;
+            }
+            
+            .post-editMessage{
+                margin-top: 13px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                padding: 2px;
+                float: left;
+                cursor: pointer;
+                margin-left: 10px;
+                border-radius: 5px;
+            }
+            
+            .post-abandon{
+                margin-top: 7px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                margin-left: 7px;
+                width: 44px;
+                cursor: pointer;
+                text-align: center;
+            }
+            
+             .post-cherryPick{
+                margin-top: 7px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                margin-left: 10px;
+                width: 100px;
+                cursor: pointer;
+                text-align: center;
+            }
+             
+            .post-revert{
+                margin-top: 7px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                margin-left: 7px;
+                width: 88px;
+                cursor: pointer;
+                text-align: center;
+            }
+            
+            .post-restore{
+                margin-top: 7px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                margin-left: 7px;
+                width: 56px;
+                cursor: pointer;
+                text-align: center;
+            }
+            
+            .clc-abandon{
+                float:right;
+                margin-top: -23px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                cursor:pointer;
+                margin-right: 12px;
+                padding: 2px;
+            }
+             
+            .clc-cherrypick{
+                float:right;
+                margin-top: -30px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                cursor:pointer;
+                margin-right: 12px;
+                padding: 5px;
+            }
+             
+            .clc-revert{
+                float:right;
+                margin-top: -21px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                cursor:pointer;
+                margin-right: 12px;
+                /*padding: 2px;*/
+                width: 50px;
+                padding-left: 2px;
+            }
+            
+            .clc-restore{
+                float:right;
+                margin-top: -23px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                cursor:pointer;
+                margin-right: 12px;
+                padding: 0px;
+                width: 50px;
+                padding-left: 2px;
+            }
+            
+            .clr{
+                float:right;
+                margin-top: 13px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                cursor:pointer;
+                border-radius: 5px;
+                margin-right: 5px;
+                padding: 2px;
+            }
+            
+            .clr-Edit-Msg{
+                float:right;
+                margin-top: 13px;
+                background: #0070d2;
+                color: white;
+                border: 1px solid white;
+                cursor:pointer;
+                border-radius: 5px;
+                margin-right: 5px;
+                padding: 2px;
+            }
+            
+            .rw-cmt{
+                    width: 354px;
+                    padding-left: 19px;    
+            }
+            input[type=radio]{
+                    margin-left: 6px;
+            }
+            .input-cls{
+               display:none;
+               margin-left: 130px;
+               margin-top: -23px;
+            }
+            
+            .input-cls-topic{
+               display:none;
+               margin-left: 110px;
+               margin-top: -23px;
+            }
+            
+            .reviewer{
+               margin-left: 68px !important;
+            }
+            .review-cmt-sec{
+                padding-bottom: 83px;
+                font-weight:bold;
+            }
+            #reviewCommentTable,.dataTables_info,.dataTables_paginate{
+                font-weight: normal;
+            }
+            
+            .reviewStatus{
+                width: 200px;
+                float: left;
+            }
+            
+            
+            .message{ display:none; }
+            .rebase{}
+            
+            .submit{
+                float: right;
+                margin-right: 22%;
+                font-weight: bold;
+                width: 66px;
+                background: #0070d2;
+                color: white;
+                cursor: pointer;
+                text-align: center;
+            }
+            
+            .stopImage{
+                width: 10px !important;
+                height: 10px !important;
+                margin-left: -2px;
+                margin-top: -2px;
+            }
+            
+            .code-reviewer{
+                margin-left: 5px;
+                color: green;
+            }
+            
+            .review-ratting{
+                margin-left: 5px;
+                color: green;
+            }
+			.backIcon{
+                width:25px;
+                height:25px;
+                float:right;
+                padding: 10px;
+            }
+    </style>
+     
+    <body>
+    <apex:form id="frm" style="margin:1%">
+        <div class="container " style="padding-top: 5px;" >
+            <div style="align:right;">
+                <apex:commandButton styleClass="backIcon" title="Navigate Back" image="{!URLFOR($Resource.CommandCenter__SDLCV_2_1_3, '/assets/icons/utility/arrowup_60.png')}" action="{!navigateCommits}" />
+            </div>
+        </div>
+        <c:GerritCommitLinks />
+        <table style="margin-top: 10px;">
+            <tr>
+               <th> 
+                   <div>
+                       <div style="width: 100px;float: left;">Change - {!$CurrentPage.parameters.n} </div>
+                   
+                   <!--<div class="reviewStatus" id="reviewStatus"> {!revisionObj.status}</div>-->
+                       <div class="reviewStatus" id="reviewStatus">{!IF(revisionObj.mergeable=='false' && revisionObj.status == 'NEW','Merge Conflict', revisionObj.status)}</div>
+                       <!-- <div class="editMessage">Edit Message</div> -->
+                       <div class="pop-up-editMessage"  >
+                            <textarea rows="5" cols="50" id="editcomment" name="editcomment" class="text-area" style="width:98%;font-weight: normal;"/>
+                            
+                            <div style="border: 1px solid #c7c7c7;width: 98%;margin-left: 5px;"> 
+                               <!--<div class="review_rating"/>-->
+                       </div>
+                        <div class="post-editMessage">Submit</div>
+                        <div class="clr-Edit-Msg"> Cancel</div>
+                      </div>
+                  </div>
+               </th>
+               <th>
+                   
+                   <div class="review-cmt-right">Reply...</div>
+                   <div class="code-review-cmt-right" style="{!IF((revisionObj.status == 'MERGED' || revisionObj.status == 'SUBMITTED'), 'display:none;', '')}">Code-Review+2</div>
+               </th>
+                
+           </tr>
+           <tr>
+               <td style="width:45%">
+                  <div class="review-cmt" id="commitChangeInfo" >
+                       <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" >
+                            <apex:outputText style="Display:none" id="commitDetails" escape="false" value="{!(revisionObj.revisions[revisionObj.current_revision].CommitDetails.message)}"  />   
+                            <apex:outputpanel id="CommitMessagePanel">
+                            <pre style="background-color:white; border:none">
+                                <Apex:outputtext id="NewcommitMessage" escape="false" value="{!formatCommitMessage}" />
+                             </pre>
+                            </apex:outputpanel>
+                       </h1>
+                        
+                        <script type="text/javascript">
+                            window.onload = function() {
+                                replaceString(document.getElementById('{!$Component.commitDetails}').innerHTML);
+                            }
+                        </script>
+                        
+                        <apex:actionFunction name="replaceString" action="{!replaceStringMessage}" reRender="CommitMessagePanel">
+                            <apex:param name="CommitMessageStr" value="" assignto="{!CommitMessageStr}"/>
+                        </apex:actionFunction>
+                   </div>
+               </td>
+               <td style="width:50%">
+                 <div style="float:left; width:60%;">
+                 <div class="pop-up"  >
+                        <textarea rows="5" cols="50" id="comment" name="comment" class="text-area" style="width:98%;"/>
+                        <div style="border: 1px solid #c7c7c7;width: 98%;margin-left: 5px;"> 
+                           <div class="review_rating"/>
+                    </div>
+                    <div class="post">Post</div>
+                    <div class="clr"> Cancel</div>
+                 </div>
+                 <div style="width: 70%;">
+                  <div>Owner    <span class="review-span">{!revisionObj.owner.name}</span></div> 
+                  <div>
+                      Reviewer
+                      <span class="review-span reviewer">
+                          <apex:outputPanel id="revInfo">
+                              <apex:repeat value="{!reviewerInfoList}" var="revInfoObj">
+                                  <span style="background-color: lightgray;">{!revInfoObj.name} 
+                                  <a href="#" onclick="removeReviewer('{!revisionObj.change_id}', '{!revInfoObj.email}', '{!revisionObj.project}', '{!revisionObj.branch}'); return false;">
+                                      <img src="{!URLFOR($Resource.RM_Resource, '/rm_images/stop.png')}" class="stopImage" title="Delete reviewer"/>
+                                  </a>
+                                  </span>
+                                  &nbsp;
+                              </apex:repeat>
+                          </apex:outputPanel>
+                          <div class="text-area-popup">
+                              <input  type="text" name="Code-Review" class="input-cls" size="50" autocomplete="on" style="width:80%"> 
+                              </input> 
+                              <div class="btn-cls-add">Add</div>
+                              <div class="btn-cls-cnl">Cancel</div>
+                          </div>
+                      </span>
+                      <div class="btn-cls">Add...</div>
+                      
+                  </div> 
+                  
+                  <div class="review-span">Project  
+                      <span class="review-span">{!revisionObj.project}
+                      </span>
+                      
+                  </div> 
+                  <div>Branch   
+                      <span class="review-span">{!revisionObj.branch}
+                          <div style="float: right;width: 15px;height: 15px;">
+                             <apex:image url="{!$Resource.CommandCenter__Setting_Icon}"  title="Go to project settings" onclick="Setting();" width="25" height="20"/>               
+                          </div>
+                      </span>
+                  </div>
+                  <div >Topic  
+                      <span class="review-span">{!revisionObj.topic}
+                          <div class="text-area-popup">
+                             <!-- <input  type="text" name="topic" class="input-cls-topic" size="50" autocomplete="on" > -->
+                              <textarea rows="1" cols="52" id="topic" name="topic"  class="input-cls-topic" />
+                              <div class="btn-cls-topicUpdate">Update</div>
+                              <div class="btn-cls-cnltopic">Cancel</div>
+                          </div>
+                          <div class="btn-cls-topic" style="float: right;width: 15px;height: 15px;" >
+                             <apex:image url="{!$Resource.CommandCenter__Edit_Icon_Image}"  title="Edit topic" width="25" height="20"/>               
+                          </div> 
+                       </span> 
+                  </div>
+                  <div style="{!IF(revisionObj.status == 'MERGED', 'display:none;', '')}">Strategy <span class="review-span">{!strategy}</span></div>
+                  <div> 
+                      Updated 
+                      <span class="review-span">
+                          <apex:outputText value="{!revisionObj.updated}"></apex:outputText>
+                      </span>
+                  </div>
+                  </div>
+                  <br/>
+                  <apex:repeat value="{!revisionObj.revisions}" var="rev">
+                      <apex:repeat value="{!revisionObj.revisions[rev].actions}" var="actions">
+                          <div style="{!IF((revisionObj.revisions[rev].actions[actions].label != 'Submit'), '', IF((revisionObj.revisions[rev].actions[actions].label == 'Submit' && (revisionObj.status == 'MERGED' || revisionObj.status == 'SUBMITTED')),'display:none', ''))}" 
+                              class="{!actions}" title="{!revisionObj.revisions[rev].actions[actions].title}">
+                              {!revisionObj.revisions[rev].actions[actions].label}
+                          </div>
+                          <div class="pop-up-{!actions}">
+                              <textarea rows="3" cols="30" id="{!actions}Comment" name="{!actions}Comment" class="text-area"/>
+                              <div class="post-{!actions}">Post</div>
+                              <div class="clc-{!actions}"> Cancel</div>
+                          </div>
+                      </apex:repeat>
+                  </apex:repeat>
+                  <div>
+                      
+                      <div class="restore">restore</div>
+                      <div class="pop-up-restore">
+                            <textarea rows="3" cols="30" id="restoreComment" name="restoreComment" class="text-area"/>
+                        <div class="post-restore">Restore</div>
+                        <div class="clc-restore">Cancel</div>
+                     </div>
+                      <div class="revert">revert</div>
+                      <div class="pop-up-revert">
+                            <textarea rows="3" cols="30" id="revertComment" name="
+                            Comment" class="text-area"/>
+                        <div class="post-revert">Revert</div>
+                        <div class="clc-revert">Cancel</div>
+                     </div>
+                      <div class="abd-btn">Abandon</div>
+                      <div class="pop-up-abandon">
+                            <textarea rows="3" cols="30" id="abdcomment" name="abdcomment" class="text-area"/>
+                        <div class="post-abandon">Post</div>
+                        <div class="clc-abandon"> Cancel</div>
+                     </div>
+                      <div class="cherryPick-Btn" data-toggle="modal" data-target="#cherryPickModal" data-backdrop="static" data-keyboard="false">Cherry Pick</div>
+                      <!-- Modal -->
+                           <div class="modal fade" id="cherryPickModal" role="dialog">
+                            <div class="modal-dialog">
+                                  <!-- Modal content-->
+                              <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="cherrypick-pop-up">
+                                              <div class="cherryField">Code Review - Cherry Pick Change to Another Branch</div>
+                                              <div class="cherryField">Cherry Pick Branch:</div>
+                                                <textarea  rows="1" cols="10" id="cherryPick-branch" name="cherryPick-branch" class="text-area"/>
+                                                <div class="cherryField" >Cherry Pick Commit message:</div>
+                                                <textarea  rows="5" cols="30" id="cherryPickMessage" name="cherryPickMessage" class="text-area"/>
+                                            <div class="modal-footer">
+                                                <div class="post-cherryPick" data-dismiss="modal">Cherry Pick Change</div>
+                                                <div class="clc-cherrypick" data-dismiss="modal"> Cancel</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    <!-- finish Modal-->  
+                </div>
+                  <div class="sub-btn" style="background: #0070d2;margin-left: 200px !important;color: white; display:none;">submit</div>  
+                  <br/><br/> 
+                  <div  style="border: 1px solid gray;width: 53%;"></div>
+                      Code-Review   
+                  <span class="review-ratting"></span><span class="code-reviewer"></span>
+                  
+                  </div>
+                  <div style="float:right;width: 40%;">
+                      
+                      <div style="width: 100%;float: left; font-weight:bold; border-bottom:1px solid;">
+                          Related Changes
+                          <hr style="margin-top: 0px !important;margin-bottom: 0px !important;border-bottom: 3px solid;width: 50%;"/>
+                      </div>
+                      <div class="relatedChanges" style="padding-top: 30px;"></div>
+                  </div>
+               </td>
+               
+           </tr>
+           
+        </table>
+        <table id="myTable" class="table table-striped" > 
+       
+         <thead>
+             
+            <tr style="background: #eaeaea;">
+                <th id="pro-name" class="pro-name">File Name</th>
+            </tr>
+        </thead>
+            
+        <tbody style="{!IF(commitComponentList.size > 0, '', 'display:none;')}">
+            <apex:repeat value="{!commitComponentList}" var="revision" rendered="{!IF(commitComponentList.size > 0, true, false)}" >
+                <apex:repeat value="{!revision.revisions}" var="rev">
+                    <apex:repeat value="{!revision.revisions[rev].files}" var="file">
+                    <tr>
+                        <td>
+                            <a href="/apex/FileComparison?p={!$CurrentPage.parameters.p}&b={!$CurrentPage.parameters.b}&n={!$CurrentPage.parameters.n}&r={!revision.current_revision}&c={!$CurrentPage.parameters.c}&f={!file}" target="_self">
+                                {!file}
+                            </a> 
+                        </td>
+                    </tr>
+                    </apex:repeat>
+                </apex:repeat>
+            </apex:repeat>
+        </tbody>
+        <tbody style="{!IF(commitComponentList.size == 0, '', 'display:none;')}">
+             <tr>
+                <td><i class="fa fa-warning"></i>{!$Label.No_records_found}</td>
+            </tr>
+        </tbody>
+        </table>
+        <div class="review-cmt-sec"></div>
+        <apex:actionFunction name="addNewReviewer" action="{!addReviewer}" reRender="revInfo">
+            <apex:param name="cid" value=""/>
+            <apex:param name="userEmail" value=""/>
+            <apex:param name="prjName" value=""/>
+            <apex:param name="brName" value=""/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="deleteReviewer" action="{!removeReviewer}" reRender="revInfo">
+            <apex:param name="cid" value=""/>
+            <apex:param name="userName" value=""/>
+            <apex:param name="prjName" value=""/>
+            <apex:param name="brName" value=""/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="restoreChange" action="{!restoreChange}" reRender="frm" oncomplete="showActions();">
+            <apex:param name="projName" value=""/>
+            <apex:param name="branchName" value=""/>
+            <apex:param name="cid" value=""/>
+            <apex:param name="msg" value=""/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="cherryPickbranch" action="{!cherryPickbranch}" reRender="frm" oncomplete="showActions();">
+            <apex:param name="projName" value=""/>
+            <apex:param name="branchName" value=""/>
+            <apex:param name="cid" value=""/>
+            <apex:param name="revid" value=""/>
+            <apex:param name="destBranch" value=""/>
+            <apex:param name="msg" value=""/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="topicChange" action="{!topicChange}" oncomplete="showActions();">
+            <apex:param name="projName" value=""/>
+            <apex:param name="branchName" value=""/>
+            <apex:param name="cid" value=""/>
+            <apex:param name="msg" value=""/>
+        </apex:actionFunction>
+                  
+        <apex:actionFunction name="EditMessageChange" action="{!EditMessage}" reRender="frm" oncomplete="showActions();">
+            <apex:param name="projName" value=""/>
+            <apex:param name="branchName" value=""/>
+            <apex:param name="cid" value=""/>
+            <apex:param name="msg" value=""/>
+        </apex:actionFunction>
+        <apex:actionFunction name="topicUpdate" />
+        </apex:form>
+    </body>
+    <script>
+       
+        $(document).ready(function(){
+             
+            $('#myTable').dataTable({"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]]});
+            
+            $('.restore').hide();
+            $('.revert').hide();
+            $('.abd-btn').hide();
+            viewRiviewHistory();
+            viewRelatedChanges();
+           
+        $(function () {
+            var dataSrc = {!gerritUsersList}; //["ashish.b.srivastava", "p.rameshwar.wayal", "a.c.ramalingam",];
+                $(".input-cls").autocomplete({
+                    source:dataSrc
+                });
+            });   
+        $('.btn-cls').click(function(event){
+            
+            $('.input-cls,.btn-cls-add,.btn-cls-cnl').show();
+            $('.btn-cls').hide();
+            
+        });
+        
+        $('.btn-cls-topic').click(function(event){
+            $('.input-cls-topic,.btn-cls-topicUpdate,.btn-cls-cnltopic').show();
+         //   $('.input-cls,.btn-cls-topicUpdate,.btn-cls-cnl').show();
+         
+             $('#topic').val('{!revisionObj.topic}');
+            $('.btn-cls-topic').hide();
+            
+        });
+        
+        $('.btn-cls-cnl').click(function(event){
+            $('.input-cls,.input-cls-topic,.btn-cls-add,.btn-cls-topicUpdate,.btn-cls-cnl').hide();
+            $('.btn-cls').show();
+        });
+        
+        $('.btn-cls-cnltopic').click(function(event){
+            $('.input-cls-topic,.btn-cls-topicUpdate,.btn-cls-cnltopic').hide();
+            $('.btn-cls-topic').show();
+        });
+        
+        $('.btn-cls-add').click(function(event){
+            addReviewer($('.input-cls').val());
+            $('.input-cls,.btn-cls-add,.btn-cls-cnl').hide();
+            $('.input-cls').val('');
+            $('.btn-cls').show();
+        });
+      /*  
+        $('.btn-cls-topicUpdate').click(function(event){
+          //  addReviewer($('.input-cls-topic').val());
+            $('.input-cls-topic,.btn-cls-topicUpdate,.btn-cls-cnltopic').hide();
+            $('.input-cls-topic').val('');
+            topicChange('{!revisionObj.project}', '{!revisionObj.branch}', '{!revisionObj.change_id}', comment);
+            $('.btn-cls').show();
+        });*/
+        
+         $('.code-review-cmt-right').click(function(){
+              $('.review-ratting').text('+2');
+              sendReply('', '+2');
+         });
+        
+         $(".review-cmt-right").click(function(e){
+             $(".text-area").focus();
+            e.preventDefault();
+            $(".pop-up").fadeIn(300,function(){$(this).focus();});
+
+            var $chkboxes = $("input[name=Code-Review]");
+            
+             var reviewcmt=$("input[name=Code-Review]:checked", '.pop-up').val();
+             $('.review-ratting').text($("input[name=Code-Review]:checked", '.pop-up').val());
+             if(reviewcmt=='0'){
+                 $('.rw-cmt').text('No score');
+             }
+              
+            $chkboxes.click(function() {
+                var currChkbox = this;
+               if(this.defaultValue=='+2'){
+                           $('.rw-cmt').text('Looks good to me, approved');
+                    }
+                    else if(this.defaultValue=='+1'){
+                           $('.rw-cmt').text('Looks good to me, but someone else must approve');
+                    }
+                    else if(this.defaultValue=='-1'){
+                           $('.rw-cmt').text('I would prefer this is not merged as is');
+                    }
+                    else if(this.defaultValue=='-2'){
+                           $('.rw-cmt').text('This shall not be merged');
+                    }
+                    else{
+                           $('.rw-cmt').text('No score');
+               }
+             });
+             });
+        
+        $('.clr').click(function() {
+           $(".pop-up").fadeOut(300);
+        });
+        
+        /*Fading Edit Message*/
+        $('.clr-Edit-Msg').click(function() {
+           $(".pop-up-editMessage").fadeOut(300);
+        });
+        
+        
+        /* Reply to commit */
+        $('.post').click(function(){
+              
+              var rattingPoint=$("input[name=Code-Review]:checked", '.pop-up').val();
+                $('.review-ratting').text(rattingPoint);
+                
+                //$('.review-cmt-sec').text($('.text-area').val());
+                var comment = $("#comment").val();
+                //console.log('*** rattingPoint *** '+rattingPoint+' *** comment *** '+comment);
+                if(rattingPoint=='+2'){
+                       $('.rw-cmt').text('Looks good to me, approved');
+                }
+                else if(rattingPoint=='+1'){
+                       $('.rw-cmt').text('Looks good to me, but someone else must approve');
+                }
+                else if(rattingPoint=='-1'){
+                       $('.rw-cmt').text('I would prefer this is not merged as is');
+                }
+                else if(rattingPoint=='-2'){
+                       $('.rw-cmt').text('This shall not be merged');
+                }
+                else{
+                       $('.rw-cmt').text('No score');
+                }
+               $(".pop-up").fadeOut(300);
+               
+               sendReply(comment, rattingPoint);
+            });
+            window.alert = function() {};
+         });
+         
+         /* Submit revision */
+         $('.submit').click(function(){
+              
+            $(".pop-up").fadeOut(300);
+               
+            submitReview();
+            window.alert = function() {};
+         });
+         
+         /* Submit revision */
+         $('.restore').click(function(){
+            $(".pop-up").fadeOut(300);
+            $(".pop-up-restore").fadeIn(300,function(){$(this).focus();});
+            $("#myTable_wrapper").css("margin-top", "50px");
+            //submitReview();
+            window.alert = function() {};
+         });
+         
+         /*Aandon popup cancel*/
+         $('.clc-restore').click(function() {
+           $(".pop-up-restore").fadeOut(300);
+           $("#myTable_wrapper").css("margin-top", "");
+        });
+        
+        /*restore post button */
+        $('.post-restore').click(function(){
+            $(".pop-up-restore").fadeOut(300);
+            var comment = $("#restoreComment").val();
+            restoreChange('{!revisionObj.project}', '{!revisionObj.branch}', '{!revisionObj.change_id}', comment);
+            location.reload();
+            window.alert = function() {};
+        });
+        
+        
+         /*Abandon Change */
+         $('.abd-btn').click(function(){
+            $(".pop-up").fadeOut(300);
+            $(".pop-up-abandon").fadeIn(300,function(){$(this).focus();});
+            $("#myTable_wrapper").css("margin-top", "50px");
+            //abandonChange();
+            //window.alert = function() {};
+         });
+
+         /*Cherry Pick Function */
+         $('.cherryPick-Btn').click(function(){
+            $(".pop-up").fadeOut(400);
+            $(".cherrypick-pop-up").fadeIn(300,function(){$(this).focus();});
+            $("#myTable_wrapper").css("margin-top", "50px");
+            $('#cherryPickMessage').val('{!JSENCODE(revisionObj.revisions[revisionObj.current_revision].CommitDetails.message)}');
+            viewBranchList();
+      });
+         
+         /*Aandon popup cancel*/
+         $('.clc-abandon').click(function() {
+             //console.log('*** cancel btn *** ');
+           $(".pop-up-abandon").fadeOut(300);
+           $("#myTable_wrapper").css("margin-top", "");
+        });
+        
+        /*Abandon post button */
+        $('.post-abandon').click(function(){
+            $(".pop-up-abandon").fadeOut(300);
+            var comment = $("#abdcomment").val();
+            abandonChange(comment);
+            location.reload();
+            window.alert = function() {};
+        });
+        
+        /*Edit message Popup*/
+        $(".editMessage").click(function(e){
+             $(".text-area1").focus();
+            e.preventDefault();
+            $(".pop-up-editMessage").fadeIn(300,function(){$(this).focus();});
+            $('#editcomment').val('"{!JSENCODE(revisionObj.revisions[revisionObj.current_revision].CommitDetails.message)}"');
+           });
+        
+        /*edit message Submit button pop */
+        $('.post-editMessage').click(function(){
+            $(".pop-up-editMessage").fadeOut(300);
+            var comment = $("#editcomment").val();
+            EditMessageChange('{!revisionObj.project}', '{!revisionObj.branch}', '{!revisionObj.change_id}', comment);
+        });
+
+         /*Revert Change */
+         $('.revert').click(function(){
+              
+            $(".pop-up").fadeOut(300);
+            $(".pop-up-revert").fadeIn(300,function(){$(this).focus();});
+            $("#myTable_wrapper").css("margin-top", "50px");
+            $('#revertComment').val('revert "{!JSENCODE(revisionObj.subject)}"\n\n"This reverts commit :  {!revisionObj.current_revision}"')
+            //abandonChange();
+            //window.alert = function() {};
+         });
+         
+         
+         /*Revert popup cancel*/
+         $('.clc-revert').click(function() {
+           $(".pop-up-revert").fadeOut(300);
+           $("#myTable_wrapper").css("margin-top", "");
+        });
+        
+        /*cherryPick popup cancel*/
+         $('.clc-cherrypick').click(function() {
+           $(".cherrypick-pop-up").fadeOut(300);
+           $("#myTable_wrapper").css("margin-top", "");
+        });
+
+        /*Revert post button */
+        $('.post-revert').click(function(){
+            $(".pop-up-revert").fadeOut(300);
+            var comment = $("#revertComment").val();
+            revertChange(comment);
+            window.alert = function() {};
+        });
+        
+       /* updating the topic*/ 
+       $('.btn-cls-topicUpdate').click(function(){
+          //  addReviewer($('.input-cls-topic').val());
+          var topic = $("#topic").val();
+          $('.input-cls-topic,.btn-cls-topicUpdate,.btn-cls-cnltopic').hide();
+          topicChange('{!revisionObj.project}', '{!revisionObj.branch}', '{!revisionObj.change_id}', topic);
+           // $('.input-cls-topic,.btn-cls-topicUpdate,.btn-cls-cnltopic').hide();
+            //$('.input-cls-topic').val(''); 
+            //$('.btn-cls').show();
+            console.log('**logtop');
+           //topicUpdate();
+           //$("#topic").val('test1234123');
+           location.reload();
+           //window.location.href = window.location.href;
+        });
+       
+      /* updating the CherryPick */ 
+       $('.post-cherryPick').click(function(){
+          var cherrybranch = $("#cherryPick-branch").val();
+          var cherryMessage = $("#cherryPickMessage").val();
+          cherryPickbranch('{!revisionObj.project}', '{!revisionObj.branch}','{!revisionObj.change_id}', '{!revisionObj.current_revision}',cherrybranch, cherryMessage);
+            $('.cherrypick-pop-up,.post-cherryPick,.clc-cherrypick').hide();
+           location.reload();
+        }); 
+        
+        
+        
+         function addReviewer(reviewers){
+             //console.log('*** reviewers *** '+reviewers);
+             addNewReviewer('{!revisionObj.change_id}', reviewers, '{!revisionObj.project}', '{!revisionObj.branch}');
+         }
+         
+         function removeReviewer(changeId, reviewerId, prjName, brName){
+             //console.log('*** reviewerId *** '+reviewerId);
+             deleteReviewer(changeId, reviewerId, prjName, brName);
+         }
+         
+         /*Get all related commits*/
+         function viewRelatedChanges(){
+             //console.log('*** inside viewRelatedChanges *** ');
+             Visualforce.remoting.Manager.invokeAction(
+                 '{!$RemoteAction.GerritDetails.readRelatedChanges}',
+                 '{!revisionObj.project}','{!revisionObj.branch}', '{!revisionObj.change_id}','{!revisionObj.current_revision}',
+                 function(result, event){
+                     if(event.status){
+                         //console.log('*** result *** '+result);
+                         var str = '<ol>';
+                         for(var i=0; i<result.length; i++){
+                             str += '<li style="margin-left: 0px;color: #015ba7;"><a href="/apex/GerritCommits?s=open">'+result[i].commits.subject+'</a></li>';
+                         }
+                         str += '</ol>';
+                         $('.relatedChanges').html(str);
+                     }
+                 },
+                     {escape:true}
+             );
+         }
+         
+         function viewRiviewHistory(){
+             
+             Visualforce.remoting.Manager.invokeAction(
+                 '{!$RemoteAction.GerritDetails.viewReviewHistory}',
+                 '{!revisionObj.project}','{!revisionObj.branch}', '{!revisionObj.change_id}',
+                 function(result, event){
+                     if(event.status){
+                         
+                         $('.review_rating').html(generateReviewRatingTable(result));
+                         if(result.labels.CodeReview != null && result.labels.CodeReview.approved != null){
+                             $('.review-ratting').text('+2');
+                             $('.code-reviewer').text(result.labels.CodeReview.approved.name);
+                             //$('.submit').hide();
+                             
+                         }
+                         
+                         $('.review-cmt-sec').html(generateReviewHistoryTable(result));
+                         $('#reviewCommentTable').dataTable({
+                         "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]], 
+                         "ordering": false,
+                         "order": [[ 2, "desc" ]]
+                        });
+                     }
+                 },
+                 {escape:true}
+             );
+             showActions();
+             
+         }
+        /* Function to show branch in cherryPick*/
+            function viewBranchList(){
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.GerritDetails.viewBranchList}',
+                    '{!revisionObj.project}',
+                    function(result, event){
+                        if(event.status){
+                            //console.log('***cherrypic');
+                            var branchListRef = result;
+                            $("#cherryPick-branch").autocomplete({source:branchListRef}); 
+                            //console.log('***cherrypic'+result);
+                        }
+                    },
+                    {escape:true}
+                    );
+                    showActions();
+                }
+
+         /*Function to show action buttons on review page*/
+         function showActions(){
+            $('.restore').hide();
+            $('.revert').hide();
+            $('.abd-btn').hide();
+             var actions = '{!revisionObj.actions}';
+             //console.log('*** action *** '+actions);
+             if('{!revisionObj.actions}' != null){
+                 if('{!revisionObj.actions}'.includes('restore')){
+                     $('.restore').show();
+                     //console.log('*** actions present - Restore *** ');
+                 }
+                 if('{!revisionObj.actions}'.includes('revert')){
+                     $('.revert').show();
+                     //console.log('*** actions present - Revert *** ');
+                 }
+                 if('{!revisionObj.actions}'.includes('abandon')){
+                     $('.abd-btn').show();
+                     //console.log('*** actions present - Abandon *** ');
+                 }
+             }
+         }
+         
+         function submitReview(){
+             var parameters = new Array();
+             parameters.push('{!revisionObj.project}');
+             parameters.push('{!revisionObj.branch}');
+             parameters.push('{!revisionObj.change_id}');
+             parameters.push('{!revisionObj.current_revision}');
+             //parameters.push('{!reviewerInfo.accountId}');
+             
+             Visualforce.remoting.Manager.invokeAction(
+                 '{!$RemoteAction.GerritDetails.submitRevision}',
+                 parameters,
+                 function(result, event){
+                     if(event.status){
+                         //console.log('*** status *** '+result.submitInfo.status);
+                         $('.reviewStatus').text(result.submitInfo.status);
+                         if(result.submitInfo.status == 'MERGED' || result.submitInfo.status == 'ABANDONED'){       
+                             $('.submit').hide();       
+                         }
+                         if(result.commitComponents != null){
+                             $('.review-cmt-sec').html(generateReviewHistoryTable(result.commitComponents));
+                             if(result.labels.CodeReview.approved != null){
+                                 $('.review-ratting').text('+2');
+                                 $('.code-reviewer').text(result.labels.CodeReview.approved.name);
+                                 //$('.submit').hide();
+                             }
+                             $('.code-review-cmt-right').hide();
+                             $('#reviewCommentTable').dataTable({
+                                 "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]], 
+                                 "ordering": false,
+                                 "order": [[ 2, "desc" ]]
+                            });
+                         }
+                     }
+                 },
+                 {escape:true}
+             );
+         }
+         
+         function abandonChange(comment){
+             var parameters = new Array();
+             parameters.push('{!revisionObj.project}');
+             parameters.push('{!revisionObj.branch}');
+             parameters.push('{!revisionObj.change_id}');
+             parameters.push('{!revisionObj.current_revision}');
+             parameters.push(comment);
+             //console.log('*** params *** '+parameters);
+             Visualforce.remoting.Manager.invokeAction(
+                 '{!$RemoteAction.GerritDetails.abandonChange}',
+                 parameters,
+                 function(result, event){
+                     if(event.status){
+                         $('.reviewStatus').text(result.changeInfo.status);
+                         if(result.submitInfo.status == 'MERGED' || result.submitInfo.status == 'ABANDONED'){       
+                             $('.submit').hide();       
+                         }
+                         $('.review-cmt-sec').html(generateReviewHistoryTable(result.commitComponents));
+                         $('#reviewCommentTable').dataTable({
+                             "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]], 
+                             "ordering": false,
+                             "order": [[ 2, "desc" ]]
+                        });
+                     }
+                 },
+                 {escape:true}
+             );
+         }
+
+         function revertChange(comment){
+             var parameters = new Array();
+             parameters.push('{!revisionObj.project}');
+             parameters.push('{!revisionObj.branch}');
+             parameters.push('{!revisionObj.change_id}');
+             parameters.push(comment);
+             Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.GerritDetails.revertChange}',
+                 parameters,
+                 function(result, event){
+                     if(event.status){
+                        //console.log('*******URl****');
+                         window.open('/apex/CommitComponents?p=-&b=-&c={!revisionObj.change_id}&n='+result.commit_number,'_self');
+                       
+                     }
+                 },
+                 {escape:true}
+             );
+         }
+         
+         
+         function sendReply(comment, reviewRating){
+             //console.log('*** reviewRating *** '+reviewRating+' *** comment 1 *** '+comment);
+             var parameters = new Array();
+             parameters.push(comment);
+             parameters.push(reviewRating);
+             parameters.push('{!revisionObj.project}');
+             parameters.push('{!revisionObj.branch}');
+             parameters.push('{!revisionObj.change_id}');
+             parameters.push('{!revisionObj.current_revision}');
+             
+             Visualforce.remoting.Manager.invokeAction(
+                 '{!$RemoteAction.GerritDetails.replyToRevision}',
+                 parameters,
+                 function(result, event){
+                     if(event.status){
+                         $('.review-cmt-sec').html(generateReviewHistoryTable(result));
+                         if(result.labels.CodeReview.approved != null){
+                             $('.review-ratting').text('+2');
+                             $('.code-reviewer').text(result.labels.CodeReview.approved.name);
+                             //$('.submit').hide();
+                         }
+                         //$('.sub-btn').show();
+                         $('#reviewCommentTable').dataTable({
+                             "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]], 
+                             "ordering": false,
+                             "order": [[ 2, "desc" ]]
+                        });
+                     }
+                 },
+                 {escape:true}
+             );
+         }
+         
+         function dateFormat(getDate){
+                         var monthName=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",];
+                         var date = new Date(getDate);
+                      return  monthName[date.getMonth()] + ' ' + date.getDate()+' '+timeFormat(date.getHours(),date.getMinutes());
+             }
+             function timeFormat(getTime,getMin){
+                if(getTime > 12 ){
+                     getTime =(getTime-12)+':'+(getMin > 9 ? getMin :'0'+getMin)+' PM';
+                 }
+                 else{
+                     getTime = getTime+':'+getMin+' AM';
+                 }
+                 return getTime;
+             }
+         
+         /*function getReviewRating(result){
+             for(var i=0; i<result.messages.length; i++){
+                 result.messages[i].message
+             }
+         }*/
+         
+         /* function to generate review rating table based on users permissions */
+         function generateReviewRatingTable(result){
+             if(result.permitted_labels.CodeReviewLabels != null){
+                 var table = '<table><tbody>';
+                 table += '<tr><td>&nbsp;</td>';
+                 var ratingChkbox = '';
+                 
+                 for(var i=0; i<result.permitted_labels.CodeReviewLabels.length; i++){
+                     table += '<td style="padding-left: 1%;">'+result.permitted_labels.CodeReviewLabels[i].trim()+'</td>';
+                     ratingChkbox += '<td><input type="radio" name="Code-Review" value="'+result.permitted_labels.CodeReviewLabels[i].trim();
+                     if(result.labels.CodeReview.default_value.toString() == result.permitted_labels.CodeReviewLabels[i].trim()){
+                         ratingChkbox += '"  checked="checked';
+                     }
+                     ratingChkbox += '"  tabindex="0"/></td>';
+                 }
+                 table += '<td>&nbsp;</td></tr>';
+                 table += '<tr><td style="font-weight:bold; width: 22%;">Code-Review</td>';
+                 table += ratingChkbox ;
+                 table += '<td class="rw-cmt"></td></tr>';
+                 table += '</tbody></table>';
+                 return table;
+             }
+             else{
+                 return '';
+             }
+         }
+         
+         /* Function to generate review history table */
+         function generateReviewHistoryTable(result){
+             //console.log('*** result *** '+result.messages);
+             
+             var tableHeader = '<table id="reviewCommentTable" class="table table-striped">';
+             tableHeader += '<thead><tr style="background: #eaeaea;">';
+             tableHeader += '<th id="pro-name" class="pro-name">Reviewer Name</th>';
+             tableHeader += '<th id="pro-name" class="pro-name">Comment</th>';
+             tableHeader += '<th id="pro-name" class="pro-name">Date</th>';
+             tableHeader += '</tr></thead><tbody>';
+             for(var i=0; i<result.messages.length; i++){
+                 tableHeader += '<tr>';
+                 if(result.messages[i].author == null){
+                     tableHeader += '<td> Gerrit Code Review </td>';
+                 }
+                 else{
+                     tableHeader += '<td>'+result.messages[i].author.name+'</td>';
+                 }
+                 tableHeader += '<td>'+result.messages[i].message+'</td>';
+                 tableHeader += '<td>'+dateFormat(result.messages[i].reviewDate)+'</td>';
+                 tableHeader += '</tr>';
+             }
+             if(result.messages.length === 0){
+                 tableHeader += '<tr>';
+                 tableHeader += '<td colspan="3"> No records to display </td>';
+                 tableHeader += '</tr>';
+             }
+             
+             tableHeader += '</tbody></table>';
+             return tableHeader ;
+         }
+         
+         //Function to Settings 
+         
+         function Setting(){
+             //console.log('*****Setting****');
+              window.open('/apex/GerritBranch?p={!revisionObj.project}','_self');
+         }
+           
+    </script>
+</apex:page>

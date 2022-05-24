@@ -1,0 +1,9 @@
+<apex:page >
+<!-- Begin Default Content REMOVE THIS -->
+<h1>Congratulations</h1>
+E2e
+MergeConflict changes
+Line 6 o n E2E1
+Conflict on line6
+<!-- End Default Content REMOVE THIS -->
+</apex:page>

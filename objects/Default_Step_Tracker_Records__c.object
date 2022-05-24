@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Applicable_Orgs__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>All SF Environments to which this default step is applicable</inlineHelpText>
+        <label>Applicable Orgs</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Component__c</fullName>
+        <description>Salesforce Components - VF, Apex classes, objects etc</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Salesforce Components - VF, Apex classes, objects etc</inlineHelpText>
+        <label>Component</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Step_Type__c</fullName>
+        <defaultValue>&apos;Other&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>Step Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Steps_to_perform__c</fullName>
+        <externalId>false</externalId>
+        <label>Steps to perform</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>defaultStepNumber__c</fullName>
+        <externalId>false</externalId>
+        <label>defaultStepNumber</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Default Step Tracker Records</label>
+    <visibility>Public</visibility>
+</CustomObject>

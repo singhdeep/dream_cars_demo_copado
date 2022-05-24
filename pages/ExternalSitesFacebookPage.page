@@ -1,0 +1,16 @@
+<apex:page showHeader="false" sidebar="false" >
+
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <center>
+              <apex:image value="{!$Resource.Facebookimg}"/><br/><br/><br/>
+      </center>
+      <div align="center">
+      <font size="2">Click on the link to request for your insurance quotation and stand a chance to win a</font><font color="red"> free ticket <br/>
+      for the monza GP 2015 ! <a href="/apex/InsurancePortalui">www.myinsurance.com </a></font>
+      </div><br/><br/><br/><br/><br/>
+      <div align="right">
+          <apex:image value="{!$Resource.compareimg}"/><br/><br/>
+          <a href="/apex/CompareMyInsuranceui">Click here to Compare</a>
+      </div>
+      
+</apex:page>
