@@ -4679,10 +4679,6 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>productdemo</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>quotepdf</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
