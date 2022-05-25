@@ -1,10 +1,8 @@
 Public Class HelloWorld
 {
-//comment 1
-//comment 2
-//comment 3
+//Devops change 25th May
     Public static void getMethod()
     {
-        System.debug('Capital Solutions info');
+        System.debug('Accenture');
     }
 }
