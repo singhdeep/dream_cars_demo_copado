@@ -5,7 +5,7 @@
     @IsTest
     private static void getMethod()
     {
-        HelloWorld.Method();
+        HelloWorld.getMethod();
     }
     
 }
